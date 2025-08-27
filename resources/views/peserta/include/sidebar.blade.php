@@ -15,6 +15,15 @@
 						</span>
 					</a>
 				</li>
+				<li class="{{request()->routeIs('peserta.lamaran') ? 'active' : ''}}">
+					<a href="{{route('peserta.lamaran')}}">
+						<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+						<span>Lamaran</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-right pull-right"></i>
+						</span>
+					</a>
+				</li>
 				
 				<li class="header">Components & UI </li>
 				<li class="treeview">

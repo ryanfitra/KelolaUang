@@ -8,6 +8,9 @@
 
   <title>CBT Universitas Sriwijaya - Sign in </title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ asset('images/logo/logo-unsri.png') }}">
+
   <!-- Vendors Style-->
   <link rel="stylesheet" href="{{ asset('template/css/vendors_css.css') }}">
     

@@ -10,14 +10,19 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin dashboard
-    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
-        ->middleware('role:admin')
-        ->name('admin.dashboard');
+    Route::prefix('admin')->middleware('role:admin')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
+            ->name('admin.dashboard');
+    });
+    
 
     // Peserta dashboard
-    Route::get('/peserta/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])
-        ->middleware('role:peserta')
-        ->name('peserta.dashboard');
+    Route::prefix('peserta')->middleware('role:peserta')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])
+            ->name('peserta.dashboard');
+        Route::get('/lamaran', [App\Http\Controllers\Peserta\LamaranController::class, 'index'])
+            ->name('peserta.lamaran');
+    });
 });
 
 // Route::middleware('auth')->group(function () {

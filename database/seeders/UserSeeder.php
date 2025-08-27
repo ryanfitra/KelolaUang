@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
                 'email' => 'admin_cbt@unsri.ac.id',
                 'role' => 'admin',
                 'password' => bcrypt('Eleunsri*#*#'), // password di-hash
+                'instansi_id' => '1',
+                'tanggal_daftar'=> '2025-08-01'
             ],
             [
                 'nama' => 'Peserta CBT',
@@ -43,6 +45,9 @@ class UserSeeder extends Seeder
                 'foto' => 'peserta1.jpg',
                 'pendidikan_terakhir' => 'SMA',
                 'ijazah' => 'ijazah_peserta1.pdf',
+                'posisi' => 'Programmer',
+                'instansi_id' => '2',
+                'tanggal_daftar' => '2025-08-01',
             ],
         ];
 

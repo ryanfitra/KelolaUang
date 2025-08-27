@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../images/favicon.ico">
+    {{-- <link rel="icon" href="../images/favicon.ico"> --}}
 
-    <title>Dashboard CBT - Admin</title>
-    
+    <title>CBT Universitas Sriwijaya | Dashboard Admin</title>
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="{{ asset('images/logo/logo-unsri.png') }}">
+
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{asset('template/css/vendors_css.css')}}">
 	  

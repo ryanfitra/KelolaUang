@@ -31,9 +31,18 @@ return new class extends Migration
             $table->string('foto')->nullable()->after('wa_sender');
             $table->enum('pendidikan_terakhir', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable()->after('foto');
             $table->string('ijazah')->nullable()->after('pendidikan_terakhir');
+            $table->string('posisi')->nullable()->after('ijazah');
+            $table->unsignedBigInteger('instansi_id')->after('posisi');
+            $table->date('tanggal_daftar')->after('instansi_id');
+
+            
+            // kolom foreign
+            $table->foreign('instansi_id')->references('id')->on('daftar_instansis')->onDelete('cascade');
+
 
             // kolom role
             $table->enum('role', ['admin', 'peserta'])->default('peserta')->after('password');
+            
         });
     }
 
@@ -60,7 +69,9 @@ return new class extends Migration
                 'nama_foto',
                 'pendidikan_terakhir',
                 'ijazah',
-                'role'
+                'role',
+                'posisi',
+                'tanggal_daftar'
             ]);
         });
     }

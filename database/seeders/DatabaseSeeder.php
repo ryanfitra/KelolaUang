@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\DaftarInstansi;
+use App\Models\JenisUjian;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,6 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $this->call(DaftarInstansiSeeder::class);
+        $this->call(JenisUjianSeeder::class);
+        $this->call(JadwalUjianSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(PesertaUjianSeeder::class);
     }
 }
