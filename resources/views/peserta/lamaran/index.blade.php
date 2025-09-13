@@ -44,38 +44,39 @@ Lamaran Peserta
                     @for($i = 0; $i < count($detailPeserta['ujian']); $i++)
                          @php
                             $ujian = $detailPeserta['ujian'][$i]; 
-                            $mulai   = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $ujian['waktu_mulai']);
-                            $selesai = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $ujian['waktu_selesai']);
+                           $ujian['mulai']   =$ujian['mulai'];
+                            $ujian['selesai'] =$ujian['selesai'];
+                            $pengumuman = \Carbon\Carbon::parse($ujian['pengumuman']);
                         @endphp
 
                         {{-- TRY OUT: belum mulai --}}
-                        @if($today < $mulai)
+                        @if($today <$ujian['mulai'])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
-                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian"
+                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
                                 onclick="showDetail({{ $i }})" style="margin: 5px 10px;">
                                 <i class="fa fa-file-pen"></i>
-                                {{ $ujian['jenis_ujian'] }}
+                                {{ $ujian['nama_ujian'] }}
                             </button>
 
                         {{-- TRY OUT: sedang berlangsung --}}{{-- UJIAN NORMAL --}}
-                        @elseif($today >= $mulai && $today <= $selesai)
+                        @elseif($today >=$ujian['mulai'] && $today <= $ujian['selesai'])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
-                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian"
+                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
                                 onclick="showDetail({{ $i }})" style="margin: 5px 10px;">
                                 <i class="fa fa-file-pen"></i>
-                                {{ $ujian['jenis_ujian'] }}
+                                {{ $ujian['nama_ujian'] }}
                             </button>
                         
                         {{-- HASIL --}}
-                        @elseif($today > $selesai)
+                        @elseif($today > $ujian['selesai'])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
-                                data-bs-toggle="modal" data-bs-target="#hasilUjian"
+                                data-bs-toggle="modal" data-bs-target="#hasilUjian{{$i}}"
                                 onclick="showHasil({{ $i }})" style="margin: 5px 10px;">
                                 <i class="fa fa-file-pen"></i>
-                                {{ $ujian['jenis_ujian'] }}
+                                {{ $ujian['nama_ujian'] }}
                             </button>
                         @endif
 
@@ -92,6 +93,33 @@ Lamaran Peserta
 @endsection
 @push('scripts')
 <script>
+    var targetDate = new Date("{{ $pengumuman->format('Y-m-d H:i:s') }}").getTime();
+
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = targetDate - now;
+
+        if (distance <= 0) {
+            clearInterval(x);
+            document.getElementById("days").innerHTML    = "0";
+            document.getElementById("hours").innerHTML   = "0";
+            document.getElementById("minutes").innerHTML = "0";
+            document.getElementById("seconds").innerHTML = "0";
+            return;
+        }
+
+        var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerHTML    = days;
+        document.getElementById("hours").innerHTML   = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+    }, 1000);
+</script>
+{{-- <script>
    window.detailPeserta = @json($detailPeserta);
 
     function showDetail(i) {
@@ -100,9 +128,9 @@ Lamaran Peserta
         if (data) {
             document.getElementById("namaPeserta").value = window.detailPeserta.nama;
             document.getElementById("noPeserta").value = data.no_peserta;
-            document.getElementById("jenisUjian").value = data.jenis_ujian;
-            document.getElementById("waktuMulai").value = data.waktu_mulai;
-            document.getElementById("waktuSelesai").value = data.waktu_selesai;
+            document.getElementById("jenisUjian").value = data.nama_ujian;
+            document.getElementById("waktuMulai").value = data.mulai;
+            document.getElementById("waktuSelesai").value = data.selesai;
             document.getElementById("fotoPeserta").src = window.detailPeserta.foto ?? "/images/default.jpg";
         }
     }
@@ -111,12 +139,12 @@ Lamaran Peserta
         let data = window.detailPeserta.ujian[i]; // ambil data berdasarkan index i
 
         if (data) {
-            document.getElementById("hasilJenisUjian").innerText = data.jenis_ujian;
+            document.getElementById("hasilJenisUjian").innerText = data.nama_ujian;
             document.getElementById("hasilNilai").innerText = data.nilai ?? 0;
             document.getElementById("hasilStatus").innerText = data.status_ujian;
         }
     }
-</script>
+</script> --}}
 
 
 @endpush

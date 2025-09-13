@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('waktu_selesai_to');
             $table->dateTime('waktu_mulai_ujian');
             $table->dateTime('waktu_selesai_ujian');
+            $table->dateTime('waktu_pengumuman');
             $table->timestamps();            
 
             $table->foreign('jenis_ujian_id')->references('id')->on('jenis_ujians')->onDelete('cascade');

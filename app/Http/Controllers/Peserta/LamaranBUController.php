@@ -74,24 +74,43 @@ class LamaranController extends Controller
                 'no_peserta'     => $pesertaUjian->no_peserta ?? '-',
                 'nama_ujian'     => $nama_ujian,
                 // 'foto'           => $data_peserta->foto ?? null,
-                'mulai'          => Carbon::parse($mulai)->format('d-m-Y H:i'),
-                'selesai'        => Carbon::parse($selesai)->format('d-m-Y H:i'),
+                'waktu_mulai'    => Carbon::parse($mulai)->format('d-m-Y H:i'),
+                'waktu_selesai'  => Carbon::parse($selesai)->format('d-m-Y H:i'),
                 // tambahkan pengumuman & status ujian biar bisa difilter
-                'pengumuman'     => Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i'),
+                'waktu_pengumuman' => Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i'),
                 'status_ujian'     => $pesertaUjian->status_ujian ?? '-', 
                 'format_nama'      => $format_nama,
             ];
         }
 
-        // dd($detailPeserta['ujian'], $jadwal->waktu_mulai_to, $today, $data_peserta );
+        // 🔎 FILTER UJIAN SESUAI KONDISI
+        $ujians = $detailPeserta['ujian'];
+        $ujiansToShow = [];
 
-        
+        if (isset($ujians[0])) {
+            $ujianPertama = $ujians[0];
+            $ujiansToShow[] = $ujianPertama; // ✅ selalu tampilkan ujian pertama
+
+            $statusUjian = $ujianPertama['status_ujian'];
+
+            // dd($ujianPertama);
+
+            if ($statusUjian === 'Lulus') {
+                // jika ujian pertama sudah lulus → tambahkan ujian berikutnya
+                for ($j = 1; $j < count($ujians); $j++) {
+                    if (isset($ujians[$j])) {
+                        $ujiansToShow[] = $ujians[$j];
+                        break; // ambil hanya satu ujian berikutnya
+                    }
+                }
+            }
+        }
 
 
         return view('peserta.lamaran.index', [
             'data_peserta'=> $data_peserta,
             'detailPeserta' => $detailPeserta, 
-            // 'ujiansToShow'  => $ujiansToShow, // 👈 kirim hasil filter ke view
+            'ujiansToShow'  => $ujiansToShow, // 👈 kirim hasil filter ke view
             'today' => $today, 
             'jadwal_ujian' => $jadwal_ujian,
             'jenisUjian' => $jenisUjian

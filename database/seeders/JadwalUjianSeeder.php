@@ -16,10 +16,11 @@ class JadwalUjianSeeder extends Seeder
         $data = [
             [
                 'jenis_ujian_id' => '1',
-                'waktu_mulai_to' => '2025-08-25 08:00:00',
-                'waktu_selesai_to' => '2025-08-25 09:00:00',
-                'waktu_mulai_ujian' => '2025-08-26 08:00:00',
-                'waktu_selesai_ujian' => '2025-08-26 12:00:00',
+                'waktu_mulai_to' => '2025-08-05 08:00:00',
+                'waktu_selesai_to' => '2025-08-05 09:00:00',
+                'waktu_mulai_ujian' => '2025-08-06 08:00:00',
+                'waktu_selesai_ujian' => '2025-08-06 12:00:00',
+                'waktu_pengumuman' => '2025-08-10 15:00:00'                    
             ],
             [
                 'jenis_ujian_id' => '2',
@@ -27,6 +28,7 @@ class JadwalUjianSeeder extends Seeder
                 'waktu_selesai_to' => '2025-09-25 09:00:00',
                 'waktu_mulai_ujian' => '2025-09-28 08:00:00',
                 'waktu_selesai_ujian' => '2025-09-28 09:00:00',
+                'waktu_pengumuman' => '2025-09-30 15:00:00'                        
             ],
         ];
 

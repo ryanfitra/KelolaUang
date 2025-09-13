@@ -1,169 +1,172 @@
 @extends('layouts.peserta')
-@section('title')
-Dashboard Peserta
-@endsection
+
+@section('title', 'Dashboard Peserta CBT Universitas Sriwijaya')
+
 @section('content')
 <section class="content">
-    
-    <div class="row align-items-end">
-        <div class="col-xl-12 col-12">
-            <div class="box bg-primary-light">
-                <div class="box-body d-flex px-0">
-                    <div class="flex-grow-1 p-30 flex-grow-1 bg-img dask-bg bg-none-md" style="background-position: right bottom; background-size: auto 100%; background-image: url(../images/svg-icon/color-svg/custom-1.svg)">
-                        <div class="row">
-                            <div class="col-12 col-xl-7">
-                                <h2>Welcome back, <strong> {{auth()->user()->nama}}!</strong></h2>
 
-                                <p class="text-dark my-10 fs-16">
-                                    Your students complated <strong class="text-warning">80%</strong> of the tasks.
-                                </p>
-                                <p class="text-dark my-10 fs-16">
-                                    Progress is <strong class="text-warning">very good!</strong>
-                                </p>
+  {{-- Greeting Section --}}
+  <div class="row align-items-end">
+      <div class="col-12">
+          <div class="card bg-primary text-white shadow-sm mb-4">
+              <div class="card-body">
+                  <h3>Selamat Datang, <strong>{{ auth()->user()->nama }}</strong> 🎉</h3>
+                  <p class="mb-0">Selamat mengikuti <strong>Computer Based Test Universitas Sriwijaya</strong>.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  {{-- Quick Stats --}}
+  <div class="row">
+      <div class="col-md-4">
+          <div class="card shadow-sm border-left-primary">
+              <div class="card-body text-center">
+                  <h5 class="text-muted">Total Ujian</h5>
+                  <h2 class="fw-bold">{{ count($jadwal_ujian ?? []) }}</h2>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="card shadow-sm border-left-success">
+              <div class="card-body text-center">
+                  <h5 class="text-muted">Ujian Selesai</h5>
+                  <h2 class="fw-bold text-success">
+                    {{ collect($detailPeserta['ujian'])->where('status_ujian','!=',null)->count() }}
+                  </h2>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="card shadow-sm border-left-warning">
+              <div class="card-body text-center">
+                  <h5 class="text-muted">Ujian Aktif</h5>
+                  <h2 class="fw-bold text-warning">
+                    {{ collect($detailPeserta['ujian'])->where('status_ujian',null)->count() }}
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  {{-- Upcoming Exam --}}
+  <div class="row mt-4">
+      <div class="col-12">
+          <div class="card shadow-sm">
+              <div class="card-header bg-light">
+                  <h5 class="mb-0">Jadwal Ujian Berikutnya</h5>
+              </div>
+              <div class="card-body">
+                  @php
+                    $nextExam = collect($detailPeserta['ujian'])->first();
+                  @endphp
+                  @if($nextExam)
+                      <p><strong>{{ $nextExam['nama_ujian'] }}</strong></p>
+                      <p>Tanggal: {{ $nextExam['waktu_mulai'] }} s/d {{ $nextExam['waktu_selesai'] }}</p>
+                      <p>No Peserta: <span class="fw-bold">{{ $nextExam['no_peserta'] }}</span></p>
+                      <a href="#" class="btn btn-primary btn-sm">
+                          <i class="fa fa-eye"></i> Detail Ujian
+                      </a>
+                  @else
+                      <p class="text-muted">Belum ada jadwal ujian.</p>
+                  @endif
+              </div>
+          </div>
+      </div>
+  </div>
+
+  {{-- Upcoming Exam --}}
+  <div class="row mt-4">
+      <div class="col-12">
+          <div class="card shadow-sm">
+              {{-- <div class="box"> --}}
+                <div class="card-header bg-light">
+                    <h4 class="card-title">Jadwal Seleksi</h4>
+                </div>
+                <div class="card-body">
+                    <div class="timeline5">
+                        <div class="timeline__group">
+                            <span class="timeline__year">2025</span>
+                            <div class="timeline__box">
+                                <div class="timeline__date">
+                                    <span class="timeline__day">2 - 5</span>
+                                    <span class="timeline__month">Feb</span>
+                                </div>
+                                <div class="timeline__post">
+                                    <div class="timeline__content">
+                                    <p>Attends the Philadelphia Museum School of Industrial Art. Studies design with Alexey Brodovitch, art director at Harper's Bazaar, and works as his assistant.</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-12 col-xl-5"></div>
                         </div>
                     </div>
+                </div>                
+            {{-- </div> --}}
+          </div>
+      </div>
+  </div>
+
+
+  {{-- Timeline Seleksi --}}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h4 class="card-title">Jadwal Seleksi</h4>
                 </div>
+                <div class="card-body">
+                    <div class="timeline5">
+                        <div class="timeline__group">
+                            <span class="timeline__year">2025</span>
+                            
+                            @foreach($timelines as $timeline)
+                            <div class="timeline__box">
+                                <div class="timeline__date">
+                                    <span class="timeline__day">
+                                        {{ \Carbon\Carbon::parse($timeline->start_date)->format('d') }}
+                                        @if($timeline->end_date)
+                                            - {{ \Carbon\Carbon::parse($timeline->end_date)->format('d') }}
+                                        @endif
+                                    </span>
+                                    <span class="timeline__month">
+                                        {{ \Carbon\Carbon::parse($timeline->start_date)->format('M') }}
+                                    </span>
+                                </div>
+                                <div class="timeline__post">
+                                    <div class="timeline__content">
+                                        <h6>{{ $timeline->title }}</h6>
+                                        <p>{{ $timeline->description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                </div>                
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 col-xl-6">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h4 class="box-title">Students Progress </h4>
-                    <ul class="box-controls pull-right d-md-flex d-none">
-                        <li class="dropdown">
-                        <button class="btn btn-primary px-10 " data-bs-toggle="dropdown" href="#">View List</button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="box-body">
-                    <div class="d-flex align-items-center mb-30 gap-items-3 justify-content-between">
-                        <div class="d-flex align-items-center fw-500">
-                            <div class="me-15 w-50 d-table">
-                                <img src="../images/avatar/avatar-1.png" class="avatar avatar-lg rounded10 bg-primary-light" alt="">
-                            </div>
-                            <div>
-                                <a href="#" class="text-dark hover-primary mb-5 d-block fs-16">Amelia</a>
-                                <div class="w-200">
-                                    <div class="progress progress-sm mb-0">
-                                        <div class="progress-bar progress-bar-primary progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <h5 class="fw-600 mb-0 badge badge-pill badge-primary">75%</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center mb-30 gap-items-3 justify-content-between">
-                        <div class="d-flex align-items-center fw-500">
-                            <div class="me-15 w-50 d-table">
-                                <img src="../images/avatar/avatar-2.png" class="avatar avatar-lg rounded10 bg-primary-light" alt="">
-                            </div>
-                            <div>
-                                <a href="#" class="text-dark hover-primary mb-5 d-block fs-16">Johen</a>
-                                <div class="w-200">
-                                    <div class="progress progress-sm mb-0">
-                                        <div class="progress-bar progress-bar-warning progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" style="width: 64%">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <h5 class="fw-600 mb-0 badge badge-pill badge-warning">64%</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center mb-30 gap-items-3 justify-content-between">
-                        <div class="d-flex align-items-center fw-500">
-                            <div class="me-15 w-50 d-table">
-                                <img src="../images/avatar/avatar-1.png" class="avatar avatar-lg rounded10 bg-primary-light" alt="">
-                            </div>
-                            <div>
-                                <a href="#" class="text-dark hover-primary mb-5 d-block fs-16">Micheal</a>
-                                <div class="w-200">
-                                    <div class="progress progress-sm mb-0">
-                                        <div class="progress-bar progress-bar-info progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="59" aria-valuemin="0" aria-valuemax="100" style="width: 59%">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <h5 class="fw-600 mb-0 badge badge-pill badge-info">59%</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center mb-30 gap-items-3 justify-content-between">
-                        <div class="d-flex align-items-center fw-500">
-                            <div class="me-15 w-50 d-table">
-                                <img src="../images/avatar/avatar-1.png" class="avatar avatar-lg rounded10 bg-primary-light" alt="">
-                            </div>
-                            <div>
-                                <a href="#" class="text-dark hover-primary mb-5 d-block fs-16">Amanda</a>
-                                <div class="w-200">
-                                    <div class="progress progress-sm mb-0">
-                                        <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <h5 class="fw-600 mb-0 badge badge-pill badge-danger">45%</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-items-3 justify-content-between">
-                        <div class="d-flex align-items-center fw-500">
-                            <div class="me-15 w-50 d-table">
-                                <img src="../images/avatar/avatar-1.png" class="avatar avatar-lg rounded10 bg-primary-light" alt="">
-                            </div>
-                            <div>
-                                <a href="#" class="text-dark hover-primary mb-5 d-block fs-16">Tyler</a>
-                                <div class="w-200">
-                                    <div class="progress progress-sm mb-0">
-                                        <div class="progress-bar progress-bar-primary progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <h5 class="fw-600 mb-0 badge badge-pill badge-primary">20%</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-6">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h4 class="box-title">Working Hours</h4>
-                    <ul class="box-controls pull-right d-md-flex d-none">
-                        <li class="dropdown">
-                        <button class="dropdown-toggle btn btn-warning-light px-10" data-bs-toggle="dropdown" href="#">Today</button>										  
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item active" href="#">Today</a>
-                            <a class="dropdown-item" href="#">Yesterday</a>
-                            <a class="dropdown-item" href="#">Last week</a>
-                            <a class="dropdown-item" href="#">Last month</a>
-                        </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="box-body">
-                    <div id="revenue5" class="min-h-325"></div>
-                    <div class="d-flex justify-content-center">
-                        <p class="d-flex align-items-center fw-600 mx-20"><span class="badge badge-xl badge-dot badge-warning me-20"></span> Progress</p>
-                        <p class="d-flex align-items-center fw-600 mx-20"><span class="badge badge-xl badge-dot badge-primary me-20"></span> Done</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  
+
+  {{-- Announcements --}}
+  <div class="row mt-4">
+      <div class="col-12">
+          <div class="card shadow-sm">
+              <div class="card-header bg-light">
+                  <h5 class="mb-0">Pengumuman</h5>
+              </div>
+              <div class="card-body">
+                  <ul class="list-unstyled mb-0">
+                      <li>📢 Pengumuman hasil ujian akan disampaikan melalui dashboard ini.</li>
+                      <li>⚠️ Pastikan Anda login tepat waktu sesuai jadwal ujian.</li>
+                      <li>💡 Gunakan browser terbaru untuk menghindari masalah teknis.</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+
 </section>
 @endsection

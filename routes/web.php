@@ -20,8 +20,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('peserta')->middleware('role:peserta')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])
             ->name('peserta.dashboard');
-        Route::get('/lamaran', [App\Http\Controllers\Peserta\LamaranController::class, 'index'])
+        
+        
+        Route::prefix('lamaran')->group(function () {
+            Route::get('/', [App\Http\Controllers\Peserta\LamaranController::class, 'index'])
             ->name('peserta.lamaran');
+            Route::get('/download-kartu-peserta/{customId}', [App\Http\Controllers\Peserta\LamaranController::class, 'download_kartu'])
+                ->name('peserta.download-kartu-peserta');
+        });
+
+        Route::prefix('profil-perusahaan')->group(function () {
+            Route::get('/', [App\Http\Controllers\ProfilController::class, 'index'])
+            ->name('peserta.profil-pt');
+        });
+
     });
 });
 

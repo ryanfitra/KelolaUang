@@ -26,8 +26,7 @@ Lamaran Peserta
             </div>
         </div>
     </div>
-
-    {{-- List Lamaran --}}
+    {{-- LIST LAMARAN --}}
     <div class="row">
         <div class="col-xl-12 col-12">
             <div class="box no-shadow mb-0 bg-transparent">
@@ -35,128 +34,65 @@ Lamaran Peserta
                     <h2 class="box-title"><strong>Lamaran</strong></h2>							
                 </div>
             </div>
+        </div>
+        <div class="col-12">
             <div class="box bt-5 border-danger rounded mb-3">
-                <div class="box-body bg-secondary-light">	
-                    <div class="flex-grow-1">	
-                        <div class="d-flex align-items-center pe-2 justify-content-between">							
-                            <h3 class="fw-500">{{ $data_peserta->posisi }}</h3>					
-                        </div>
-                        <p class="fs-16">PT Tanjungenim Lestari Pulp and Paper (TeL)</p>
-                    </div>		
-                    <div class="row mt-30">
-                    {{-- LOOPING JUMLAH UJIAN --}}
-                    {{-- @if($today <= $jadwal_ujian->first()->waktu_selesai_ujian && $data_peserta->pesertaUjian->status_ujian == 'Lulus') --}}
-                        {{-- Tampilkan SEMUA ujian --}}
-                        @for($i = 0; $i < count($jadwal_ujian); $i++)
-                            @php
-                                $jadwal = $jadwal_ujian[$i]; // ambil data berdasarkan index
-                            @endphp
-                            <div class="col-lg-4 col-md-6 col-12">
-                                <div class="box mb-15 pull-up">
-                                    <div class="box-body">
+                <div class="box-body">
+                    <h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>
+                    <p class="subtitle mb-20">{{ $data_peserta->instansi->nama_instansi }}</p>
+                    <div class="clearfix">
+                    {{-- LOOPING SESUAI KONDISI --}}
+                    @for($i = 0; $i < count($ujiansToShow); $i++)
+                        @php
+                            $ujian   = $ujiansToShow[$i]; 
+                            $mulai   = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $ujian['waktu_mulai']);
+                            $selesai = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $ujian['waktu_selesai']);
+                        @endphp
 
-                                        {{-- Kondisi Try Out --}}
-                                        @if($today <= $jadwal->waktu_mulai_to && $today <= $jadwal->waktu_selesai_to)
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-15 bg-warning d-flex justify-content-center align-items-center rounded" 
-                                                        style="width:60px; height:60px;">
-                                                        <i class="fa-solid fa-file-pen fa-2x text-white"></i>
-                                                    </div>
-                                                    <div class="d-flex flex-column fw-500">
-                                                        <a href="#" class="text-dark hover-primary mb-1 fs-16">
-                                                            Try Out {{ $jadwal->jenisUjian->nama_ujian }}
-                                                        </a>
-                                                        <span class="text-fade">
-                                                            Mulai   : {{ date('d-m-Y H:i', strtotime($jadwal->waktu_mulai_to)) }} <br>
-                                                            Selesai : {{ date('d-m-Y H:i', strtotime($jadwal->waktu_selesai_to)) }}
-                                                        </span>
-                                                    </div>
-                                                </div>
+                        {{-- TRY OUT: belum mulai --}}
+                        @if($today < $mulai)
+                            <button type="button"
+                                class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
+                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
+                                onclick="showDetail({{ $i }})" style="margin: 5px 10px;">
+                                <i class="fa fa-file-pen"></i>
+                                {{ $ujian['nama_ujian'] }}
+                            </button>
 
-                                                {{-- Tombol detail, kirim index i --}}
-                                                <button type="button" 
-                                                    class="btn btn-sm btn-warning btn-rounded"
-                                                    title="Detail Peserta"
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#detailPesertaUjian"
-                                                    onclick="showDetail({{ $i }})">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
-                                            </div>
+                        {{-- sedang berlangsung --}}
+                        @elseif($today >= $mulai && $today <= $selesai)
+                            <button type="button"
+                                class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
+                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
+                                onclick="showDetail({{ $i }})" style="margin: 5px 10px;">
+                                <i class="fa fa-file-pen"></i>
+                                {{ $ujian['nama_ujian'] }}
+                            </button>
 
-                                        {{-- Kondisi Ujian Normal --}}
-                                        @elseif($today <= $jadwal->waktu_mulai_ujian && $today > $jadwal->waktu_selesai_to)
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-15 bg-warning d-flex justify-content-center align-items-center rounded" 
-                                                        style="width:60px; height:60px;">
-                                                        <i class="fa-solid fa-file-pen fa-2x text-white"></i>
-                                                    </div>
-                                                    <div class="d-flex flex-column fw-500">
-                                                        <a href="#" class="text-dark hover-primary mb-1 fs-16">
-                                                            {{ $jadwal->jenisUjian->nama_ujian }}
-                                                        </a>
-                                                        <span class="text-fade">
-                                                            Mulai   : {{ date('d-m-Y H:i', strtotime($jadwal->waktu_mulai_to)) }} <br>
-                                                            Selesai : {{ date('d-m-Y H:i', strtotime($jadwal->waktu_selesai_to)) }}
-                                                        </span>
-                                                    </div>
-                                                </div>
+                        {{-- sudah selesai tampilkan hasil --}}
+                        @elseif($today > $selesai)
+                            <button type="button"
+                                class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
+                                data-bs-toggle="modal" data-bs-target="#hasilUjian{{$i}}"
+                                onclick="showHasil({{ $i }})" style="margin: 5px 10px;">
+                                <i class="fa fa-file-pen"></i>
+                                {{ $ujian['nama_ujian'] }}
+                            </button>
+                        @endif
 
-                                                {{-- Tombol detail, kirim index i --}}
-                                                <button type="button" 
-                                                    class="btn btn-sm btn-warning btn-rounded"
-                                                    title="Detail Peserta"
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#detailPesertaUjian"
-                                                    onclick="showDetail({{ $i }})">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
-                                            </div>
-                                        @else
-                                            {{-- Kondisi Hasil --}}
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-15 bg-warning d-flex justify-content-center align-items-center rounded" 
-                                                        style="width:60px; height:60px;">
-                                                        <i class="fa-solid fa-file-pen fa-2x text-white"></i>
-                                                    </div>
-                                                    <div class="d-flex flex-column fw-500">
-                                                        <a href="#" class="text-dark hover-primary mb-1 fs-16">
-                                                            Hasil {{ $jadwal->jenisUjian->nama_ujian }}
-                                                        </a>
-                                                    </div>
-                                                </div>
-
-                                                {{-- Tombol hasil, kirim index i --}}
-                                                <button type="button" class="waves-effect waves-light btn btn-rounded btn-outline btn-primary mb-5 btn-lg" 
-                                                    title="Lihat Hasil Ujian"
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#hasilUjian"
-                                                    onclick="showHasil({{ $i }})">
-                                                    <i class="fa fa-eye"></i> Lihat Hasil
-                                                </button>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- ✅ include modal per ujian --}}
-
-                            @include('peserta.lamaran.kartu-peserta-ujian')
-                            @include('peserta.lamaran.hasil-ujian', ['i' => $i, 'jadwal' => $jenisUjian[$i]])
-                        @endfor
+                        @include('peserta.lamaran.kartu-peserta-ujian')
+                        @include('peserta.lamaran.hasil-ujian', ['i' => $i, 'jadwal' => $ujian])
+                    @endfor
 
                     </div>
-                </div>					
+                </div>
             </div>
         </div>
-    </div>	
+    </div>
 </section>
 @endsection
 @push('scripts')
-<script>
+{{-- <script>
    window.detailPeserta = @json($detailPeserta);
 
     function showDetail(i) {
@@ -165,10 +101,10 @@ Lamaran Peserta
         if (data) {
             document.getElementById("namaPeserta").value = window.detailPeserta.nama;
             document.getElementById("noPeserta").value = data.no_peserta;
-            document.getElementById("jenisUjian").value = data.jenis_ujian;
+            document.getElementById("jenisUjian").value = data.nama_ujian;
             document.getElementById("waktuMulai").value = data.waktu_mulai;
             document.getElementById("waktuSelesai").value = data.waktu_selesai;
-            document.getElementById("fotoPeserta").src = window.detailPeserta.foto ?? "/images/default.png";
+            document.getElementById("fotoPeserta").src = window.detailPeserta.foto ?? "/images/default.jpg";
         }
     }
 
@@ -176,12 +112,12 @@ Lamaran Peserta
         let data = window.detailPeserta.ujian[i]; // ambil data berdasarkan index i
 
         if (data) {
-            document.getElementById("hasilJenisUjian").innerText = data.jenis_ujian;
+            document.getElementById("hasilJenisUjian").innerText = data.nama_ujian;
             document.getElementById("hasilNilai").innerText = data.nilai ?? 0;
             document.getElementById("hasilStatus").innerText = data.status_ujian;
         }
     }
-</script>
+</script> --}}
 
 
 @endpush

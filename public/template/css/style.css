@@ -30105,9 +30105,12 @@ td .label {
     margin-top: 4rem; }
 
 .timeline__year {
+  text-align: center;
   padding: .5rem 1.5rem;
   color: #ffffff;
   position: absolute;
+  width: 135px;
+    /* height: 2px; */
   left: 0;
   top: 0; }
 
@@ -30117,7 +30120,7 @@ td .label {
     margin-bottom: 10px; }
   .timeline__box:before {
     content: "";
-    width: 100%;
+    width: 135px;
     height: 2px;
     position: absolute;
     left: 0;
@@ -30153,13 +30156,13 @@ td .label {
 
 @media screen and (min-width: 641px) {
   .timeline5:before {
-    left: 38px; }
+    left: 70px; }
 
   .timeline__group {
     padding-top: 55px; }
 
   .timeline__box {
-    padding-left: 105px; }
+    padding-left: 150px; }
     .timeline__box:before {
       top: 50%;
       transform: translateY(-50%); }

@@ -12,6 +12,7 @@ class JadwalUjian extends Model
         'waktu_selesai_to',
         'waktu_mulai_ujian',
         'waktu_selesai_ujian',
+        'waktu_pengumuman',
     ];
 
     public function jenisUjian()

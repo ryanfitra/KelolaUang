@@ -15,9 +15,18 @@
 						</span>
 					</a>
 				</li>
+				<li class="{{request()->routeIs('peserta.profil-pt') ? 'active' : ''}}">
+					<a href="{{route('peserta.profil-pt')}}">
+						<i class="fa fa-bank"><span class="path1"></span><span class="path2"></span></i>
+						<span>Profil Perusahaan</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-right pull-right"></i>
+						</span>
+					</a>
+				</li>
 				<li class="{{request()->routeIs('peserta.lamaran') ? 'active' : ''}}">
 					<a href="{{route('peserta.lamaran')}}">
-						<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+						<i class="fa fa-file-pen"><span class="path1"></span><span class="path2"></span></i>
 						<span>Lamaran</span>
 						<span class="pull-right-container">
 							<i class="fa fa-angle-right pull-right"></i>
