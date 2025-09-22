@@ -14,24 +14,18 @@ class JenisUjianSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            // [
-            //     'nama_ujian' => 'Try Out TPA',
-            //     'deskripsi' => 'Try Out Ujian Tes Potensi Akademik',
-            // ],
             [
-                'nama_ujian' => 'Ujian TPA',
+                'nama_ujian' => 'Tes Tahap I',
+                'deskripsi' => 'Verifikasi Peserta Online',
+            ],
+            [
+                'nama_ujian' => 'Tes Tahap II',
                 'deskripsi' => 'Ujian Tes Potensi Akademik',
             ],
-            // [
-            //     'nama_ujian' => 'Try Out Psikotest',
-            //     'deskripsi' => 'Try Out Ujian Psikologi Test (TIKI, Kreaplin, Papikostik, Quisioner)',
-            // ],
             [
-                'nama_ujian' => 'Ujian Psikotest',
+                'nama_ujian' => 'Tes Tahap III',
                 'deskripsi' => 'Ujian Psikologi Test (TIKI, Kreaplin, Papikostik, Quisioner)',
             ],
-            
-            
         ];
 
         foreach ($data as $d) {

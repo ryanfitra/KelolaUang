@@ -75,9 +75,9 @@ class DashboardController extends Controller
             ];
         }
 
-        $timelines = Timeline::orderBy('start_date')->get();
+        $timelines = Timeline::where('instansi_id', $data_peserta->instansi_id )->orderBy('tanggal_mulai')->get();
 
-        // dd($jadwal_ujian);
+        // dd($timelines);
 
         // Kirim ke view dashboard peserta
         return view('peserta.dashboard', [

@@ -898,5 +898,7 @@
 	<script src="{{asset('template/js/pages/dashboard.js')}}"></script>
 	<script src="{{asset('template/js/pages/calendar.js')}}"></script>
 	
+	@include('swal')
+    @stack('js')
 </body>
 </html>

@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('timelines', function (Blueprint $table) {
             $table->id();
-            $table->string('title');              // Judul kegiatan
-            $table->text('description')->nullable(); // Deskripsi kegiatan
-            $table->dateTime('start_date');           // Tanggal mulai
-            $table->dateTime('end_date')->nullable(); // Tanggal selesai (opsional)
+            $table->unsignedBigInteger('instansi_id');
+            $table->string('nama_kegiatan');              // Judul kegiatan
+            $table->text('deskripsi')->nullable(); // Deskripsi kegiatan
+            $table->dateTime('tanggal_mulai');           // Tanggal mulai
+            $table->dateTime('tanggal_selesai')->nullable(); // Tanggal selesai (opsional)
             $table->timestamps();
+
+            // kolom foreign
+            $table->foreign('instansi_id')->references('id')->on('daftar_instansis')->onDelete('cascade');
+
         });
     }
 

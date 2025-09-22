@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class JadwalUjian extends Model
 {
+    protected $table = 'jadwal_ujians';
+
     protected $fillable = [
         'jenis_ujian_id',
         'waktu_mulai_to',
@@ -19,4 +21,10 @@ class JadwalUjian extends Model
     {
         return $this->belongsTo(JenisUjian::class, 'jenis_ujian_id', 'id');
     }
+
+    // public function peserta()
+    // {
+    //     return $this->hasMany(PesertaUjian::class, 'jadwal_ujian_id');
+    // }
+
 }

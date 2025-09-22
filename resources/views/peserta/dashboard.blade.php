@@ -50,7 +50,7 @@
   </div>
 
   {{-- Upcoming Exam --}}
-  <div class="row mt-4">
+  {{-- <div class="row mt-4">
       <div class="col-12">
           <div class="card shadow-sm">
               <div class="card-header bg-light">
@@ -73,39 +73,7 @@
               </div>
           </div>
       </div>
-  </div>
-
-  {{-- Upcoming Exam --}}
-  <div class="row mt-4">
-      <div class="col-12">
-          <div class="card shadow-sm">
-              {{-- <div class="box"> --}}
-                <div class="card-header bg-light">
-                    <h4 class="card-title">Jadwal Seleksi</h4>
-                </div>
-                <div class="card-body">
-                    <div class="timeline5">
-                        <div class="timeline__group">
-                            <span class="timeline__year">2025</span>
-                            <div class="timeline__box">
-                                <div class="timeline__date">
-                                    <span class="timeline__day">2 - 5</span>
-                                    <span class="timeline__month">Feb</span>
-                                </div>
-                                <div class="timeline__post">
-                                    <div class="timeline__content">
-                                    <p>Attends the Philadelphia Museum School of Industrial Art. Studies design with Alexey Brodovitch, art director at Harper's Bazaar, and works as his assistant.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
-            {{-- </div> --}}
-          </div>
-      </div>
-  </div>
-
+  </div> --}}
 
   {{-- Timeline Seleksi --}}
     <div class="row mt-4">
@@ -115,34 +83,42 @@
                     <h4 class="card-title">Jadwal Seleksi</h4>
                 </div>
                 <div class="card-body">
-                    <div class="timeline5">
-                        <div class="timeline__group">
-                            <span class="timeline__year">2025</span>
-                            
-                            @foreach($timelines as $timeline)
-                            <div class="timeline__box">
-                                <div class="timeline__date">
-                                    <span class="timeline__day">
-                                        {{ \Carbon\Carbon::parse($timeline->start_date)->format('d') }}
-                                        @if($timeline->end_date)
-                                            - {{ \Carbon\Carbon::parse($timeline->end_date)->format('d') }}
-                                        @endif
-                                    </span>
-                                    <span class="timeline__month">
-                                        {{ \Carbon\Carbon::parse($timeline->start_date)->format('M') }}
-                                    </span>
-                                </div>
-                                <div class="timeline__post">
-                                    <div class="timeline__content">
-                                        <h6>{{ $timeline->title }}</h6>
-                                        <p>{{ $timeline->description }}</p>
+                    @if($timelines->isEmpty())
+                        <div class="timeline__post">
+                            <div class="timeline__content">
+                                <h4>Belum ada Jadwal yang tersedia</h4>
+                                {{-- <p>{{ $timeline->deskripsi }}</p> --}}
+                            </div>
+                        </div>
+                    @else
+                        <div class="timeline5">
+                            <div class="timeline__group">
+                                <span class="timeline__year">2025</span>
+                                
+                                @foreach($timelines as $timeline)
+                                <div class="timeline__box">
+                                    <div class="timeline__date">
+                                        <span class="timeline__day">
+                                            {{ \Carbon\Carbon::parse($timeline->tanggal_mulai)->format('d') }}
+                                            @if($timeline->tanggal_selesai)
+                                                - {{ \Carbon\Carbon::parse($timeline->tanggal_selesai)->format('d') }}
+                                            @endif
+                                        </span>
+                                        <span class="timeline__month">
+                                            {{ \Carbon\Carbon::parse($timeline->tanggal_mulai)->format('M') }}
+                                        </span>
+                                    </div>
+                                    <div class="timeline__post">
+                                        <div class="timeline__content">
+                                            <h6>{{ $timeline->nama_kegiatan }}</h6>
+                                            <p>{{ $timeline->deskripsi }}</p>
+                                        </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                            
                         </div>
-                    </div>
+                    @endif
                 </div>                
             </div>
         </div>

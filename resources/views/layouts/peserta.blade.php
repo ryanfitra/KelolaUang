@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    {{-- <link rel="icon" href="{{asset('images/favicon.ico')}}"> --}}
+    {{-- <link rel="icon" href="../images/favicon.ico"> --}}
 
-    <title>CBT Universitas Sriwijaya | Dashboard Admin</title>
+    <title>CBT Universitas Sriwijaya | Dashboard Peserta</title>
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="{{ asset('images/logo/logo-unsri.png') }}">
-    
+
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{asset('template/css/vendors_css.css')}}">
 	  
@@ -882,7 +882,8 @@
 	</div> --}}
 	
 	<!-- Page Content overlay -->
-
+	
+	
 	<!-- Vendor JS -->
 	<script src="{{asset('template/js/vendors.min.js')}}"></script>
 	<script src="{{asset('template/js/pages/chat-popup.js')}}"></script>
@@ -892,18 +893,10 @@
 	<script src="{{asset('assets/vendor_components/moment/min/moment.min.js')}}"></script>
 	<script src="{{asset('assets/vendor_components/fullcalendar/fullcalendar.js')}}"></script>
 	
-	<!-- Bootstrap 5 -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Custom JS -->
-	<script src="{{asset('template/js/template.js')}}"></script>
-
 	<!-- EduAdmin App -->
+	<script src="{{asset('template/js/template.js')}}"></script>
 	<script src="{{asset('template/js/pages/dashboard.js')}}"></script>
 	<script src="{{asset('template/js/pages/calendar.js')}}"></script>
 	
-	{{-- tempat untuk inject JS tambahan dari setiap view --}}
-	@stack('scripts')
-
 </body>
 </html>

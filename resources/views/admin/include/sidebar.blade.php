@@ -15,6 +15,85 @@
 						</span>
 					</a>
 				</li>
+
+				{{-- <li class="{{request()->routeIs('admin.peserta.*') ? 'active' : ''}}">
+					<a href="{{route('admin.peserta.index')}}">
+						<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+						<span>Peserta</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-right pull-right"></i>
+						</span>
+					</a>
+				</li> --}}
+
+				<li class="{{request()->routeIs('admin.pendaftar.*') ? 'active' : ''}}">
+					<a href="{{route('admin.pendaftar.index')}}">
+						<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+						<span>Pendaftar</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-right pull-right"></i>
+						</span>
+					</a>
+				</li>
+
+				<li class="treeview">
+				  <a href="#">
+					<i class="icon-Write"><span class="path1"></span><span class="path2"></span></i>
+					<span>Ujian</span>
+					<span class="pull-right-container">
+					  <i class="fa fa-angle-right pull-right"></i>
+					</span>
+				  </a>
+				  <ul class="treeview-menu">			
+					<li class="{{request()->routeIs('admin.jenis-ujian.index') || request()->routeIs('admin.jenis-ujian.*') ? 'active' : ''}}">
+						<a href="{{route('admin.jenis-ujian.index')}}">
+							<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+							<span>Jenis Ujian</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+					</li>
+
+					<li class="{{request()->routeIs('admin.jadwal-ujian.index') || request()->routeIs('admin.jadwal-ujian.*') ? 'active' : ''}}">
+						<a href="{{route('admin.jadwal-ujian.index')}}">
+							<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+							<span>Jadwal Ujian</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+					</li>
+
+					<li class="{{request()->routeIs('admin.peserta-ujian.index') || request()->routeIs('admin.peserta-ujian.*') ? 'active' : ''}}">
+						<a href="{{route('admin.peserta-ujian.index')}}">
+							<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+							<span>Peserta Ujian</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+					</li>
+					{{-- <li><a href="{{route('admin.jenis-ujian.index')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Jenis Ujian</a></li>								 --}}
+					{{-- <li class="treeview">
+						<a href="">
+							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Jadwal UJian
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li><a href="box_cards.html"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>User Card</a></li>
+							<li><a href="box_advanced.html"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Advanced Card</a></li>
+							<li><a href="box_basic.html"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Basic Card</a></li>
+							<li><a href="box_color.html"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Card Color</a></li>
+							<li><a href="box_group.html"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Card Group</a></li>
+						</ul>
+					</li> --}}
+				  </ul>
+				</li>	 
+
+				
 				
 				<li class="header">Components & UI </li>
 				<li class="treeview">

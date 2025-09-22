@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(JadwalUjianSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(PesertaUjianSeeder::class);
+        $this->call(TimelineSeeder::class);
     }
 }
