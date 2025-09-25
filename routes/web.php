@@ -25,10 +25,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('pendaftar')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\PendaftarController::class, 'index'])->name('admin.pendaftar.index');
             Route::post('/generate/{id}', [App\Http\Controllers\Admin\PendaftarController::class, 'generate'])->name('admin.pendaftar.generate');
-    Route::post('/generate-all', [App\Http\Controllers\Admin\PendaftarController::class, 'generateAll'])->name('admin.pendaftar.generateAll');
+            Route::post('/generate-all', [App\Http\Controllers\Admin\PendaftarController::class, 'generateAll'])->name('admin.pendaftar.generateAll');
             Route::get('/tambah', [App\Http\Controllers\Admin\PendaftarController::class, 'tambah'])->name('admin.pendaftar.tambah');
             Route::post('/store', [App\Http\Controllers\Admin\PendaftarController::class, 'store'])->name('admin.pendaftar.store');
-            // Route::delete('/hapus/{id}', [App\Http\Controllers\Admin\PendaftarController::class, 'destroy'])->name('admin.peserta-ujian.delete');
+            Route::post('/upload', [App\Http\Controllers\Admin\PendaftarController::class, 'upload'])->name('admin.pendaftar.upload');
             Route::delete('/delete/{peserta}', [App\Http\Controllers\Admin\PendaftarController::class, 'destroy'])->name('admin.pendaftar.delete');
         });
 
@@ -36,7 +36,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\JenisUjianController::class, 'index'])->name('admin.jenis-ujian.index');
             Route::get('/create', [App\Http\Controllers\Admin\JenisUjianController::class, 'create'])->name('admin.jenis-ujian.tambah');
             Route::post('/store', [App\Http\Controllers\Admin\JenisUjianController::class, 'store'])->name('admin.jenis-ujian.store');
-            // Route::delete('/hapus/{id}', [App\Http\Controllers\Admin\PesertaUjianController::class, 'destroy'])->name('admin.peserta-ujian.delete');
+            Route::get('/{jenisUjian}/edit', [App\Http\Controllers\Admin\JenisUjianController::class, 'edit'])
+                ->name('admin.jenis-ujian.edit');
+            Route::patch('/{jenisUjian}', [App\Http\Controllers\Admin\JenisUjianController::class, 'update'])
+                ->name('admin.jenis-ujian.update');
             Route::delete('/delete/{id}', [App\Http\Controllers\Admin\JenisUjianController::class, 'destroy'])->name('admin.jenis-ujian.delete');
         });
 

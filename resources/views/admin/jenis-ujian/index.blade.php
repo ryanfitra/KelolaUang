@@ -23,7 +23,7 @@ JENIS UJIAN
     <div class="row">
         <div class="col-12">
             <div class="box box-outline-success bs-3 border-success">
-                {{-- <div class="box-header with-border d-flex justify-content-between"> --}}
+                <div class="box-header with-border d-flex justify-content-between">
                     {{-- <div class="d-flex justify-content-start">
                         <form action="{{route('univ.p-bayar')}}" method="get" id="semesterForm">
                             <select name="id_semester" id="id_semester" class="form-select"
@@ -35,23 +35,22 @@ JENIS UJIAN
                             </select>
                         </form>
                     </div> --}}
-                    {{-- <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end">
                         <button class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
                         data-bs-target="#createModal"><i class="fa fa-plus"></i> Tambah Data</button>
                         <span class="divider-line mx-1"></span>
-                        <button
+                        {{-- <button
                         type="button"
                         class="btn btn-primary waves-effect waves-light"
                         data-bs-toggle="modal"
                         data-bs-target="#uploadModal"
                     >
                     <i class="fa fa-upload me-2"></i>Upload Data
-                    </button>
+                    </button> --}}
                     </div>
                 </div>
-                @include('admin.peserta.create') --}}
-                {{-- @include('admin.peserta.edit') --}}
-                {{-- @include('admin.peserta.upload') --}}
+                @include('admin.jenis-ujian.create')
+                @include('admin.jenis-ujian.edit')
                 <div class="box-body">
                     <div class="table-responsive">
                         <table id="data" class="table table-hover table-bordered margin-top-10 w-p100">
@@ -88,10 +87,18 @@ JENIS UJIAN
                                 <td class="text-start align-middle">{{$d->posisi}}</td> --}}
                                 
                                 <td class="text-center align-middle">
-                                    {{-- <button class="btn btn-rounded bg-warning" title="Edit Data" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editRuang({{$d}}, {{$d->id}})">
+                                    {{-- <button class="btn btn-rounded bg-warning" title="Edit Data" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editButton({{$d}}, {{$d->id}})">
                                         <i class="fa fa-pencil-square-o"><span class="path1"></span><span class="path2"></span></i>
                                     </button> --}}
-                                    <button type="button" class="btn btn-rounded bg-danger my-2" title="Delete Data" onclick="deleteRuang({{$d->id}})">
+                                    <button class="btn btn-rounded bg-warning" 
+                                        title="Edit Data" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#editModal" 
+                                        onclick='editButton(@json($d), {{ $d->id }})'>
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-rounded bg-danger my-2" title="Delete Data" onclick="deleteButton({{$d->id}})">
                                         <i class="fa fa-trash"><span class="path1"></span><span class="path2"></span></i>
                                     </button>
                                     <form action="{{route('admin.jenis-ujian.delete', $d->id)}}" method="POST" id="delete-form-{{$d->id}}">
@@ -123,14 +130,15 @@ JENIS UJIAN
         $('#data').DataTable();
     });
 
-    function editRuang(data, id) {
-        document.getElementById('edit_status').value = data.status;
-        document.getElementById('edit_keterangan').value = data.keterangan;
-        // Populate other fields...
-        document.getElementById('editForm').action = '/universitas/p-bayar/update/' + id;
+    function editButton(data, id) {
+        // isi action form edit
+        document.getElementById('editForm').action = '/admin/jenis-ujian/' + id;
+
+        document.getElementById('edit_jenis_ujian').value = data.nama_ujian;
+        document.getElementById('edit_deskripsi').value = data.deskripsi;
     }
 
-    function deleteRuang(id) {
+    function deleteButton(id) {
         swal({
             title: 'Delete Data',
             text: "Apakah anda yakin ingin menghapus data?",

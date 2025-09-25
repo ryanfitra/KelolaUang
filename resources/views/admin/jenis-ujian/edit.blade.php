@@ -3,37 +3,44 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">
-                    Ubah Data
-                </h5>
+                <h5 class="modal-title" id="editModalLabel">Ubah Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" id="editForm">
                 @csrf
                 @method('patch')
+
                 <div class="modal-body">
+                    <!-- Nama Jenis Ujian -->
                     <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select name="status" id="edit_status" required class="form-select">
-                                <option value="" selected disabled>-- Pilih Status --</option>
-                                <option value="0">Diajukan</option>
-                                <option value="2">Disetujui Prodi</option>
-                                <option value="3">Disetujui Fakultas</option>
-                                <option value="4">Disetujui BAK</option>
-                                <option value="5">Ditolak</option>
-                            </select>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="edit_jenis_ujian" class="form-label">Nama Jenis Ujian</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="ti-pencil-alt"></i></span>
+                                    <input type="text" name="nama_ujian" id='edit_jenis_ujian' class="form-control"
+                                           required>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="keterangan" class="form-label">Keterangan</label>
-                        <textarea class="form-control" name="keterangan" id="edit_keterangan" rows="3"></textarea>
+
+                    <!-- Deskripsi -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="edit_deskripsi" class="form-label">Deskripsi</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="ti-receipt"></i></span>
+                                    <textarea name="deskripsi" id="edit_deskripsi" class="form-control" placeholder="Deskripsi"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Tutup
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

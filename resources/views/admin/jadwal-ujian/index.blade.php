@@ -82,23 +82,23 @@ JADWAL UJIAN
                                     {{ \Carbon\Carbon::parse($d->waktu_selesai_ujian)->format('d-m-Y (H:i)') }}
                                 </td>
                                 <td class="text-center align-middle">
-                                    {{ \Carbon\Carbon::parse($d->waktu_pengumuman)->format('d-m-Y (H:i)') }} - 
+                                    {{ \Carbon\Carbon::parse($d->waktu_pengumuman)->format('d-m-Y (H:i)') }}
                                 </td>
                                 
 
                                 <td class="text-center align-middle">
-                                    {{-- <button class="btn btn-rounded bg-warning" title="Edit Data" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editRuang({{$d}}, {{$d->id}})">
+                                    {{-- <button class="btn btn-rounded bg-warning" title="Edit Data" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editButton({{$d}}, {{$d->id}})">
                                         <i class="fa fa-pencil-square-o"><span class="path1"></span><span class="path2"></span></i>
                                     </button> --}}
                                     <button class="btn btn-rounded bg-warning" 
                                         title="Edit Data" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#editModal" 
-                                        onclick='editRuang(@json($d), {{ $d->id }})'>
+                                        onclick='editButton(@json($d), {{ $d->id }})'>
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
 
-                                    <button type="button" class="btn btn-rounded bg-danger my-2" title="Delete Data" onclick="deleteRuang({{$d->id}})">
+                                    <button type="button" class="btn btn-rounded bg-danger my-2" title="Delete Data" onclick="deleteButton({{$d->id}})">
                                         <i class="fa fa-trash"><span class="path1"></span><span class="path2"></span></i>
                                     </button>
                                     <form action="{{route('admin.jadwal-ujian.delete', $d->id)}}" method="POST" id="delete-form-{{$d->id}}">
@@ -130,21 +130,21 @@ JADWAL UJIAN
         $('#data').DataTable();
     });
 
-    function editRuang(data, id) {
-    // isi action form edit
-    document.getElementById('editForm').action = '/admin/jadwal-ujian/' + id;
+    function editButton(data, id) {
+        // isi action form edit
+        document.getElementById('editForm').action = '/admin/jadwal-ujian/' + id;
 
-    // isi field
-    document.getElementById('edit_jenis_ujian_id').value = data.jenis_ujian_id;
-    document.getElementById('edit_waktu_mulai_to').value = data.waktu_mulai_to.replace(' ', 'T');
-    document.getElementById('edit_waktu_selesai_to').value = data.waktu_selesai_to.replace(' ', 'T');
-    document.getElementById('edit_waktu_mulai_ujian').value = data.waktu_mulai_ujian.replace(' ', 'T');
-    document.getElementById('edit_waktu_selesai_ujian').value = data.waktu_selesai_ujian.replace(' ', 'T');
-    document.getElementById('edit_waktu_pengumuman').value = data.waktu_pengumuman.replace(' ', 'T');
-}
+        // isi field
+        document.getElementById('edit_jenis_ujian_id').value = data.jenis_ujian_id;
+        document.getElementById('edit_waktu_mulai_to').value = data.waktu_mulai_to.replace(' ', 'T');
+        document.getElementById('edit_waktu_selesai_to').value = data.waktu_selesai_to.replace(' ', 'T');
+        document.getElementById('edit_waktu_mulai_ujian').value = data.waktu_mulai_ujian.replace(' ', 'T');
+        document.getElementById('edit_waktu_selesai_ujian').value = data.waktu_selesai_ujian.replace(' ', 'T');
+        document.getElementById('edit_waktu_pengumuman').value = data.waktu_pengumuman.replace(' ', 'T');
+    }
 
 
-    function deleteRuang(id) {
+    function deleteButton(id) {
         swal({
             title: 'Delete Data',
             text: "Apakah anda yakin ingin menghapus data?",

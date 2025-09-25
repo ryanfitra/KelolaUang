@@ -32,7 +32,18 @@ class JenisUjianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'jenis_ujian' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        JenisUjian::create([
+            'nama_ujian' => $request->jenis_ujian,
+            'deskripsi' => $request->deskripsi
+        ]);
+
+        return redirect()->route('admin.jenis-ujian.index')
+                        ->with('success', 'Jenis ujian berhasil ditambahkan');
     }
 
     /**
@@ -46,24 +57,49 @@ class JenisUjianController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(JenisUjian $jenisUjian)
     {
-        //
+        // Cek apakah sudah ada peserta ujian
+        if ($jenisUjian->pesertaUjian->count() > 0) {
+            return redirect()->back()->with('error', 'Jadwal ujian sudah memiliki peserta, tidak bisa diedit.');
+        }
+
+        return view('admin.jadwal-ujian.edit', compact('jenisUjian'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, JenisUjian $jenisUjian)
     {
-        //
+        // Cek apakah sudah ada peserta ujian
+        if ($jenisUjian->pesertaUjian->count() > 0) {
+            return redirect()->back()->with('error', 'Jadwal ujian sudah memiliki peserta, tidak bisa diubah.');
+        }
+
+        $validated = $request->validate([
+            'nama_ujian' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        $jenisUjian->update($validated);
+
+        // dd($jenisUjian);
+
+        return redirect()->route('admin.jenis-ujian.index')->with('success', 'Data berhasil diubah.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        
+        $jenisUjian = JenisUjian::findOrFail($id);
+
+        // dd($jadwalUjian);
+        if ($jenisUjian->pesertaUjian->count() > 0) {
+            return redirect()->back()->with('error', 'Jenis ujian tidak bisa dihapus karena sudah memiliki peserta.');
+        }
+
+        $jenisUjian->delete();
+        return redirect()->back()->with('success', 'Jenis ujian berhasil dihapus.');
     }
 }

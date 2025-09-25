@@ -11,10 +11,8 @@ class PesertaUjian extends Model
     protected $fillable = [
         'user_id',
         'jenis_ujian_id',
-        // 'jadwal_ujian_id',
         'no_peserta',
         'status_ujian',
-        // tambahkan field lain yang boleh diisi mass assignment
     ];
 
     public function user()

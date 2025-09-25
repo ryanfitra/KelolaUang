@@ -7,6 +7,7 @@ use App\Models\PesertaUjian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Hash;
 
 class PendaftarController extends Controller
 {
@@ -26,8 +27,10 @@ class PendaftarController extends Controller
 
         PesertaUjian::updateOrCreate(
             ['user_id' => $user->id],
-            ['no_peserta' => $noPeserta],
-            ['jenis_ujian_id' => 1]
+            [
+                'no_peserta' => $noPeserta,
+                'jenis_ujian_id' => 1
+            ]
         );
 
         return redirect()->back()->with('success', 'Nomor peserta berhasil digenerate: ' . $noPeserta);
@@ -41,13 +44,78 @@ class PendaftarController extends Controller
             $noPeserta = date('Y') .'-'.str_pad($user->instansi_id, 2, '0', STR_PAD_LEFT).'-'.str_pad($user->posisi_id, 2, '0', STR_PAD_LEFT).'-'. str_pad($user->id, 4, '0', STR_PAD_LEFT);
 
             PesertaUjian::updateOrCreate(
-            ['user_id' => $user->id],
-            ['no_peserta' => $noPeserta],
-            ['jenis_ujian_id' => 1]
-        );
+                ['user_id' => $user->id],
+                [
+                    'no_peserta' => $noPeserta,
+                    'jenis_ujian_id' => 1
+                ]
+            );
         }
 
         return redirect()->back()->with('success', 'Nomor peserta berhasil digenerate untuk semua pendaftar.');
+    }
+
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        try {
+            $file = $request->file('file');
+
+            // Baca Excel langsung tanpa make:import
+            $rows = Excel::toArray([], $file);
+
+            foreach ($rows[0] as $index => $row) {
+                if ($index == 0) {
+                    // Skip header
+                    continue;
+                }
+
+                // Ambil nilai tanggal lahir dan jadikan password
+                $tanggal_lahir = $row[5] ?? null; // kolom ke-6: tanggal_lahir (YYYY-MM-DD)
+                $password = $tanggal_lahir ? str_replace('-', '', $tanggal_lahir) : '12345678';
+
+                User::create([
+                    'nama' => $row[0] ?? null,
+                    'nik' => $row[1] ?? null,
+                    'warga_negara' => $row[2] ?? null,
+                    'jenis_kelamin' => $row[3] ?? null,
+                    'tempat_lahir' => $row[4] ?? null,
+                    'tanggal_lahir' => $tanggal_lahir,
+                    'alamat' => $row[6] ?? null,
+                    'alamat_kelurahan_desa' => $row[7] ?? null,
+                    'kode_kelurahan_desa' => $row[8] ?? null,
+                    'alamat_kecamatan' => $row[9] ?? null,
+                    'kode_kecamatan' => $row[10] ?? null,
+                    'alamat_kabupaten_kota' => $row[11] ?? null,
+                    'kode_kabupaten_kota' => $row[12] ?? null,
+                    'alamat_provinsi' => $row[13] ?? null,
+                    'kode_provinsi' => $row[14] ?? null,
+                    'agama' => $row[15] ?? null,
+                    'no_wa' => $row[16] ?? null,
+                    'wa_sender' => $row[17] ?? null,
+                    'foto' => $row[18] ?? null,
+                    'pendidikan_terakhir' => $row[19] ?? null,
+                    'jurusan' => $row[20] ?? null,
+                    'sekolah_universitas' => $row[21] ?? null,
+                    'ijazah' => $row[22] ?? null,
+                    'posisi_id' => $row[23] ?? null,
+                    'posisi' => $row[24] ?? null,
+                    'instansi_id' => $row[25] ?? null,
+                    'tanggal_daftar' => $row[26] ?? null,
+                    'email' => $row[27] ?? null,
+                    'password' => Hash::make($password),
+                    'role' => $row[29] ?? 'peserta',
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Data berhasil diimport.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal import: ' . $e->getMessage());
+        }
     }
 
     // public function upload(Request $request)

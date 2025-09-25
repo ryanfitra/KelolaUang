@@ -6,6 +6,7 @@ use App\Models\JenisUjian;
 use App\Models\JadwalUjian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use App\Models\PesertaUjian;
 
 class JadwalUjianController extends Controller
@@ -30,26 +31,34 @@ class JadwalUjianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_ujian_id' => 'required|unique:jadwal_ujians,jenis_ujian_id',
-            'waktu_mulai_to' => 'required|date',
-            'waktu_selesai_to' => 'required|date|after:waktu_mulai_to',
-            'waktu_mulai_ujian' => 'required|date',
-            'waktu_selesai_ujian' => 'required|date|after:waktu_mulai_ujian',
-            'waktu_pengumuman' => 'required|date|after:waktu_selesai_ujian',
+            'jenis_ujian_id'     => 'required|unique:jadwal_ujians,jenis_ujian_id',
+            'waktu_mulai_to'     => 'required|date',
+            'waktu_selesai_to'   => 'required|date|after:waktu_mulai_to',
+            'waktu_mulai_ujian'  => 'required|date',
+            'waktu_selesai_ujian'=> 'required|date|after:waktu_mulai_ujian',
+            'waktu_pengumuman'   => 'required|date|after:waktu_selesai_ujian',
         ]);
 
-        JadwalUjian::create([
-            'jenis_ujian_id' => $request->jenis_ujian_id,
-            'waktu_mulai_to' => $request->waktu_mulai_to,
-            'waktu_selesai_to' => $request->waktu_selesai_to,
-            'waktu_mulai_ujian' => $request->waktu_mulai_ujian,
-            'waktu_selesai_ujian' => $request->waktu_selesai_ujian,
-            'waktu_pengumuman' => $request->waktu_pengumuman,
-        ]);
+        try {
+            JadwalUjian::create([
+                'jenis_ujian_id'     => $request->jenis_ujian_id,
+                'waktu_mulai_to'     => $request->waktu_mulai_to,
+                'waktu_selesai_to'   => $request->waktu_selesai_to,
+                'waktu_mulai_ujian'  => $request->waktu_mulai_ujian,
+                'waktu_selesai_ujian'=> $request->waktu_selesai_ujian,
+                'waktu_pengumuman'   => $request->waktu_pengumuman,
+            ]);
 
-        return redirect()->route('admin.jadwal-ujian.index')
-                        ->with('success', 'Jadwal ujian berhasil ditambahkan');
+            return redirect()->route('admin.jadwal-ujian.index')
+                            ->with('success', 'Jadwal ujian berhasil ditambahkan');
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') { // duplicate / constraint violation
+                return redirect()->back()->with('error', 'Jenis ujian tersebut sudah memiliki jadwal ujian.');
+            }
+            throw $e; // biarkan error lain ditangani Laravel
+        }
     }
+
 
 
     
@@ -82,7 +91,7 @@ class JadwalUjianController extends Controller
         }
 
         $validated = $request->validate([
-            'jenis_ujian_id' => 'required|exists:jenis_ujian,id',
+            'jenis_ujian_id' => 'required|exists:jenis_ujians,id',
             'waktu_mulai_to' => 'required|date',
             'waktu_selesai_to' => 'required|date|after:waktu_mulai_to',
             'waktu_mulai_ujian' => 'required|date',
@@ -90,10 +99,19 @@ class JadwalUjianController extends Controller
             'waktu_pengumuman' => 'required|date',
         ]);
 
-        $jadwalUjian->update($validated);
+        try {
+            $jadwalUjian->update($validated);
+            return redirect()->route('admin.jadwal-ujian.index')->with('success', 'Data berhasil diubah.');
+        } catch (QueryException $e) {
+            // Cek apakah error karena duplicate entry
+            if ($e->errorInfo[1] == 1062) {
+                return redirect()->back()->with('error', 'Jenis ujian ini sudah memiliki jadwal, silakan pilih jenis ujian lain.');
+            }
 
-        return redirect()->route('admin.jadwal-ujian.index')->with('success', 'Data berhasil diubah.');
-    }
+            // Kalau error lain, lempar kembali
+            throw $e;
+        }
+}
 
 
 
