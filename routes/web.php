@@ -67,6 +67,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/delete/{id}', [App\Http\Controllers\Admin\PesertaUjianController::class, 'destroy'])->name('admin.peserta-ujian.delete');
         });
 
+        Route::prefix('jabatan')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\JabatanController::class, 'index'])->name('admin.jabatan.index');
+            Route::get('/create', [App\Http\Controllers\Admin\JabatanController::class, 'create'])->name('admin.jabatan.tambah');
+            Route::post('/store', [App\Http\Controllers\Admin\JabatanController::class, 'store'])->name('admin.jabatan.store');
+            Route::get('/{jabatan}/edit', [App\Http\Controllers\Admin\JabatanController::class, 'edit'])->name('admin.jabatan.edit');
+            Route::patch('/{jabatan}', [App\Http\Controllers\Admin\JabatanController::class, 'update'])->name('admin.jabatan.update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\Admin\JabatanController::class, 'destroy'])->name('admin.jabatan.delete');
+        });
+
     });
     
 

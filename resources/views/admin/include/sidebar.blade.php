@@ -93,9 +93,19 @@
 				  </ul>
 				</li>	 
 
+				<li class="{{request()->routeIs('admin.jabatan.*') ? 'active' : ''}}">
+					<a href="{{route('admin.jabatan.index')}}">
+						<i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+						<span>Jabatan</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-right pull-right"></i>
+						</span>
+					</a>
+				</li>
+
 				
 				
-				<li class="header">Components & UI </li>
+				{{-- <li class="header">Components & UI </li>
 				<li class="treeview">
 				  <a href="#">
 					<i class="icon-Write"><span class="path1"></span><span class="path2"></span></i>
@@ -173,7 +183,9 @@
 						</ul>
 					</li>  
 				  </ul>
-				</li>	     
+				</li>	      --}}
+
+
 			  </ul>
 		  </div>
 		</div>
