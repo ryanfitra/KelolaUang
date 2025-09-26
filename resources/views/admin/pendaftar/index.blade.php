@@ -52,11 +52,12 @@ DAFTAR PENDAFTAR
                           <thead>
                              <tr>
                                 <th class="text-center align-middle">No</th>
-                                <th class="text-center align-middle">Nama</th>
+                                <th class="text-start align-middle">Nama</th>
                                 <th class="text-center align-middle">Nomer Identitas</th>
-                                <th class="text-center align-middle">Jenis Kelamin</th>
+                                <th class="text-start align-middle">Jenis Kelamin</th>
                                 <th class="text-center align-middle">No. HP</th>
-                                <th class="text-center align-middle">Posisi yang Dilamar</th>
+                                <th class="text-start align-middle">Email</th>
+                                <th class="text-start align-middle">Posisi yang Dilamar</th>
                                 <th class="text-center align-middle">Aksi</th>
                              </tr>
                           </thead>
@@ -64,9 +65,9 @@ DAFTAR PENDAFTAR
                             @foreach ($pendaftar as $d)
                             <tr>
                                 <td class="text-center align-middle">{{$loop->iteration}}</td>
-                                <td class="text-center align-middle">{{$d->nama}}</td>
+                                <td class="text-start align-middle">{{$d->nama}}</td>
                                 <td class="text-center align-middle">{{$d->nik}}</td>
-                                <td class="text-center align-middle">
+                                <td class="text-start align-middle">
                                     @if($d->jenis_kelamin == 'L')
                                         Laki-laki
                                     @elseif($d->jenis_kelamin == 'P')
@@ -79,6 +80,7 @@ DAFTAR PENDAFTAR
                                 </td>
 
                                 <td class="text-center align-middle">{{$d->no_wa}}</td>
+                                <td class="text-start align-middle">{{$d->email}}</td>
                                 <td class="text-start align-middle">{{$d->posisi}}</td>
                                 
                                 <td class="text-center align-middle">

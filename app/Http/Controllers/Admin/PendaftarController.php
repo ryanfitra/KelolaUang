@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\PesertaUjian;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class PendaftarController extends Controller
 {
@@ -59,65 +61,105 @@ class PendaftarController extends Controller
     public function upload(Request $request)
     {
         $instansiId = Auth::user()->instansi_id;
-        
+
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
+        $gagalImport = []; // penampung nama yang gagal
+
+        ini_set('max_execution_time', 300);
+
         try {
             $file = $request->file('file');
-
-            // Baca Excel langsung tanpa make:import
             $rows = Excel::toArray([], $file);
 
             foreach ($rows[0] as $index => $row) {
-                if ($index == 0) {
-                    // Skip header
-                    continue;
+                if ($index == 0) continue; // skip header
+
+                try {
+                    // Ambil nilai tanggal lahir untuk password
+                    $tanggal_lahir = $this->parseTanggal($row[5]) ?? null;
+                    $password = $tanggal_lahir ? str_replace('-', '', $tanggal_lahir) : '12345678';
+
+                    User::create([
+                        'nama' => isset($row[0]) ? strtoupper($row[0]) : null,
+                        'nik' => $row[1] ?? null,
+                        'warga_negara' => $row[2] ?? null,
+                        'jenis_kelamin' => $row[3] ?? null,
+                        'tempat_lahir' => isset($row[4]) ? strtoupper($row[4]) : null,
+                        'tanggal_lahir' => $tanggal_lahir,
+                        'alamat' => isset($row[6]) ? strtoupper($row[6]) : null,
+                        'alamat_kelurahan_desa' => isset($row[7]) ? strtoupper($row[7]) : null,
+                        'kode_kelurahan_desa' => $row[8] ?? null,
+                        'alamat_kecamatan' => isset($row[9]) ? strtoupper($row[9]) : null,
+                        'kode_kecamatan' => $row[10] ?? null,
+                        'alamat_kabupaten_kota' => isset($row[11]) ? strtoupper($row[11]) : null,
+                        'kode_kabupaten_kota' => $row[12] ?? null,
+                        'alamat_provinsi' => isset($row[13]) ? strtoupper($row[13]) : null,
+                        'kode_provinsi' => $row[14] ?? null,
+                        'agama' => $row[15] ?? null,
+                        'no_wa' => $row[16] ?? null,
+                        'wa_sender' => $row[17] ?? null,
+                        'foto' => $row[18] ?? null,
+                        'pendidikan_terakhir' => $row[19] ?? null,
+                        'jurusan' => isset($row[20]) ? strtoupper($row[20]) : null,
+                        'sekolah_universitas' => isset($row[21]) ? strtoupper($row[21]) : null,
+                        'ijazah' => $row[22] ?? null,
+                        'posisi_id' => $row[23] ?? null,
+                        'posisi' => isset($row[24]) ? strtoupper($row[24]) : null,
+                        'instansi_id' => $instansiId,
+                        'tanggal_daftar' => $this->parseTanggal($row[25]) ?? null,
+                        'email' => $row[26] ?? null,
+                        'password' => Hash::make($password),
+                        'role' => $row[27] ?? 'peserta',
+                    ]);
+
+                } catch (\Exception $e) {
+                    // Kalau gagal import, simpan nama untuk ditampilkan
+                    $gagalImport[] = $row[0] ?? "Baris ke-".($index+1);
+                    continue; // lanjut ke baris berikutnya
                 }
-
-                // Ambil nilai tanggal lahir dan jadikan password
-                $tanggal_lahir = $row[5] ?? null; // kolom ke-6: tanggal_lahir (YYYY-MM-DD)
-                $password = $tanggal_lahir ? str_replace('-', '', $tanggal_lahir) : '12345678';
-
-                User::create([
-                    'nama' => $row[0] ?? null,
-                    'nik' => $row[1] ?? null,
-                    'warga_negara' => $row[2] ?? null,
-                    'jenis_kelamin' => $row[3] ?? null,
-                    'tempat_lahir' => $row[4] ?? null,
-                    'tanggal_lahir' => $tanggal_lahir,
-                    'alamat' => $row[6] ?? null,
-                    'alamat_kelurahan_desa' => $row[7] ?? null,
-                    'kode_kelurahan_desa' => $row[8] ?? null,
-                    'alamat_kecamatan' => $row[9] ?? null,
-                    'kode_kecamatan' => $row[10] ?? null,
-                    'alamat_kabupaten_kota' => $row[11] ?? null,
-                    'kode_kabupaten_kota' => $row[12] ?? null,
-                    'alamat_provinsi' => $row[13] ?? null,
-                    'kode_provinsi' => $row[14] ?? null,
-                    'agama' => $row[15] ?? null,
-                    'no_wa' => $row[16] ?? null,
-                    'wa_sender' => $row[17] ?? null,
-                    'foto' => $row[18] ?? null,
-                    'pendidikan_terakhir' => $row[19] ?? null,
-                    'jurusan' => $row[20] ?? null,
-                    'sekolah_universitas' => $row[21] ?? null,
-                    'ijazah' => $row[22] ?? null,
-                    'posisi_id' => $row[23] ?? null,
-                    'posisi' => $row[24] ?? null,
-                    'instansi_id' => $instansiId,
-                    'tanggal_daftar' => $row[26] ?? null,
-                    'email' => $row[27] ?? null,
-                    'password' => Hash::make($password),
-                    'role' => $row[29] ?? 'peserta',
-                ]);
             }
+
+            if (count($gagalImport) > 0) {
+                return redirect()->back()->with('error', 
+                    'Beberapa data gagal diimport: '.implode(', ', $gagalImport)
+                );
+            }
+
             return redirect()->back()->with('success', 'Data berhasil diimport.');
+
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal import: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal import: '.$e->getMessage());
         }
     }
+
+
+    private function parseTanggal($value)
+    {
+        if (empty($value)) {
+            return null; // kalau kosong, langsung null
+        }
+
+        // Jika numeric (format date bawaan Excel)
+        if (is_numeric($value)) {
+            try {
+                return Carbon::instance(Date::excelToDateTimeObject($value))
+                            ->format('Y-m-d');
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+
+        // Jika string (manual input "2023-09-25" atau "25/09/2023")
+        try {
+            return Carbon::parse($value)->format('Y-m-d');
+        } catch (\Exception $e) {
+            return null; // kalau gagal parse, jangan bikin error
+        }
+    }
+
 
     // public function upload(Request $request)
     // {
