@@ -6,8 +6,9 @@ use App\Models\User;
 use App\Models\PesertaUjian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PendaftarController extends Controller
 {
@@ -58,6 +59,8 @@ class PendaftarController extends Controller
 
     public function upload(Request $request)
     {
+        $instansiId = Auth::user()->instansi_id;
+        
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
@@ -104,7 +107,7 @@ class PendaftarController extends Controller
                     'ijazah' => $row[22] ?? null,
                     'posisi_id' => $row[23] ?? null,
                     'posisi' => $row[24] ?? null,
-                    'instansi_id' => $row[25] ?? null,
+                    'instansi_id' => $instansiId,
                     'tanggal_daftar' => $row[26] ?? null,
                     'email' => $row[27] ?? null,
                     'password' => Hash::make($password),

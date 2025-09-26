@@ -37,6 +37,19 @@ Lamaran Peserta
         </div>
         <div class="col-12">
             <div class="box bt-5 border-danger rounded mb-3">
+                @if(empty($detailPeserta['ujian']))
+                <div class="box-body">
+                    <h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>
+                    <p class="subtitle mb-20">{{ $data_peserta->instansi->nama_instansi }}</p>
+                    <div class="clearfix">
+                        <div class="alert alert-warning" role="alert">
+                            <h4 class="alert-heading">Info!</h4>
+                            <p>Belum ada jadwal ujian yang tersedia untuk Anda saat ini. Silakan hubungi administrator atau
+                                pihak terkait untuk informasi lebih lanjut.</p>
+                        </div>  
+                    </div>
+                </div>
+                @else
                 <div class="box-body">
                     <h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>
                     <p class="subtitle mb-20">{{ $data_peserta->instansi->nama_instansi }}</p>
@@ -86,39 +99,43 @@ Lamaran Peserta
 
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
 </section>
 @endsection
 @push('scripts')
-<script>
-    var targetDate = new Date("{{ $pengumuman->format('Y-m-d H:i:s') }}").getTime();
+@if(!empty($detailPeserta['ujian']))
+    <script>
+        var targetDate = new Date("{{ $pengumuman->format('Y-m-d H:i:s') }}").getTime();
 
-    var x = setInterval(function() {
-        var now = new Date().getTime();
-        var distance = targetDate - now;
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = targetDate - now;
 
-        if (distance <= 0) {
-            clearInterval(x);
-            document.getElementById("days").innerHTML    = "0";
-            document.getElementById("hours").innerHTML   = "0";
-            document.getElementById("minutes").innerHTML = "0";
-            document.getElementById("seconds").innerHTML = "0";
-            return;
-        }
+            if (distance <= 0) {
+                clearInterval(x);
+                document.getElementById("days").innerHTML    = "0";
+                document.getElementById("hours").innerHTML   = "0";
+                document.getElementById("minutes").innerHTML = "0";
+                document.getElementById("seconds").innerHTML = "0";
+                return;
+            }
 
-        var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("days").innerHTML    = days;
-        document.getElementById("hours").innerHTML   = hours;
-        document.getElementById("minutes").innerHTML = minutes;
-        document.getElementById("seconds").innerHTML = seconds;
-    }, 1000);
-</script>
+            document.getElementById("days").innerHTML    = days;
+            document.getElementById("hours").innerHTML   = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+        }, 1000);
+    </script>
+@endif
+
 {{-- <script>
    window.detailPeserta = @json($detailPeserta);
 

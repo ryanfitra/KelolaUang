@@ -80,7 +80,7 @@
         @else
           <div class="alert  text-center">
             <strong class="text-warning">MOHON MAAF!</strong><br>
-            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> dan tidak dapat melanjutkan ke ujian berikutnya
+            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>dan tidak dapat melanjutkan ke ujian berikutnya
           </div>
           
           <p class="text-center">

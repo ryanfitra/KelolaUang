@@ -25,6 +25,8 @@ class LamaranController extends Controller
             'pesertaUjian.jenisUjian'
         );
 
+        // dd($data_peserta);
+
         $user_id = $data_peserta->id;
 
         $today = Carbon::now();
@@ -38,6 +40,7 @@ class LamaranController extends Controller
             'posisi' => $data_peserta->posisi,
             'instansi' => $data_peserta->instansi,
         ];
+        
 
         $detailPeserta['ujian'] = [];
 
@@ -68,7 +71,7 @@ class LamaranController extends Controller
             }
 
             $format_nama = strtoupper(str_replace(' ', '_', $detailPeserta['nama']));
-
+// dd($detailPeserta['ujian']);
             $detailPeserta['ujian'][] = [
                 'jenis_ujian_id' => $jadwal->jenis_ujian_id,
                 'no_peserta'     => $pesertaUjian->no_peserta ?? '-',

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\DaftarInstansi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\QueryException;
 
 class JabatanController extends Controller
@@ -99,6 +100,58 @@ class JabatanController extends Controller
             throw $e;
         }
     }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        $path = $request->file('file')->getRealPath();
+        $rows = \PhpOffice\PhpSpreadsheet\IOFactory::load($path)
+                ->getActiveSheet()
+                ->toArray();
+
+        $instansiId = Auth::user()->instansi_id; // instansi sesuai user login
+        $inserted = [];
+        $skipped  = [];
+
+        foreach (array_slice($rows, 1) as $row) {
+            $namaJabatan = trim($row[0]);
+            $keterangan  = $row[2] ?? null;
+
+            if (empty($namaJabatan)) {
+                continue; // skip baris kosong
+            }
+
+            // 🔎 Cek apakah jabatan sudah ada di instansi yang sama
+            $exists = Jabatan::where('nama_jabatan', $namaJabatan)
+                        ->where('instansi_id', $instansiId)
+                        ->exists();
+
+            if ($exists) {
+                $skipped[] = $namaJabatan;
+                continue; // lewati jika sudah ada
+            }
+
+            // Simpan jabatan baru
+            Jabatan::create([
+                'nama_jabatan' => $namaJabatan,
+                'instansi_id'  => $instansiId,
+                'keterangan'   => $keterangan,
+            ]);
+
+            $inserted[] = $namaJabatan;
+        }
+
+        return redirect()->back()->with([
+            'success' => count($inserted) . ' jabatan berhasil ditambahkan',
+            'warning' => count($skipped) > 0 
+                            ? 'Beberapa jabatan dilewati karena sudah ada: ' . implode(', ', $skipped)
+                            : null,
+        ]);
+    }
+
 
 
 

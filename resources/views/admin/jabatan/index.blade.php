@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 @section('title')
-JADWAL UJIAN
+JABATAN
 @endsection
 @section('content')
 @include('swal')
 <div class="content-header">
     <div class="d-flex align-items-center">
         <div class="me-auto">
-            <h3 class="page-title">DAFTAR JADWAL UJIAN</h3>
+            <h3 class="page-title">DAFTAR JABATAN</h3>
             <div class="d-inline-block align-items-center">
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Jadwal Ujian</li>
+                        <li class="breadcrumb-item active" aria-current="page">Jabatan</li>
                     </ol>
                 </nav>
             </div>
@@ -39,19 +39,19 @@ JADWAL UJIAN
                         <button class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
                         data-bs-target="#createModal"><i class="fa fa-plus"></i> Tambah Data</button>
                         <span class="divider-line mx-1"></span>
-                        {{-- <button
-                        type="button"
-                        class="btn btn-primary waves-effect waves-light"
-                        data-bs-toggle="modal"
-                        data-bs-target="#uploadModal"
-                    >
-                    <i class="fa fa-upload me-2"></i>Upload Data
-                    </button> --}}
+                        <button
+                            type="button"
+                            class="btn btn-primary waves-effect waves-light"
+                            data-bs-toggle="modal"
+                            data-bs-target="#uploadModal"
+                            >
+                            <i class="fa fa-upload me-2"></i>Upload Data
+                        </button>
                     </div>
                 </div>
                 @include('admin.jabatan.create')
                 @include('admin.jabatan.edit')
-                {{-- @include('admin.jadwal-ujian.upload') --}}
+                @include('admin.jabatan.upload')
                 
                 <div class="box-body">
                     <div class="table-responsive">

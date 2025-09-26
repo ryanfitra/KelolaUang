@@ -73,6 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/store', [App\Http\Controllers\Admin\JabatanController::class, 'store'])->name('admin.jabatan.store');
             Route::get('/{jabatan}/edit', [App\Http\Controllers\Admin\JabatanController::class, 'edit'])->name('admin.jabatan.edit');
             Route::patch('/{jabatan}', [App\Http\Controllers\Admin\JabatanController::class, 'update'])->name('admin.jabatan.update');
+            Route::post('/upload', [App\Http\Controllers\Admin\JabatanController::class, 'upload'])->name('admin.jabatan.upload');
             Route::delete('/delete/{id}', [App\Http\Controllers\Admin\JabatanController::class, 'destroy'])->name('admin.jabatan.delete');
         });
 
