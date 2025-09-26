@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Pastikan kolom sudah ada sebelum ditambahkan unique
+            if (Schema::hasColumn('users', 'nik')) {
+                $table->unique('nik');
+            }
             if (Schema::hasColumn('users', 'no_wa')) {
                 $table->unique('no_wa');
             }
@@ -25,6 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropUnique(['nik']);
             $table->dropUnique(['no_wa']);
         });
     }

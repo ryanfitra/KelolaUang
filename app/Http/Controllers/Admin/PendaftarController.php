@@ -52,7 +52,6 @@ class PendaftarController extends Controller
                 ]
             );
         }
-
         return redirect()->back()->with('success', 'Nomor peserta berhasil digenerate untuk semua pendaftar.');
     }
 
@@ -114,7 +113,6 @@ class PendaftarController extends Controller
                     'role' => $row[29] ?? 'peserta',
                 ]);
             }
-
             return redirect()->back()->with('success', 'Data berhasil diimport.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal import: ' . $e->getMessage());
