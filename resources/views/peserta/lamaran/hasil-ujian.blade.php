@@ -64,7 +64,7 @@
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
             <strong>SELAMAT!</strong><br>
-            Anda dinyatakan <span class="text-success"><strong>LOLOS</strong></span> dan dapat melanjutkan ke ujian berikutnya
+            Anda dinyatakan <span class="text-success"><strong>LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>
           </div>
 
           <p class="text-center">
@@ -72,15 +72,15 @@
             {{-- Anda menempati nomor urut <strong>12</strong>  --}}
           </p>
           <p class="text-center">
-            Dengan ini Anda dapat melanjutkan ke tahap berikutnya: <br>
-            <strong>
+            Dengan ini Anda dapat melanjutkan ke tahap berikutnya
+            {{-- <strong>
               {{ isset($data_peserta->pesertaUjian[$i+1]) ? $data_peserta->pesertaUjian[$i+1]->jenisUjian->nama_ujian : '-' }}
-            </strong>
+            </strong> --}}
           </p>
         @else
           <div class="alert  text-center">
             <strong class="text-warning">MOHON MAAF!</strong><br>
-            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>dan tidak dapat melanjutkan ke ujian berikutnya
+            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>
           </div>
           
           <p class="text-center">

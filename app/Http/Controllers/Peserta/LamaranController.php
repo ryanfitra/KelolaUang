@@ -86,6 +86,8 @@ class LamaranController extends Controller
             ];
         }
 
+        // dd($data_peserta, $detailPeserta);
+
         // dd($detailPeserta['ujian'], $jadwal->waktu_mulai_to, $today, $data_peserta );
 
         

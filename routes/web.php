@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/tambah', [App\Http\Controllers\Admin\PesertaUjianController::class, 'tambah'])->name('admin.peserta-ujian.tambah');
             Route::post('/store', [App\Http\Controllers\Admin\PesertaUjianController::class, 'store'])->name('admin.peserta-ujian.store');
             // Route::delete('/hapus/{id}', [App\Http\Controllers\Admin\PesertaUjianController::class, 'destroy'])->name('admin.peserta-ujian.delete');
+            Route::post('/upload', [App\Http\Controllers\Admin\PesertaUjianController::class, 'upload'])->name('admin.peserta-ujian.status.upload');
             Route::delete('/delete/{id}', [App\Http\Controllers\Admin\PesertaUjianController::class, 'destroy'])->name('admin.peserta-ujian.delete');
         });
 

@@ -23,35 +23,28 @@ DAFTAR PESERTA
     <div class="row">
         <div class="col-12">
             <div class="box box-outline-success bs-3 border-success">
-                {{-- <div class="box-header with-border d-flex justify-content-between"> --}}
-                    {{-- <div class="d-flex justify-content-start">
-                        <form action="{{route('univ.p-bayar')}}" method="get" id="semesterForm">
-                            <select name="id_semester" id="id_semester" class="form-select"
-                                onchange="document.getElementById('semesterForm').submit();">
-                                <option value="">-- Pilih Semester --</option>
-                                @foreach ($semester as $s)
-                                <option value="{{$s->id_semester}}" {{ request('id_semester') == $s->id_semester ? 'selected' : '' }}>{{$s->nama_semester}}</option>
-                                @endforeach
-                            </select>
+                <div class="box-header with-border d-flex justify-content-between">
+                    {{-- Tombol Generate Nomor Peserta --}}
+                    {{-- <div class="mb-0">
+                        <form action="{{ route('admin.pendaftar.generateAll') }}" method="POST" id="generateAllForm">
+                            @csrf
+                            <button type="button" class="btn btn-primary" onclick="generateAllPeserta()">
+                                <i class="fa fa-id-card me-1"></i> Generate Nomor Peserta
+                            </button>
                         </form>
                     </div> --}}
-                    {{-- <div class="d-flex justify-content-end">
-                        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
-                        data-bs-target="#createModal"><i class="fa fa-plus"></i> Tambah Data</button>
-                        <span class="divider-line mx-1"></span>
+                    <span class="divider-line mx-1"></span>
                         <button
                         type="button"
-                        class="btn btn-primary waves-effect waves-light"
+                        class="btn btn-success waves-effect waves-light"
                         data-bs-toggle="modal"
                         data-bs-target="#uploadModal"
                     >
                     <i class="fa fa-upload me-2"></i>Upload Data
                     </button>
-                    </div>
+                    {{-- </div> --}}
                 </div>
-                @include('admin.pendaftar.create') --}}
-                {{-- @include('admin.pendaftar.edit') --}}
-                {{-- @include('admin.pendaftar.upload') --}}
+                @include('admin.peserta-ujian.upload')
                 <div class="box-body">
                     <div class="table-responsive">
                         <table id="data" class="table table-hover table-bordered margin-top-10 w-p100">

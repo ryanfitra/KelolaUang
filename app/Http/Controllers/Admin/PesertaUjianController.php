@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-// use App\Models\Semester;
 use Illuminate\Http\Request;
-// use App\Models\SemesterAktif;
-// use App\Models\PenundaanBayar;
-// use App\Models\Mahasiswa\LulusDo;
 use App\Http\Controllers\Controller;
 use App\Models\PesertaUjian;
 use Maatwebsite\Excel\Facades\Excel;
-// use App\Imports\PenundaanBayarImport;
-// use App\Models\Mahasiswa\RiwayatPendidikan;
+use Illuminate\Support\Facades\Log;
 
 class PesertaUjianController extends Controller
 {
@@ -42,55 +37,102 @@ class PesertaUjianController extends Controller
         return redirect()->route('admin.peserta-ujian.index')->with('success', 'Status verifikasi berhasil diperbarui.');
     }
 
-    // public function upload(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'file' => 'required|mimes:xls,xlsx'
-    //     ]);
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
 
-    //     $file = $request->file('file');
-    //     $import = Excel::import(new PenundaanBayarImport(), $file);
+        $file = $request->file('file');
 
-    //     return redirect()->back()->with('success', "Data successfully imported!");
-    // }
+        try {
+            $rows = Excel::toArray([], $file)[0]; // ambil sheet pertama
+            $berhasil = 0;
+            $gagal = [];
 
-    // public function store(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'id_registrasi_mahasiswa' => 'required|exists:riwayat_pendidikans,id_registrasi_mahasiswa',
-    //         'status' => 'required|in:0,2,3,4,5',
-    //         'keterangan' => 'nullable',
-    //     ]);
+            // dd($rows);
 
-    //     $check = LulusDo::where('id_registrasi_mahasiswa', $data['id_registrasi_mahasiswa'])->first();
+            foreach ($rows as $index => $row) {
+                if ($index == 0) continue; // lewati header
 
-    //     if ($check) {
-    //         return redirect()->back()->with('error', 'Mahasiswa sudah ada pada data Lulus Do Feeder!!');
-    //     }
-    //     $data['id_semester'] = SemesterAktif::first()->id_semester;
-    //     $data['nim'] = RiwayatPendidikan::where('id_registrasi_mahasiswa', $data['id_registrasi_mahasiswa'])->first()->nim;
+                try {
+                    $no_peserta  = trim($row[0] ?? '');
+                    $jenis_ujian_id = trim($row[1] ?? '');
+                    $status_ujian   = trim($row[2] ?? '');
 
-    //     PenundaanBayar::create($data);
+                    // dd($no_peserta, $jenis_ujian_id, $status_ujian);    
 
-    //     return redirect()->back()->with('success', 'Data berhasil disimpan');
-    // }
+                    $check = PesertaUjian::where('no_peserta', $no_peserta)
+                        ->where('jenis_ujian_id', $jenis_ujian_id)
+                        ->first();
 
-    // public function update(PenundaanBayar $penundaan, Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'status' => 'required|in:0,2,3,4,5',
-    //         'keterangan' => 'nullable',
-    //     ]);
+                    // dd($check);
+                    if (!$no_peserta || !$jenis_ujian_id || !$status_ujian) {
+                        $gagal[] = [
+                            'baris' => $index + 1,
+                            'no_peserta' => $no_peserta,
+                            'jenis_ujian_id' => $jenis_ujian_id,
+                            'status_ujian' => $status_ujian,
+                            'keterangan' => 'Data tidak lengkap',
+                        ];
+                        continue;
+                    }
 
-    //     $restrict = ['4', '5'];
-    //     if (in_array($penundaan->status, $restrict)) {
-    //         return redirect()->back()->with('error', 'Data tidak bisa diubah');
-    //     }
+                    $peserta = $update = PesertaUjian::where('no_peserta', $no_peserta)
+                        ->where('jenis_ujian_id', $jenis_ujian_id)->first();
 
-    //     $penundaan->update($data);
+                    // dd($peserta);
+                    if (!$peserta) {
+                        $gagal[] = [
+                            'baris' => $index + 1,
+                            'no_peserta' => $no_peserta,
+                            'jenis_ujian_id' => $jenis_ujian_id,
+                            'status_ujian' => $status_ujian,
+                            'keterangan' => 'Nomor peserta tidak ditemukan',
+                        ];
+                        continue;
+                    }
 
-    //     return redirect()->back()->with('success', 'Data berhasil diubah');
-    // }
+                    // Update status ujian
+                    $update = PesertaUjian::where('no_peserta', $no_peserta)
+                        ->where('jenis_ujian_id', $jenis_ujian_id)
+                        ->update(['status_ujian' => $status_ujian]);
+
+                    if ($update) {
+                        $berhasil++;
+                    } else {
+                        $gagal[] = [
+                            'baris' => $index + 1,
+                            'no_peserta' => $no_peserta,
+                            'jenis_ujian_id' => $jenis_ujian_id,
+                            'status_ujian' => $status_ujian,
+                            'keterangan' => 'Peserta ujian tidak ditemukan',
+                        ];
+                    }
+                } catch (\Exception $e) {
+                    // tangani error per baris agar tidak hentikan seluruh proses
+                    $gagal[] = [
+                        'baris' => $index + 1,
+                        'no_peserta' => $row[0] ?? '',
+                        'jenis_ujian_id' => $row[1] ?? '',
+                        'status_ujian' => $row[2] ?? '',
+                        'keterangan' => 'Error: ' . $e->getMessage(),
+                    ];
+                    Log::error('Gagal import baris ' . ($index + 1) . ': ' . $e->getMessage());
+                    continue;
+                }
+            }
+
+            return redirect()->back()->with([
+                'success' => "$berhasil data berhasil diperbarui.",
+                'gagal' => $gagal
+            ]);
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memproses file: ' . $e->getMessage());
+        }
+    }
+
 
     public function destroy(User $peserta)
     {

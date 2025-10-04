@@ -15,9 +15,9 @@ Lamaran Peserta
                         <div class="row">
                             <div class="col-12 col-xl-7">
                                 <h2>Welcome back, <strong>{{ auth()->user()->nama }}!</strong></h2>
-                                <p class="text-dark my-10 fs-16">
+                                {{-- <p class="text-dark my-10 fs-16">
                                     Lamaran Peserta <strong class="text-warning">very good!</strong>
-                                </p>
+                                </p> --}}
                             </div>
                             <div class="col-12 col-xl-5"></div>
                         </div>

@@ -34,7 +34,7 @@
 					</a>
 				</li>
 				
-				<li class="header">Components & UI </li>
+				{{-- <li class="header">Components & UI </li>
 				<li class="treeview">
 				  <a href="#">
 					<i class="icon-Write"><span class="path1"></span><span class="path2"></span></i>
@@ -112,7 +112,7 @@
 						</ul>
 					</li>  
 				  </ul>
-				</li>	     
+				</li>	      --}}
 			  </ul>
 		  </div>
 		</div>
