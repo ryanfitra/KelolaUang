@@ -32,7 +32,7 @@ class PendaftarController extends Controller
             ['user_id' => $user->id],
             [
                 'no_peserta' => $noPeserta,
-                'jenis_ujian_id' => 1
+                'jadwal_ujian_id' => 1
             ]
         );
 
@@ -50,7 +50,7 @@ class PendaftarController extends Controller
                 ['user_id' => $user->id],
                 [
                     'no_peserta' => $noPeserta,
-                    'jenis_ujian_id' => 1,
+                    'jadwal_ujian_id' => 1,
                     'status_ujian' => 'Lulus'
                 ]
             );
