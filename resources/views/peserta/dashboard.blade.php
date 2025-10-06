@@ -11,7 +11,7 @@
           <div class="card bg-primary text-white shadow-sm mb-4">
               <div class="card-body">
                   <h3>Selamat Datang, <strong>{{ auth()->user()->nama }}</strong> 🎉</h3>
-                  <p class="mb-0">Selamat mengikuti <strong>Computer Based Test Universitas Sriwijaya</strong>.</p>
+                  {{-- <p class="mb-0">Selamat mengikuti <strong>Computer Based Test Universitas Sriwijaya</strong>.</p> --}}
               </div>
           </div>
       </div>
