@@ -22,7 +22,7 @@
       <div class="col-md-4">
           <div class="card shadow-sm border-left-primary">
               <div class="card-body text-center">
-                  <h5 class="text-muted">Total Ujian</h5>
+                  <h5 class="text-muted">Tahapan Seleksi</h5>
                   <h2 class="fw-bold">{{ count($jadwal_ujian ?? []) }}</h2>
               </div>
           </div>
@@ -30,7 +30,7 @@
       <div class="col-md-4">
           <div class="card shadow-sm border-left-success">
               <div class="card-body text-center">
-                  <h5 class="text-muted">Ujian Selesai</h5>
+                  <h5 class="text-muted">Tahapan Selesai</h5>
                   <h2 class="fw-bold text-success">
                     {{ collect($detailPeserta['ujian'])->where('status_ujian','!=',null)->count() }}
                   </h2>
@@ -40,7 +40,7 @@
       <div class="col-md-4">
           <div class="card shadow-sm border-left-warning">
               <div class="card-body text-center">
-                  <h5 class="text-muted">Ujian Aktif</h5>
+                  <h5 class="text-muted">Tahapan Aktif</h5>
                   <h2 class="fw-bold text-warning">
                     {{ collect($detailPeserta['ujian'])->where('status_ujian',null)->count() }}
                   </h2>
