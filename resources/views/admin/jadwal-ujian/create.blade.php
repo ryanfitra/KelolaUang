@@ -24,6 +24,18 @@
                             </select>
                         </div>
 
+                        <!-- Sesi Ujian -->
+                        <div class="col-md-12 mb-3">
+                            <label for="sesi" class="form-label">Jenis Ujian</label>
+                            <select name="sesi" id="sesi" required class="form-select">
+                                <option value="" selected disabled>-- Pilih Jenis Ujian --</option>
+                                    <option value="1">Sesi 1</option>
+                                    <option value="2">Sesi 2</option>
+                                    <option value="3">Sesi 3</option>
+                                    <option value="4">Sesi 4</option>
+                            </select>
+                        </div>
+
                         <!-- Tanggal Mulai & Selesai Try Out -->
                         <div class="col-md-6 mb-3">
                             <label for="waktu_mulai_to" class="form-label">Tanggal Mulai TO</label>

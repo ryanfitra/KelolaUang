@@ -37,6 +37,10 @@
             <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
           </tr>
           <tr>
+            <th>Sesi Ujian</th>
+            <td>Sesi {{ $ujian['sesi'] ?? '-' }}</td>
+          </tr>
+          <tr>
             <th>Waktu Mulai</th>
             <td>{{ $ujian['mulai'] ?? '-' }}</td>
           </tr>
@@ -63,7 +67,7 @@
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
             <strong>SELAMAT!</strong><br>
-            Anda dinyatakan <span class="text-success"><strong>LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>
+            Anda dinyatakan <span class="text-success"><strong>LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br>
           </div>
 
           <p class="text-center">

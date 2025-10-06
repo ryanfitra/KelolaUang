@@ -17,8 +17,8 @@ class JadwalUjianController extends Controller
     public function index()
     {
         
-        $data = JadwalUjian::with('jenisUjian', 'jenisUjian.pesertaUjian', )->get();
-        $jenisUjian = JenisUjian::with('pesertaUjian')->get();
+        $data = JadwalUjian::with('jenisUjian', 'pesertaUjian', )->orderBy('id', 'ASC')->orderBy('sesi', 'ASC')->get();
+        $jenisUjian = JenisUjian::get();
 
         // $peserta = PesertaUjian::with('jenisUjian')->get();
         // dd($data);
@@ -32,6 +32,7 @@ class JadwalUjianController extends Controller
     {
         $request->validate([
             'jenis_ujian_id'     => 'required|unique:jadwal_ujians,jenis_ujian_id',
+            'sesi'               => 'required',
             'waktu_mulai_to'     => 'required|date',
             'waktu_selesai_to'   => 'required|date|after:waktu_mulai_to',
             'waktu_mulai_ujian'  => 'required|date',
@@ -42,6 +43,7 @@ class JadwalUjianController extends Controller
         try {
             JadwalUjian::create([
                 'jenis_ujian_id'     => $request->jenis_ujian_id,
+                'sesi'               => $request->sesi,
                 'waktu_mulai_to'     => $request->waktu_mulai_to,
                 'waktu_selesai_to'   => $request->waktu_selesai_to,
                 'waktu_mulai_ujian'  => $request->waktu_mulai_ujian,
@@ -124,7 +126,7 @@ class JadwalUjianController extends Controller
         $jadwalUjian = JadwalUjian::findOrFail($id);
 
         // dd($jadwalUjian);
-        if ($jadwalUjian->jenisUjian->pesertaUjian->count() > 0) {
+        if ($jadwalUjian->pesertaUjian->count() > 0) {
             return redirect()->back()->with('error', 'Jadwal ujian tidak bisa dihapus karena sudah memiliki peserta.');
         }
 

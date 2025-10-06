@@ -65,7 +65,7 @@ DAFTAR PESERTA
                                     <td class="text-center text-middle">{{ $loop->iteration }}</td>
                                     <td class="text-start text-middle">{{ $p->user->nama ?? '-' }}</td>
                                     <td class="text-center text-middle">{{ $p->no_peserta }}</td>
-                                    <td class="text-center text-middle">{{ $p->jenisUjian->nama_ujian }}</td>
+                                    <td class="text-center text-middle">{{ $p->jadwalUjian->jenisUjian->nama_ujian }}</td>
                                     <td class="text-center text-bottom">
                                         @if($p->status_ujian == 'Lulus')
                                             <span class="badge bg-success">Lulus</span>

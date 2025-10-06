@@ -60,6 +60,7 @@ JADWAL UJIAN
                              <tr>
                                 <th class="text-center align-middle">No</th>
                                 <th class="text-center align-middle">Nama Ujian</th>
+                                <th class="text-center align-middle">Sesi Ujian</th>
                                 <th class="text-center align-middle">Jadwal Try Out</th>
                                 <th class="text-center align-middle">Jadwal Ujian</th>
                                 <th class="text-center align-middle">Jadwal Pengumuman</th>
@@ -73,6 +74,7 @@ JADWAL UJIAN
                             <tr>
                                 <td class="text-center align-middle">{{$loop->iteration}}</td>
                                 <td class="text-center align-middle">{{ isset($d->jenisUjian) ? $d->jenisUjian->nama_ujian : '-' }}</td>
+                                <td class="text-center align-middle">{{ $d->sesi}}</td>
                                 <td class="text-center align-middle">
                                     {{ \Carbon\Carbon::parse($d->waktu_mulai_to)->format('d-m-Y (H:i)') }} - 
                                     {{ \Carbon\Carbon::parse($d->waktu_selesai_to)->format('d-m-Y (H:i)') }}

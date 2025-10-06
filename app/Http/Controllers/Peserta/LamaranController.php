@@ -22,7 +22,7 @@ class LamaranController extends Controller
             'instansi',
             'pesertaUjian',
             'pesertaUjian.jadwalUjian',
-            'pesertaUjian.jenisUjian'
+            'pesertaUjian.jadwalUjian.jenisUjian'
         );
 
         // dd($data_peserta);
@@ -48,7 +48,7 @@ class LamaranController extends Controller
         $detailPeserta['ujian'] = [];
 
         foreach ($data_peserta->pesertaUjian as $pesertaUjian) {
-            $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jenis_ujian_id)->first();
+            $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jadwal_ujian_id)->first();
 
             // dd($today, $jadwal->waktu_mulai_to, $jadwal->waktu_selesai_to, $jadwal->waktu_selesai_ujian);
             if (!$jadwal) {
@@ -80,6 +80,7 @@ class LamaranController extends Controller
                 'jenis_ujian_id' => $jadwal->jenis_ujian_id,
                 'no_peserta'     => $pesertaUjian->no_peserta ?? '-',
                 'nama_ujian'     => $nama_ujian,
+                'sesi'     => $jadwal->sesi,
                 // 'foto'           => $data_peserta->foto ?? null,
                 'mulai'          => Carbon::parse($mulai)->format('d-m-Y H:i'),
                 'selesai'        => Carbon::parse($selesai)->format('d-m-Y H:i'),

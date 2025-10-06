@@ -10,7 +10,8 @@ class PesertaUjian extends Model
 
     protected $fillable = [
         'user_id',
-        'jenis_ujian_id',
+        'jadwal_ujian_id',
+        // 'sesi',
         'no_peserta',
         'status_ujian',
     ];

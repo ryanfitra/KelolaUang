@@ -9,14 +9,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('jadwal_ujians', function (Blueprint $table) {
-            $table->unique('jenis_ujian_id', 'jadwal_ujian_jenis_unique');
+            $table->string('sesi')->after('jenis_ujian_id')->nullable();
+            $table->unique(['jenis_ujian_id', 'sesi'], 'jenis_ujian_sesi_unique');
+            // $table->unique('jenis_ujian_id', 'jadwal_ujian_jenis_unique');
         });
     }
 
     public function down(): void
     {
         Schema::table('jadwal_ujians', function (Blueprint $table) {
-            $table->dropUnique('jadwal_ujian_jenis_unique');
+            $table->dropColumn('sesi');
+            $table->dropUnique('jenis_ujian_sesi_unique');
         });
     }
 };

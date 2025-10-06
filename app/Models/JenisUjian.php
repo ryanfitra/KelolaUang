@@ -13,10 +13,10 @@ class JenisUjian extends Model
         'deskripsi'
     ];
 
-    public function pesertaUjian()
-    {
-        return $this->hasMany(PesertaUjian::class,'jenis_ujian_id', 'id' );
-    }
+    // public function pesertaUjian()
+    // {
+    //     return $this->hasMany(PesertaUjian::class,'jenis_ujian_id', 'id' );
+    // }
 
     public function jadwalUjian()
     {

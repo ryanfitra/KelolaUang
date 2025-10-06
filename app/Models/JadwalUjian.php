@@ -10,6 +10,7 @@ class JadwalUjian extends Model
 
     protected $fillable = [
         'jenis_ujian_id',
+        'sesi',
         'waktu_mulai_to',
         'waktu_selesai_to',
         'waktu_mulai_ujian',
@@ -22,9 +23,9 @@ class JadwalUjian extends Model
         return $this->belongsTo(JenisUjian::class, 'jenis_ujian_id', 'id');
     }
 
-    // public function peserta()
-    // {
-    //     return $this->hasMany(PesertaUjian::class, 'jadwal_ujian_id');
-    // }
+    public function pesertaUjian()
+    {
+        return $this->hasMany(PesertaUjian::class, 'jadwal_ujian_id');
+    }
 
 }

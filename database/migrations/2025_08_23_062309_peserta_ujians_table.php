@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('no_peserta');
-            $table->unsignedBigInteger('jenis_ujian_id'); // reference to jenis_ujian
+            $table->unsignedBigInteger('jadwal_ujian_id'); // reference to jenis_ujian
             $table->string('status_ujian')->nullable();
             $table->timestamps();
 
-            $table->foreign('jenis_ujian_id')->references('id')->on('jenis_ujians')->onDelete('cascade');
+            $table->foreign('jadwal_ujian_id')->references('id')->on('jadwal_ujians')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // 🔑 Unique constraint: no_peserta + jenis_ujian_id
-            $table->unique(['no_peserta', 'jenis_ujian_id']);
+            $table->unique(['no_peserta', 'jadwal_ujian_id']);
         });
 
     }
