@@ -86,7 +86,7 @@ Lamaran Peserta
                         @elseif($today > $ujian['selesai'])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
-                                data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
+                                data-bs-toggle="modal" data-bs-target="#hasilUjian{{$i}}"
                                 onclick="showHasil({{ $i }})" style="margin: 5px 10px;">
                                 <i class="fa fa-file-pen"></i>
                                 {{ $ujian['nama_ujian'] }}
