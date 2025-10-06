@@ -102,8 +102,7 @@
                                 @endphp
 
                                 <div class="timeline__box">
-                                    <div class="timeline__date 
-                                        {{ $tanggalMulai && !$tanggalSelesai ? 'text-center' : '' }}">
+                                    <div class="timeline__date text-center">
                                         
                                         @if(!$tanggalMulai)
                                             {{-- Jika belum ada tanggal sama sekali --}}
