@@ -23,41 +23,42 @@
         <hr>
 
         @if($today < $pengumuman)
-          <table class="table table-bordered">
-          <tr>
-            <th width="200">Nama</th>
-            <td>{{ $detailPeserta['nama'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>No Peserta</th>
-            <td>{{ $ujian['no_peserta'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Jenis Ujian</th>
-            <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Waktu Mulai</th>
-            <td>{{ $ujian['waktu_mulai'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Waktu Selesai</th>
-            <td>{{ $ujian['waktu_selesai'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Link Ujian</th>
-            <td>
-              {{-- @if(!empty($ujian['link'])) --}}
-                <a href="https://cbt.unsri.ac.id/" target="_blank" class="btn btn-sm btn-success">
-                  <i class="fa fa-link"></i> Buka Ujian
-                </a>
-              {{-- @else --}}
-                {{-- <span class="text-muted">Belum tersedia</span> --}}
-              {{-- @endif --}}
-            </td>
-          </tr>
+          <div class="alert text-center ">
+              Hasil ujian akan diumumkan pada :
+              <p class="text-center">
+                <strong>
+                    <span class="text-primary mt-10">
+                        <strong style="font-size: 20px;">
+                            {{ $pengumuman->format('d F Y') }} <br>
+                            Pukul {{ $pengumuman->format('H:i') }}
+                        </strong>
+                    </span>
+                </strong>
+            </p>
+          </div>
 
-        </table>
+          {{-- Countdown Timer --}}
+          <div class="text-center mt-3">
+            <label>Sisa Waktu</label><br>
+              <table class="table d-inline-block text-center" style="width:auto;">
+                  <thead class="table-primary">
+                      <tr>
+                          <th>Hari</th>
+                          <th>Jam</th>
+                          <th>Menit</th>
+                          <th>Detik</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td id="days">0</td>
+                          <td id="hours">0</td>
+                          <td id="minutes">0</td>
+                          <td id="seconds">0</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
 
           
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
