@@ -101,12 +101,12 @@
                                     $tanggalSelesai = $timeline->tanggal_selesai ? \Carbon\Carbon::parse($timeline->tanggal_selesai) : null;
                                 @endphp
 
-                                <div class="timeline__box">
+                                <div class="timeline__box" style="align-content: center;">
                                     <div class="timeline__date text-center">
                                         
                                         @if(!$tanggalMulai)
                                             {{-- Jika belum ada tanggal sama sekali --}}
-                                            <span class="timeline__day">-</span>
+                                            {{-- <span class="timeline__day">-</span> --}}
                                             <span class="timeline__month text-center">Diinfokan<br>Kemudian</span>
                                         @elseif($tanggalMulai && !$tanggalSelesai)
                                             {{-- Hanya tanggal mulai --}}
