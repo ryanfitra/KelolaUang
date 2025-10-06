@@ -485,8 +485,8 @@
   </div> --}}
   <!-- /.content-wrapper -->
 <footer class="main-footer">
-            &copy; {{date('Y')}} <a href="https://tik.unsri.ac.id/">Created By UPT TIK UNSRI</a>. All Rights Reserved.
-        </footer>
+	&copy; {{date('Y')}} <a href="">Created By BPU UNSRI</a>. All Rights Reserved.
+</footer>
 
   {{-- <!-- Control Sidebar -->
   <aside class="control-sidebar">
