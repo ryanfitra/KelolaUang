@@ -75,7 +75,7 @@ class DashboardController extends Controller
             ];
         }
 
-        $timelines = Timeline::where('instansi_id', $data_peserta->instansi_id )->orderBy('tanggal_mulai')->get();
+        $timelines = Timeline::where('instansi_id', $data_peserta->instansi_id )->orderBy('id')->get();
 
         // dd($timelines);
 
