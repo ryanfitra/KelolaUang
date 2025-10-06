@@ -66,7 +66,7 @@ class PendaftarController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        $gagalImport = []; // penampung nama yang gagal
+        $gagalImport = []; // penampung data gagal
 
         ini_set('max_execution_time', 300);
 
@@ -78,7 +78,6 @@ class PendaftarController extends Controller
                 if ($index == 0) continue; // skip header
 
                 try {
-                    // Ambil nilai tanggal lahir untuk password
                     $tanggal_lahir = $this->parseTanggal($row[5]) ?? null;
                     $password = $tanggal_lahir ? str_replace('-', '', $tanggal_lahir) : '12345678';
 
@@ -114,26 +113,29 @@ class PendaftarController extends Controller
                         'password' => Hash::make($password),
                         'role' => $row[27] ?? 'peserta',
                     ]);
-
-                } catch (\Exception $e) {
-                    // Kalau gagal import, simpan nama untuk ditampilkan
-                    $gagalImport[] = $row[0] ?? "Baris ke-".($index+1);
-                    continue; // lanjut ke baris berikutnya
+                } 
+                catch (\Exception $e) {
+                    // simpan nama + pesan error
+                    $namaPeserta = $row[0] ?? "Baris ke-".($index+1);
+                    $gagalImport[] = $namaPeserta . " (" . $e->getMessage() . ")";
+                    continue;
                 }
             }
 
+            // Jika ada data gagal
             if (count($gagalImport) > 0) {
-                return redirect()->back()->with('error', 
-                    'Beberapa data gagal diimport: '.implode(', ', $gagalImport)
+                return redirect()->back()->with('error',
+                    'Beberapa data gagal diimport:<br>' . implode('<br>', $gagalImport)
                 );
             }
 
-            return redirect()->back()->with('success', 'Data berhasil diimport.');
+            return redirect()->back()->with('success', 'Semua data berhasil diimport.');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal import: '.$e->getMessage());
         }
     }
+
 
 
     private function parseTanggal($value)
