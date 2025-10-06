@@ -31,6 +31,9 @@ class LamaranController extends Controller
 
         $today = Carbon::now();
 
+        // $today = Carbon::now()->format('d-m-Y H:i');
+        
+
         $jadwal_ujian = JadwalUjian::with('jenisUjian')->get();
         $jenisUjian = JenisUjian::all();
 
@@ -47,6 +50,7 @@ class LamaranController extends Controller
         foreach ($data_peserta->pesertaUjian as $pesertaUjian) {
             $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jenis_ujian_id)->first();
 
+            // dd($today, $jadwal->waktu_mulai_to, $jadwal->waktu_selesai_to, $jadwal->waktu_selesai_ujian);
             if (!$jadwal) {
                 continue;
             }
@@ -86,7 +90,7 @@ class LamaranController extends Controller
             ];
         }
 
-        // dd($data_peserta, $detailPeserta);
+        // dd($today, $data_peserta, $detailPeserta);
 
         // dd($detailPeserta['ujian'], $jadwal->waktu_mulai_to, $today, $data_peserta );
 
