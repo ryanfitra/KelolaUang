@@ -97,6 +97,16 @@
                                 
                                 @foreach($timelines as $timeline)
                                 <div class="timeline__box">
+                                    @if($timeline->tanggal_mulai == 0000-00-00 00:00:00)
+                                    <div class="timeline__date">
+                                        <span class="timeline__day">
+                                            -
+                                        </span>
+                                        <span class="timeline__month">
+                                            Diinfokan Kemudian
+                                        </span>
+                                    </div>
+                                    @else
                                     <div class="timeline__date">
                                         <span class="timeline__day">
                                             {{ \Carbon\Carbon::parse($timeline->tanggal_mulai)->format('d') }}
@@ -108,6 +118,8 @@
                                             {{ \Carbon\Carbon::parse($timeline->tanggal_mulai)->format('M') }}
                                         </span>
                                     </div>
+                                    @endif
+                                    
                                     <div class="timeline__post">
                                         <div class="timeline__content">
                                             <h6>{{ $timeline->nama_kegiatan }}</h6>

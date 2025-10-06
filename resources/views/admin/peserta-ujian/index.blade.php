@@ -54,7 +54,8 @@ DAFTAR PESERTA
                                     <th class="text-center text-middle">No</th>
                                     <th class="text-start text-middle">Nama Peserta</th>
                                     <th class="text-center text-middle">No Peserta</th>
-                                    <th class="text-center text-middle">Jenis Ujian</th>
+                                    <th class="text-center text-middle">Jenis Tahapan</th>
+                                    <th class="text-center text-middle">Sesi</th>
                                     <th class="text-center text-middle">Status</th>
                                     <th class="text-center text-middle">Aksi</th>
                                 </tr>
@@ -66,6 +67,7 @@ DAFTAR PESERTA
                                     <td class="text-start text-middle">{{ $p->user->nama ?? '-' }}</td>
                                     <td class="text-center text-middle">{{ $p->no_peserta }}</td>
                                     <td class="text-center text-middle">{{ $p->jadwalUjian->jenisUjian->nama_ujian }}</td>
+                                    <td class="text-center text-middle">{{ $p->jadwalUjian->sesi }}</td>
                                     <td class="text-center text-bottom">
                                         @if($p->status_ujian == 'Lulus')
                                             <span class="badge bg-success">Lulus</span>
