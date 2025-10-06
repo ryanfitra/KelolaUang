@@ -108,7 +108,7 @@
                                         @if(!$tanggalMulai)
                                             {{-- Jika belum ada tanggal sama sekali --}}
                                             <span class="timeline__day">-</span>
-                                            <span class="timeline__month">Diinfokan Kemudian</span>
+                                            <span class="timeline__month text-center">Diinfokan<br>Kemudian</span>
                                         @elseif($tanggalMulai && !$tanggalSelesai)
                                             {{-- Hanya tanggal mulai --}}
                                             <span class="timeline__day">
