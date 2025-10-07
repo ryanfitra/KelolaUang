@@ -110,20 +110,25 @@
                                     @endphp
 
                                     <div class="timeline__box" 
-                                        style="{{ !$tanggalSelesai ? 'margin-left: 30px; padding-left:120px' : '' }}">
-                                        <div class="timeline__date text-center">
+                                        style="{{ !$tanggalSelesai && $tanggalMulai ? 'margin-left: 30px; padding-left:120px' : '' }}">
+                                        
                                             @if(!$tanggalMulai)
-                                                <span class="timeline__month text-center">Diinfokan<br>Kemudian</span>
+                                            <div class="timeline__date text-center" style="margin-left: 15px">
+                                                <span class="timeline__month text-center" ><strong>Diinfokan<br>Kemudian</strong></span>
+                                            </div>
                                             @elseif($tanggalMulai && !$tanggalSelesai)
+                                            <div class="timeline__date text-center">
                                                 <span class="timeline__day">{{ $tanggalMulai->format('d') }}</span>
                                                 <span class="timeline__month">{{ $tanggalMulai->format('M') }}</span>
+                                            </div>
                                             @else
+                                            <div class="timeline__date text-center">
                                                 <span class="timeline__day">
                                                     {{ $tanggalMulai->format('d') }} - {{ $tanggalSelesai->format('d') }}
                                                 </span>
                                                 <span class="timeline__month">{{ $tanggalMulai->format('M') }}</span>
+                                            </div>
                                             @endif
-                                        </div>
 
                                         <div class="timeline__post">
                                             <div class="timeline__content">
