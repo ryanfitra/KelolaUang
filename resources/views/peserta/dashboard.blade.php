@@ -19,34 +19,42 @@
 
   {{-- Quick Stats --}}
   <div class="row">
-      <div class="col-md-4">
-          <div class="card shadow-sm border-left-primary">
-              <div class="card-body text-center">
-                  <h5 class="text-muted">Tahapan Seleksi</h5>
-                  <h2 class="fw-bold">{{ count($jadwal_ujian ?? []) }}</h2>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-4">
-          <div class="card shadow-sm border-left-success">
-              <div class="card-body text-center">
-                  <h5 class="text-muted">Tahapan Selesai</h5>
-                  <h2 class="fw-bold text-success">
-                    {{ collect($detailPeserta['ujian'])->where('status_ujian','!=',null)->count() }}
-                  </h2>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-4">
-          <div class="card shadow-sm border-left-warning">
-              <div class="card-body text-center">
-                  <h5 class="text-muted">Tahapan Aktif</h5>
-                  <h2 class="fw-bold text-warning">
-                    {{ collect($detailPeserta['ujian'])->where('status_ujian',null)->count() }}
-                  </h2>
-              </div>
-          </div>
-      </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-left-primary">
+            <div class="card-body text-center">
+                <h5 class="text-muted">Tahapan Seleksi</h5>
+                <h2 class="fw-bold">
+                    {{ $jenisUjian->count() }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-left-success">
+            <div class="card-body text-center">
+            <h5 class="text-muted">Tahapan Selesai</h5>
+            <h2>
+                <a href="{{ route('peserta.lamaran') }}" 
+                class="fw-bold text-success" 
+                style="text-decoration: none;">
+                {{-- 1 --}}
+                {{ collect($detailPeserta['ujian'])->whereNotIn('status_ujian',['Belum Ujian', 'Sedang Ujian', NULL])->count() }}
+                </a>
+            </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-left-warning">
+            <div class="card-body text-center">
+                <h5 class="text-muted">Tahapan Aktif</h5>
+                <h2 class="fw-bold text-warning">
+                {{ collect($detailPeserta['ujian'])->where('status_ujian','Sedang Ujian')->count() }}
+                </h2>
+            </div>
+        </div>
+    </div>
   </div>
 
   {{-- Upcoming Exam --}}
@@ -96,45 +104,36 @@
                                 <span class="timeline__year">2025</span>
                                 
                                 @foreach($timelines as $timeline)
-                                @php
-                                    $tanggalMulai = $timeline->tanggal_mulai ? \Carbon\Carbon::parse($timeline->tanggal_mulai) : null;
-                                    $tanggalSelesai = $timeline->tanggal_selesai ? \Carbon\Carbon::parse($timeline->tanggal_selesai) : null;
-                                @endphp
+                                    @php
+                                        $tanggalMulai = $timeline->tanggal_mulai ? \Carbon\Carbon::parse($timeline->tanggal_mulai) : null;
+                                        $tanggalSelesai = $timeline->tanggal_selesai ? \Carbon\Carbon::parse($timeline->tanggal_selesai) : null;
+                                    @endphp
 
-                                <div class="timeline__box" style="align-content: center;">
-                                    <div class="timeline__date text-center">
-                                        
-                                        @if(!$tanggalMulai)
-                                            {{-- Jika belum ada tanggal sama sekali --}}
-                                            {{-- <span class="timeline__day">-</span> --}}
-                                            <span class="timeline__month text-center">Diinfokan<br>Kemudian</span>
-                                        @elseif($tanggalMulai && !$tanggalSelesai)
-                                            {{-- Hanya tanggal mulai --}}
-                                            <span class="timeline__day">
-                                                {{ $tanggalMulai->format('d') }}
-                                            </span>
-                                            <span class="timeline__month">
-                                                {{ $tanggalMulai->format('M') }}
-                                            </span>
-                                        @else
-                                            {{-- Rentang tanggal mulai - selesai --}}
-                                            <span class="timeline__day">
-                                                {{ $tanggalMulai->format('d') }} - {{ $tanggalSelesai->format('d') }}
-                                            </span>
-                                            <span class="timeline__month">
-                                                {{ $tanggalMulai->format('M') }}
-                                            </span>
-                                        @endif
-                                    </div>
+                                    <div class="timeline__box" 
+                                        style="{{ !$tanggalSelesai ? 'margin-left: 30px; padding-left:120px' : '' }}">
+                                        <div class="timeline__date text-center">
+                                            @if(!$tanggalMulai)
+                                                <span class="timeline__month text-center">Diinfokan<br>Kemudian</span>
+                                            @elseif($tanggalMulai && !$tanggalSelesai)
+                                                <span class="timeline__day">{{ $tanggalMulai->format('d') }}</span>
+                                                <span class="timeline__month">{{ $tanggalMulai->format('M') }}</span>
+                                            @else
+                                                <span class="timeline__day">
+                                                    {{ $tanggalMulai->format('d') }} - {{ $tanggalSelesai->format('d') }}
+                                                </span>
+                                                <span class="timeline__month">{{ $tanggalMulai->format('M') }}</span>
+                                            @endif
+                                        </div>
 
-                                    <div class="timeline__post">
-                                        <div class="timeline__content">
-                                            <h6>{{ $timeline->nama_kegiatan }}</h6>
-                                            <p>{{ $timeline->deskripsi }}</p>
+                                        <div class="timeline__post">
+                                            <div class="timeline__content">
+                                                <h6>{{ $timeline->nama_kegiatan }}</h6>
+                                                <p>{{ $timeline->deskripsi }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endforeach
+
 
                             </div>
                         </div>

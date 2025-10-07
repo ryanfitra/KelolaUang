@@ -30118,13 +30118,14 @@ td .label {
   position: relative; }
   .timeline__box:not(:last-of-type) {
     margin-bottom: 10px; }
-  .timeline__box:before {
+  /* .timeline__box:before {
     content: "";
     width: 135px;
     height: 2px;
     position: absolute;
     left: 0;
-    z-index: 1; }
+    z-index: 1;  */
+  /* } */
 
 .timeline__date {
   min-width: 80px;

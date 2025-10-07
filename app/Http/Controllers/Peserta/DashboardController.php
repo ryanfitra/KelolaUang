@@ -39,7 +39,7 @@ class DashboardController extends Controller
         $detailPeserta['ujian'] = [];
 
         foreach ($data_peserta->pesertaUjian as $pesertaUjian) {
-            $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jenis_ujian_id)->first();
+            $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jadwal_ujian_id)->first();
 
             if (!$jadwal) {
                 continue;
