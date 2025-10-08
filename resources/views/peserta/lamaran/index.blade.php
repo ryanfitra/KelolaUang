@@ -108,6 +108,14 @@ Lamaran Peserta
                       <p class="mb-0">Klik tombol <strong>Try Out</strong> atau <strong>Tes</strong> untuk lihat Kartu Peserta dan masuk ke halaman ujian.</p>
                     </li>
                 </ul>
+                <ul class="text-danger"><strong>Catatan :</strong>
+                    <li class="text-black">
+                      <p class="mb-0">Peserta diwajibkan mengikuti Try Out dan Tes menggunakan perangkat <strong>Komputer / PC / Laptop</strong> dengan <strong>web browser (Google Chrome / Firefox)</strong> versi terbaru.</p>
+                    </li>
+                    <li class="text-black">
+                      <p class="mb-0">Kegiatan <strong>Try Out</strong> bertujuan untuk melakukan uji coba aplikasi dan jaringan saat ujian, serta memperkenalkan cara menggunakan aplikasi ujian kepada peserta.</p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

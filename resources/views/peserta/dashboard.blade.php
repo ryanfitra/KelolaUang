@@ -17,45 +17,61 @@
       </div>
   </div>
 
-  {{-- Quick Stats --}}
-  <div class="row">
-    <div class="col-md-4">
-        <div class="card shadow-sm border-left-primary">
-            <div class="card-body text-center">
-                <h5 class="text-muted">Tahapan Seleksi</h5>
-                <h2 class="fw-bold">
-                    {{ $jenisUjian->count() }}
-                </h2>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm border-left-success">
-            <div class="card-body text-center">
-            <h5 class="text-muted">Tahapan Selesai</h5>
-            <h2>
-                <a href="{{ route('peserta.lamaran') }}" 
-                class="fw-bold text-success" 
-                style="text-decoration: none;">
-                {{-- 1 --}}
-                {{ collect($detailPeserta['ujian'])->whereNotIn('status_ujian',['Belum Ujian', 'Sedang Ujian', NULL])->count() }}
-                </a>
-            </h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm border-left-warning">
-            <div class="card-body text-center">
-                <h5 class="text-muted">Tahapan Aktif</h5>
-                <h2 class="fw-bold text-warning">
-                {{ collect($detailPeserta['ujian'])->where('status_ujian','Sedang Ujian')->count() }}
-                </h2>
-            </div>
-        </div>
-    </div>
+  <div class="row mt-4">
+      <div class="col-12">
+          <div class="card shadow-sm">
+              <div class="card-header bg-danger-light">
+                  <h2 class="mb-0 text-danger fw-bold">PENGUMUMAN!</h2>
+              </div>
+              <div class="card-body">
+                <h4 class="text-black">Pada tanggal <strong class="text-danger">09 Oktober 2025</strong>, akan dilaksanakan <strong>TRY OUT ULANG</strong> untuk seluruh peserta seleksi. Ujian akan dilaksanakan secara online, pada website 
+                    <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
+                        cbt.unsri.ac.id
+                    </a></h4>
+              </div>
+          </div>
+      </div>
   </div>
+
+  {{-- Quick Stats --}}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-left-primary">
+                <div class="card-body text-center">
+                    <h5 class="text-muted">Tahapan Seleksi</h5>
+                    <h2 class="fw-bold">
+                        {{ $jenisUjian->count() }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-left-success">
+                <div class="card-body text-center">
+                <h5 class="text-muted">Tahapan Selesai</h5>
+                <h2>
+                    <a href="{{ route('peserta.lamaran') }}" 
+                    class="fw-bold text-success" 
+                    style="text-decoration: none;">
+                    {{-- 1 --}}
+                    {{ collect($detailPeserta['ujian'])->whereNotIn('status_ujian',['Belum Ujian', 'Sedang Ujian', NULL])->count() }}
+                    </a>
+                </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-left-warning">
+                <div class="card-body text-center">
+                    <h5 class="text-muted">Tahapan Aktif</h5>
+                    <h2 class="fw-bold text-warning">
+                    {{ collect($detailPeserta['ujian'])->where('status_ujian','Sedang Ujian')->count() }}
+                    </h2>
+                </div>
+            </div>
+        </div>  
+    </div>
 
   {{-- Upcoming Exam --}}
   <div class="row mt-4">
@@ -83,7 +99,7 @@
                   @endif
               </div> --}}
               <div class="card-body">
-                <Silahkan class="text-black">Ujian akan dilaksanakan secara online, pada website 
+                <p class="text-black">Ujian akan dilaksanakan secara online, pada website 
                     <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
                         https://cbt.unsri.ac.id/main/peserta
                     </a>
