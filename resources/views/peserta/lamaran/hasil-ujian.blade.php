@@ -30,7 +30,7 @@
           </tr>
           <tr>
             <th>No Peserta</th>
-            <td>{{ $ujian['no_peserta'] ?? '-' }}</td>
+            <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
           </tr>
           <tr>
             <th>Jenis Ujian</th>

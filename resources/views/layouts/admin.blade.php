@@ -485,7 +485,7 @@
   </div> --}}
   <!-- /.content-wrapper -->
 <footer class="main-footer">
-	&copy; {{date('Y')}} <a href="">Created By BPU UNSRI</a>. All Rights Reserved.
+	&copy; {{date('Y')}} <a href=""> BPU Universitas Sriwijaya</a>. All Rights Reserved.
 </footer>
 
   {{-- <!-- Control Sidebar -->

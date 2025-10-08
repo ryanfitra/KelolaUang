@@ -58,30 +58,39 @@
   </div>
 
   {{-- Upcoming Exam --}}
-  {{-- <div class="row mt-4">
+  <div class="row mt-4">
       <div class="col-12">
           <div class="card shadow-sm">
               <div class="card-header bg-light">
                   <h5 class="mb-0">Jadwal Ujian Berikutnya</h5>
               </div>
-              <div class="card-body">
+              {{-- <div class="card-body">
                   @php
-                    $nextExam = collect($detailPeserta['ujian'])->first();
+                    // Ensure we operate on the ujian list (if present) and pick the next single exam (first match).
+                    // Use null (lowercase) and fallback to empty array to avoid errors.
+                    $nextExam = collect($detailPeserta['ujian'] ?? [])->whereIn('status_ujian', ['Belum Ujian', 'Sedang Ujian', null])->first();
                   @endphp
-                  @if($nextExam)
-                      <p><strong>{{ $nextExam['nama_ujian'] }}</strong></p>
-                      <p>Tanggal: {{ $nextExam['waktu_mulai'] }} s/d {{ $nextExam['waktu_selesai'] }}</p>
-                      <p>No Peserta: <span class="fw-bold">{{ $nextExam['no_peserta'] }}</span></p>
-                      <a href="#" class="btn btn-primary btn-sm">
-                          <i class="fa fa-eye"></i> Detail Ujian
+                  @if($nextExam && $today <= data_get($nextExam, 'mulai') && $today <= data_get($nextExam, 'selesai'))
+                      Display next exam details safely using data_get so it works with arrays or objects
+                      <p><strong>{{ data_get($nextExam, 'nama_ujian') }}</strong></p>
+                      <p>Tanggal: {{$today}} {{ data_get($nextExam, 'mulai') }} s/d {{ data_get($nextExam, 'selesai') }}</p>
+                      <p>No Peserta: <span class="fw-bold">{{ data_get($nextExam, 'no_peserta') }}</span></p>
+                      <a href="route()" class="btn btn-primary btn-sm">
+                          <i class="fa fa-eye"></i> Ikuti Ujian
                       </a>
                   @else
                       <p class="text-muted">Belum ada jadwal ujian.</p>
                   @endif
+              </div> --}}
+              <div class="card-body">
+                <h3 class="text-danger">Silahkan klik Tombol dibawah untuk menuju halaman Lamaran (Kartu Peserta).</h3>
+                <a href="{{ route('peserta.lamaran') }}" class="btn btn-primary btn-xl">
+                    <i class="fa fa-file"></i> Halaman Lamaran
+                </a>
               </div>
           </div>
       </div>
-  </div> --}}
+  </div>
 
   {{-- Timeline Seleksi --}}
     <div class="row mt-4">

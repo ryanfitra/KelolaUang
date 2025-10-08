@@ -23,7 +23,7 @@
           </tr>
           <tr>
             <th>No Peserta</th>
-            <td>{{ $ujian['no_peserta'] ?? '-' }}</td>
+            <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
           </tr>
           <tr>
             <th>Jenis Ujian</th>
@@ -41,7 +41,7 @@
             <th>Link Ujian</th>
             <td>
               {{-- @if(!empty($ujian['link'])) --}}
-                <a href="https://cbt.unsri.ac.id/" target="_blank" class="btn btn-sm btn-success">
+                <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="btn btn-sm btn-success">
                   <i class="fa fa-link"></i> Buka Ujian
                 </a>
               {{-- @else --}}
