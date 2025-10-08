@@ -68,10 +68,10 @@
           </tr>
           <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
             <li class="text-black">
-              <p>Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-")</p>
+              <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-")</p>
             </li>
             <li class="text-black">
-              <p>Gunakan kata sandi yang sama dengan yang anda gunakan masuk ke laman <a class="text-primary">https://dashboard-cbt.unsri.ac.id/</a></p>
+              <p class="mb-0">PIN Ujian menggunakan kata sandi yang sama dengan yang anda gunakan masuk ke laman <a class="text-primary">https://dashboard-cbt.unsri.ac.id/</a></p>
             </li>
           </ul>
 
