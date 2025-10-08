@@ -83,7 +83,11 @@
                   @endif
               </div> --}}
               <div class="card-body">
-                <h3 class="text-danger">Silahkan klik Tombol dibawah untuk menuju halaman Lamaran (Kartu Peserta).</h3>
+                <Silahkan class="text-black">Ujian akan dilaksanakan secara online, pada website 
+                    <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
+                        https://cbt.unsri.ac.id/main/peserta
+                    </a>
+                    untuk memantau jadwal ujian dan dan hasil ujian, Silahkan klik Tombol dibawah untuk menuju halaman Lamaran (Kartu Peserta).</p>
                 <a href="{{ route('peserta.lamaran') }}" class="btn btn-primary btn-xl">
                     <i class="fa fa-file"></i> Halaman Lamaran
                 </a>

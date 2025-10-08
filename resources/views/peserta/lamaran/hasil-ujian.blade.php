@@ -52,7 +52,7 @@
             <th>Link Ujian</th>
             <td>
               {{-- @if(!empty($ujian['link'])) --}}
-                <a href="https://cbt.unsri.ac.id/" target="_blank" class="btn btn-sm btn-success">
+                <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="btn btn-sm btn-success">
                   <i class="fa fa-link"></i> Buka Ujian
                 </a>
               {{-- @else --}}
@@ -60,6 +60,14 @@
               {{-- @endif --}}
             </td>
           </tr>
+          <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
+            <li class="text-black">
+              <p>Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-")</p>
+            </li>
+            <li class="text-black">
+              <p>Gunakan kata sandi yang sama dengan yang anda gunakan masuk ke laman <a class="text-primary">https://dashboard-cbt.unsri.ac.id/</a></p>
+            </li>
+          </ul>
 
         </table>
 
