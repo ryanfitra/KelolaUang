@@ -105,7 +105,7 @@ Lamaran Peserta
                       <p class="mb-0">Klik tombol <strong>Hasil</strong> untuk melihat hasil ujian sesuai jadwal Pengumuman.</p>
                     </li>
                     <li class="text-black">
-                      <p class="mb-0">Klik tombil <strong>Try Out</strong> atau <strong>Tes</strong> untuk lihat Kartu Peserta dan masuk ke halaman ujian.</p>
+                      <p class="mb-0">Klik tombol <strong>Try Out</strong> atau <strong>Tes</strong> untuk lihat Kartu Peserta dan masuk ke halaman ujian.</p>
                     </li>
                 </ul>
             </div>
