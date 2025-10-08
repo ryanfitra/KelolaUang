@@ -35,7 +35,7 @@
           <tr>
             <th>PIN Ujian</th>
             <td>
-              {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
+              {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ymd') : '-' }}
             </td>
           </tr>
           <tr>
