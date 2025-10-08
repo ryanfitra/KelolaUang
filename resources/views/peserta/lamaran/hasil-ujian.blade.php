@@ -35,7 +35,7 @@
           <tr>
             <th>PIN Ujian</th>
             <td>
-              {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ymd') : '-' }}
+              {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
             </td>
           </tr>
           <tr>
@@ -68,10 +68,10 @@
           </tr>
           <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
             <li class="text-black">
-              <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-")</p>
+              <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-").</p>
             </li>
             <li class="text-black">
-              <p class="mb-0">PIN Ujian menggunakan kata sandi yang sama dengan yang anda gunakan masuk ke laman <a class="text-primary">https://dashboard-cbt.unsri.ac.id/</a></p>
+              <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
             </li>
           </ul>
 
