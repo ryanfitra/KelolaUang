@@ -33,6 +33,12 @@
             <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
           </tr>
           <tr>
+            <th>PIN Ujian</th>
+            <td>
+              {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
+            </td>
+          </tr>
+          <tr>
             <th>Jenis Ujian</th>
             <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
           </tr>
