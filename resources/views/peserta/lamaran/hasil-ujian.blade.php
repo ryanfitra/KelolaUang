@@ -48,11 +48,11 @@
           </tr>
           <tr>
             <th>Waktu Mulai</th>
-            <td>{{ $ujian['mulai'] ?? '-' }}</td>
+            <td>{{ $ujian['mulai'] ?? '-' }} WIB</td>
           </tr>
           <tr>
             <th>Waktu Selesai</th>
-            <td>{{ $ujian['selesai'] ?? '-' }}</td>
+            <td>{{ $ujian['selesai'] ?? '-' }} WIB</td>
           </tr>
           <tr>
             <th>Link Ujian</th>

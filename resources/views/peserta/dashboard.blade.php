@@ -24,7 +24,7 @@
                   <h2 class="mb-0 text-danger fw-bold">PENGUMUMAN!</h2>
               </div>
               <div class="card-body">
-                <h4 class="text-black">Pada tanggal <strong class="text-danger">09 Oktober 2025</strong>, akan dilaksanakan <strong>TRY OUT ULANG</strong> untuk seluruh peserta seleksi. Ujian akan dilaksanakan secara online, pada website 
+                <h4 class="text-black">Pada tanggal <strong class="text-danger">09 Oktober 2025</strong> pukul <strong class="text-danger">15:00</strong> WIB, akan dilaksanakan <strong>TRY OUT ULANG</strong> untuk seluruh peserta seleksi. Ujian akan dilaksanakan secara online, pada website 
                     <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
                         cbt.unsri.ac.id
                     </a></h4>

@@ -47,4 +47,9 @@ class LoginController extends Controller
 
         return redirect()->route('login');
     }
+
+    public function signup()
+    {
+        return view ('auth.register');
+    }
 }
