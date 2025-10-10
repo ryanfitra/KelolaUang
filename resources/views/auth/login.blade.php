@@ -64,14 +64,14 @@
         </div> --}}
 
         <div class="col-12 text-center">
-          <button type="submit" class="btn btn-info margin-top-10">REGISTER</button>
+          <button type="submit" class="btn btn-info margin-top-10">SIGN IN</button>
         </div>
 
         {{-- <p class="mt-3">Don't have an account? <a href="{{ route('register') }}">Sign Up</a></p> --}}
       </form>
-      <div class="text-center">
+      {{-- <div class="text-center">
         <p class="mt-15 mb-0">Don't have an account?<a href="{{ route('register') }}" class="text-danger ml-5"> Register</a></p>
-      </div>
+      </div> --}}
     </div>
   </div>
 </body>
