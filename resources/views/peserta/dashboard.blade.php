@@ -24,10 +24,31 @@
                   <h2 class="mb-0 text-danger fw-bold">PENGUMUMAN!</h2>
               </div>
               <div class="card-body">
-                <h4 class="text-black">Pada tanggal <strong class="text-danger">09 Oktober 2025</strong> pukul <strong class="text-danger">15:00</strong> WIB, akan dilaksanakan <strong>TRY OUT ULANG</strong> untuk seluruh peserta seleksi. Ujian akan dilaksanakan secara online, pada website 
+                {{-- <h4 class="text-black">Pada tanggal <strong class="text-danger">09 Oktober 2025</strong> pukul <strong class="text-danger">15:00</strong> WIB, akan dilaksanakan <strong>TRY OUT ULANG</strong> untuk seluruh peserta seleksi. Ujian akan dilaksanakan secara online, pada website 
                     <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
                         cbt.unsri.ac.id
-                    </a></h4>
+                    </a>
+                </h4> --}}
+
+                <h4 class="text-black">Tes Tahap II akan dilaksanakan pada tanggal <strong class="text-danger">11 Oktober 2025</strong> 
+                    <p class="fw-bold mb-0 mt-20">Waktu Pelaksanaan:</p>
+                    <ul>
+                        <li>
+                            <strong>Sesi I  </strong> : Pukul 10:00 - 11:00 WIB
+                        </li>
+                        <li>
+                            <strong>Sesi II </strong> : Pukul 13:00 - 14:00 WIB
+                        </li>
+                        <li>
+                            <strong>Sesi III</strong> : Pukul 15:00 - 16:00 WIB
+                        </li>
+                    </ul>
+                    Seluruh peserta diwajibkan memeriksa jadwal ujian pada halaman Lamaran (Kartu Peserta) untuk mengetahui Sesi Ujian.
+                    Ujian akan dilaksanakan secara online, pada website 
+                    <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
+                        cbt.unsri.ac.id
+                    </a>
+                </h4>
               </div>
           </div>
       </div>

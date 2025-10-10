@@ -2,114 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    {{-- <link rel="icon" href="../images/favicon.ico"> --}}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>CBT Universitas Sriwijaya</title>
+  <title>CBT Universitas Sriwijaya - Sign Up </title>
 
-    <!-- Favicon -->
-	<link rel="icon" type="image/png" href="{{ asset('images/logo/logo-unsri.png') }}">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ asset('images/logo/logo-unsri.png') }}">
 
-	<!-- Vendors Style-->
-	<link rel="stylesheet" href="{{asset('template/css/vendors_css.css')}}">
-	  
-	<!-- Style-->  
-	<link rel="stylesheet" href="{{asset('template/css/style.css')}}">
-	<link rel="stylesheet" href="{{asset('template/css/skin_color.css')}}">
-     	
-
+  <!-- Vendors Style-->
+  <link rel="stylesheet" href="{{ asset('template/css/vendors_css.css') }}">
+    
+  <!-- Custom Style -->  
+  <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 </head>
+  
+<body class="register-page">
+  
+  <div class="register-wrapper">
 
-<body class="login-page">
-	
-	<div class="container h-p100">
-		<div class="row align-items-center justify-content-md-center h-p100">
-			
-			<div class="col-12">
-				<div class="row justify-content-center no-gutters">
-					<div class="col-lg-5 col-md-5 col-12">
-						<div class="bg-white rounded30 shadow-lg">
-							<div class="content-top-agile p-20 pb-0">
-								<h2 class="text-primary">Get started with Us</h2>
-								<p class="mb-0">Register a new membership</p>							
-							</div>
-							<div class="p-40">
-								<form action="index.html" method="post">
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-											</div>
-											<input type="text" class="form-control pl-15 bg-transparent" placeholder="Full Name">
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
-											</div>
-											<input type="email" class="form-control pl-15 bg-transparent" placeholder="Email">
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-											</div>
-											<input type="password" class="form-control pl-15 bg-transparent" placeholder="Password">
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-											</div>
-											<input type="password" class="form-control pl-15 bg-transparent" placeholder="Retype Password">
-										</div>
-									</div>
-									  <div class="row">
-										<div class="col-12">
-										  <div class="checkbox">
-											<input type="checkbox" id="basic_checkbox_1" >
-											<label for="basic_checkbox_1">I agree to the <a href="#" class="text-warning"><b>Terms</b></a></label>
-										  </div>
-										</div>
-										<!-- /.col -->
-										<div class="col-12 text-center">
-										  <button type="submit" class="btn btn-info margin-top-10">SIGN IN</button>
-										</div>
-										<!-- /.col -->
-									  </div>
-								</form>				
-								<div class="text-center">
-									<p class="mt-15 mb-0">Already have an account?<a href="auth_login.html" class="text-danger ml-5"> Sign In</a></p>
-								</div>
-							</div>
-						</div>								
+      <!-- 🔹 FORM register -->
+      
+	<!-- 🔹 PANEL KIRI -->
+	<div class="register-left">
+        <div class="register-logo mb-30">
+            <img src="{{ asset('images/logo/logo-unsri.png') }}" alt="Logo CBT Universitas Sriwijaya">
+        </div>
+        <h2 class="text-end">Register</h2>
 
-						<div class="text-center">
-						  <p class="mt-20 text-white">- Register With -</p>
-						  <p class="gap-items-2 mb-20">
-							  <a class="btn btn-social-icon btn-round btn-facebook" href="#"><i class="fa fa-facebook"></i></a>
-							  <a class="btn btn-social-icon btn-round btn-twitter" href="#"><i class="fa fa-twitter"></i></a>
-							  <a class="btn btn-social-icon btn-round btn-instagram" href="#"><i class="fa fa-instagram"></i></a>
-							</p>	
-						</div>
+        <form method="POST" action="{{ route('register') }}">
+          @csrf
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
 					</div>
+					<input type="text" name="nama" class="form-control pl-15 bg-transparent" placeholder="Full Name">
 				</div>
-			</div>			
+			</div>
+			@error('nama')
+				<span class="text-danger">{{ $message }}</span>
+			@enderror
+
+			<!-- Email -->
+			<div class="input-group">
+				<span class="input-group-text">
+					<i data-feather="mail"></i>
+				</span>
+				<input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus>
+			</div>
+			@error('email')
+				<span class="text-danger">{{ $message }}</span>
+			@enderror
+
+			<!-- Password -->
+			<div class="input-group">
+				<span class="input-group-text">
+					<i data-feather="lock"></i>
+				</span>
+				<input type="password" name="password" class="form-control" placeholder="Password" required>
+			</div>
+			@error('password')
+				<span class="text-danger">{{ $message }}</span>
+			@enderror
+
+			<!-- Password -->
+			<div class="input-group">
+				<span class="input-group-text">
+					<i data-feather="lock"></i>
+				</span>
+				<input type="password" name="password_confirmation" class="form-control" placeholder="Retype Password" required>
+			</div>
+			@error('password_confirmation')
+				<span class="text-danger">{{ $message }}</span>
+			@enderror
+
+			{{-- <div class="form-group mb-3 text-end">
+				<a href="#" class="text-muted">Forgot your password?</a>
+			</div> --}}
+
+			<div class="col-12 text-center">
+				<button type="submit" class="btn btn-info margin-top-10">REGISTER</button>
+			</div>
+
+          {{-- <p class="mt-3">Don't have an account? <a href="{{ route('register') }}">Sign Up</a></p> --}}
+        </form>
+		<div class="text-center">
+			<p class="mt-15 mb-0">Already have an account?<a href="{{ route('login') }}" class="text-danger ml-5"> Sign In</a></p>
 		</div>
 	</div>
 
+	<!-- 🔹 PANEL KANAN -->
+	<div class="register-right">
+		<h1>WELCOME !</h1>
+		<h3 class="text-center mb-20">Dashboard CBT<br>Universitas Sriwijaya</h3>
+		<p>Register to continue</p>
+	</div>
 
-	<!-- Vendor JS -->
-	<script src="{{asset('template/js/vendors.min.js')}}"></script>
-	<script src="{{asset('template/js/pages/chat-popup.js')}}"></script>
-    <script src="{{asset('assets/icons/feather-icons/feather.min.js')}}"></script>
+  </div>
 
-	
 </body>
 </html>
+<script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script>
+<script>
+  feather.replace()
+</script>

@@ -18,62 +18,62 @@
   <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 </head>
   
-<body class="login-page">
-  
+<body class="login-page rounded30">
+  <!-- 🔹 FORM LOGIN -->
   <div class="login-wrapper">
-
-      <!-- 🔹 FORM LOGIN -->
-      
       <!-- 🔹 PANEL KIRI -->
-      <div class="login-left">
-          <h1>WELCOME !</h1>
-          <h3>CBT Universitas Sriwijaya</h3>
-          <p>Sign in to continue</p>
-      </div>
+    <div class="login-left">
+        <h1>WELCOME !</h1>
+        <h3>Dashboard CBT<br>Universitas Sriwijaya</h3>
+        <p>Sign in to continue</p>
+    </div>
 
-      <div class="login-right">
-        <div class="login-logo mb-30">
-            <img src="{{ asset('images/logo/logo-unsri.png') }}" alt="Logo CBT Universitas Sriwijaya">
+    <div class="login-right">
+      <div class="login-logo mb-30">
+          <img src="{{ asset('images/logo/logo-unsri.png') }}" alt="Logo CBT Universitas Sriwijaya">
+      </div>
+      <h2>Sign in</h2>
+
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <!-- Email -->
+        <div class="input-group">
+            <span class="input-group-text">
+                <i data-feather="mail"></i>
+            </span>
+            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus>
         </div>
-        <h2>Sign in</h2>
+        @error('email')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
 
-        <form method="POST" action="{{ route('login') }}">
-          @csrf
+        <!-- Password -->
+        <div class="input-group">
+            <span class="input-group-text">
+                <i data-feather="lock"></i>
+            </span>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+        @error('password')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
 
-          <!-- Email -->
-          <div class="input-group">
-              <span class="input-group-text">
-                  <i data-feather="mail"></i>
-              </span>
-              <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus>
-          </div>
-          @error('email')
-              <span class="text-danger">{{ $message }}</span>
-          @enderror
+        {{-- <div class="form-group mb-3 text-end">
+            <a href="#" class="text-muted">Forgot your password?</a>
+        </div> --}}
 
-          <!-- Password -->
-          <div class="input-group">
-              <span class="input-group-text">
-                  <i data-feather="lock"></i>
-              </span>
-              <input type="password" name="password" class="form-control" placeholder="Password" required>
-          </div>
-          @error('password')
-              <span class="text-danger">{{ $message }}</span>
-          @enderror
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-info margin-top-10">REGISTER</button>
+        </div>
 
-          {{-- <div class="form-group mb-3 text-end">
-              <a href="#" class="text-muted">Forgot your password?</a>
-          </div> --}}
-
-          <button type="submit" class="btn btn-custom">Sign In</button>
-
-          {{-- <p class="mt-3">Don't have an account? <a href="{{ route('register') }}">Sign Up</a></p> --}}
-        </form>
+        {{-- <p class="mt-3">Don't have an account? <a href="{{ route('register') }}">Sign Up</a></p> --}}
+      </form>
+      <div class="text-center">
+        <p class="mt-15 mb-0">Don't have an account?<a href="{{ route('register') }}" class="text-danger ml-5"> Register</a></p>
       </div>
-
+    </div>
   </div>
-
 </body>
 </html>
 <script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script>

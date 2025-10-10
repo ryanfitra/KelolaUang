@@ -31975,6 +31975,179 @@ img.away, img.busy, img.offline, img.online {
 /*# sourceMappingURL=style.css.map */
 
 /* ================================
+   Custom Register Page Style
+   ================================ */
+body.register-page {
+    background:  url("../../images/auth-bg/bg-10.jpg") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.register-wrapper {
+    display: flex;
+    width: 900px;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.register-left {
+    position: relative; /* penting biar anak bisa di-absolute */
+    flex:1;
+    padding: 40px 40px 40px 40px;
+    background: #fff;
+    height: 500px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 🔹 konten di tengah vertical */
+}
+
+.register-left h2 {
+    color: #0d1b3d;
+    margin-bottom: 20px;
+}
+
+
+.register-right {
+    flex: 1;
+    background: linear-gradient(135deg, #001d4a, #2069b1);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.register-right h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+}
+
+.btn-custom {
+    background: #003366;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-custom:hover {
+    background: #001d4a;
+}
+
+.input-group-text {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 10px 12px;
+}
+
+.form-control {
+    border-radius: 0 8px 8px 0;
+    border: 1px solid #ddd;
+    border-left: none;
+    padding: 10px 15px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.register-logo {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+.register-logo img {
+    max-width: 60px; /* atur sesuai kebutuhan */
+    height: auto;
+}
+
+/* Mobile Enhancement */
+@media (max-width: 768px) {
+  body.register-page {
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+  }
+
+  .register-wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    display: block; /* hilangkan flex */
+  }
+
+  .register-left {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.6s ease;
+  }
+
+  .register-left h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0d47a1;
+    font-weight: bold;
+  }
+
+  .register-logo {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .btn-custom {
+    width: 100%;
+    background: #0d47a1;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-custom:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ================================
    Custom Login Page Style
    ================================ */
 body.login-page {
@@ -31993,7 +32166,7 @@ body.login-page {
     width: 900px;
     max-width: 100%;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }

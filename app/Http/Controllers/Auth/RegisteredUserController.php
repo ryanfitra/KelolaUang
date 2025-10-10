@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\DaftarInstansi;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +21,12 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         return view('auth.register');
+    }
+
+    public function create1(): View
+    {
+        $daftar_instansi = DaftarInstansi::where('status', 'Open Recruitmen')->where('status', 'Open Recruitmen')->get();
+        return view('auth.register-bu');
     }
 
     /**

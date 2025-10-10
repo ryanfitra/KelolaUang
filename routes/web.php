@@ -13,7 +13,8 @@ Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLog
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.attempt');
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::get('/signup', [App\Http\Controllers\Auth\LoginController::class, 'signup'])->middleware('guest')->name('signup');
+Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
+Route::get('/register-bu', [App\Http\Controllers\Auth\RegisteredUserController::class, 'create1'])->middleware('guest')->name('register.create1');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
