@@ -6,15 +6,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="text-center mb-3">
-          <img 
-            src="{{isset ($detailPeserta['foto']) ? $detailPeserta['foto'] : asset('images/default.jpg') }}" 
-            alt="Foto Peserta" 
-            title="Foto Peserta"
-            width="225" height="300" {{-- ukuran 3x4 cm (perbandingan 3:4) --}}
-            class="border rounded"
-            style="object-fit: cover;">
-        </div>
+        @if($detailPeserta['foto'] == NULL )
+          <div class="text-center mb-3">
+              
+            <img 
+              src="{{ $detailPeserta['foto'] }}" 
+              alt="Foto Peserta" 
+              title="Foto Peserta"
+              width="225" height="300"
+              class="border rounded"
+              style="object-fit: cover;">
+          </div>
+        @endif
 
         <table class="table table-bordered">
             <tr>
