@@ -76,7 +76,7 @@ class LamaranController extends Controller
 
             $format_nama = strtoupper(str_replace(' ', '_', $detailPeserta['nama']));
 // dd($detailPeserta['ujian']);
-            $detailPeserta['ujian'][] = [
+            $ujianData = [
                 'jenis_ujian_id' => $jadwal->jenis_ujian_id,
                 'no_peserta'     => $pesertaUjian->no_peserta ?? '-',
                 'nama_ujian'     => $nama_ujian,
@@ -85,15 +85,22 @@ class LamaranController extends Controller
                 'mulai'          => Carbon::parse($mulai)->format('d-m-Y H:i'),
                 'selesai'        => Carbon::parse($selesai)->format('d-m-Y H:i'),
                 // tambahkan pengumuman & status ujian biar bisa difilter
-                'pengumuman'     => Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i'),
-                'status_ujian'     => $pesertaUjian->status_ujian ?? '-', 
+                'status_ujian'     => $pesertaUjian->status_ujian ?? '-',
                 'format_nama'      => $format_nama,
             ];
+
+            if (isset($jadwal->waktu_pengumuman)) {
+                $ujianData['pengumuman'] = Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i');
+            } else {
+                $ujianData['pengumuman'] = null;
+            }
+
+            $detailPeserta['ujian'][] = $ujianData;
         }
 
         // dd($today, $data_peserta, $detailPeserta);
 
-        // dd($detailPeserta, $jadwal->waktu_mulai_to, $today, $data_peserta, $jadwal->waktu_pengumuman );
+        // dd($detailPeserta['ujian'], $jadwal->waktu_mulai_to, $today, $data_peserta, $jadwal->waktu_pengumuman );
 
         
 
