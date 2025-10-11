@@ -65,10 +65,10 @@ Lamaran Peserta
                             $today = \Carbon\Carbon::now()->format('d-m-Y H:i');
                         @endphp
 
-                        <p>{{$ujian['mulai']}}</p>
+                        {{-- <p>{{$ujian['mulai']}}</p>
                         <p>{{$ujian['selesai']}}</p>
                         <p>{{$pengumuman}}</p>
-                        <p>{{$today}}</p>
+                        <p>{{$today}}</p> --}}
 
                         {{-- TRY OUT: belum mulai --}}
                         @if($today <$ujian['mulai'])
