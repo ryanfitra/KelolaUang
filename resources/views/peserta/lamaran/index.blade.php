@@ -81,7 +81,9 @@ Lamaran Peserta
                             </button>
 
                         {{-- TRY OUT: sedang berlangsung --}}{{-- UJIAN NORMAL --}}
-                        @elseif($today >=$ujian['mulai'] && $today <= $ujian['selesai'])
+                        {{-- JANGAN LUPA KEMBALIKAN KONDISI INI --}}
+                        @elseif($today <= '12-10-2025 10:00')
+                        {{-- @elseif($today >=$ujian['mulai'] && $today <= $ujian['selesai']) --}}
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
                                 data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
@@ -132,7 +134,7 @@ Lamaran Peserta
 @push('scripts')
 @if(!empty($detailPeserta['ujian']))
     <script>
-        var targetDate = @if($pengumuman) new Date("{{ $pengumuman->format('Y-m-d H:i:s') }}").getTime() @else null @endif;
+        var targetDate = @if($pengumuman) new Date("{{ $pengumuman }}").getTime() @else null @endif;
 
         var x = setInterval(function() {
             var now = new Date().getTime();
@@ -143,19 +145,19 @@ Lamaran Peserta
                 document.getElementById("days").innerHTML    = "0";
                 document.getElementById("hours").innerHTML   = "0";
                 document.getElementById("minutes").innerHTML = "0";
-                document.getElementById("seconds").innerHTML = "0";
+                // document.getElementById("seconds").innerHTML = "0";
                 return;
             }
 
             var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById("days").innerHTML    = days;
             document.getElementById("hours").innerHTML   = hours;
             document.getElementById("minutes").innerHTML = minutes;
-            document.getElementById("seconds").innerHTML = seconds;
+            // document.getElementById("seconds").innerHTML = seconds;
         }, 1000);
     </script>
 @endif
