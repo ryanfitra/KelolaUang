@@ -74,9 +74,7 @@
               <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
             </li>
           </ul>
-        </table>
-
-          
+        </table>          
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
             <strong>SELAMAT!</strong><br>
@@ -93,10 +91,10 @@
               {{ isset($data_peserta->pesertaUjian[$i+1]) ? $data_peserta->pesertaUjian[$i+1]->jenisUjian->nama_ujian : '-' }}
             </strong> --}}
           </p>
-        @else
+        @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Tidak Lulus')
           <div class="alert  text-center">
             <strong class="text-warning">MOHON MAAF!</strong><br>
-            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>
+            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br>
           </div>
           <p class="text-center">
             {{-- Anda menempati nomor urut <strong>{{ $peringkat }}</strong> dari <strong>{{ $totalPeserta }}</strong> peserta. --}}
@@ -105,6 +103,48 @@
           <p class="text-center">
             Anda tidak dapat melanjutkan ke tahap berikutnya
           </p>
+        @else
+          {{-- @if(!$pengumuman && $pengumuman -> format('d F Y H:i')) --}}
+            <div class="alert text-center ">
+              Hasil {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }} akan diumumkan kemudian
+            </div>
+          {{-- @else
+            <div class="alert text-center ">
+              Hasil ujian akan diumumkan pada :
+                <p class="text-center">
+                  <strong>
+                      <span class="text-primary mt-10">
+                          <strong style="font-size: 20px;">
+                              {{ $pengumuman->format('d F Y') }} <br>
+                              Pukul {{ $pengumuman->format('H:i') }}
+                          </strong>
+                      </span>
+                  </strong>
+              </p>
+            </div> --}}
+            {{-- Countdown Timer --}}
+            {{-- <div class="text-center mt-3">
+              <label>Sisa Waktu</label><br>
+                <table class="table d-inline-block text-center" style="width:auto;">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Hari</th>
+                            <th>Jam</th>
+                            <th>Menit</th>
+                            <th>Detik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="days">0</td>
+                            <td id="hours">0</td>
+                            <td id="minutes">0</td>
+                            <td id="seconds">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          @endif --}}
         @endif
 
         {{-- <div class="row text-center">
