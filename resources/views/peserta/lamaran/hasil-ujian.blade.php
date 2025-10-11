@@ -22,62 +22,65 @@
         </div>
         <hr>
 
-        @if($today < $pengumuman)
+        {{-- @if($today < $selesai)
           <table class="table table-bordered">
-          <tr>
-            <th width="200">Nama</th>
-            <td>{{ $detailPeserta['nama'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>No Peserta</th>
-            <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
-          </tr>
-          <tr>
-            <th>PIN Ujian</th>
-            <td>
-              {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
-            </td>
-          </tr>
-          <tr>
-            <th>Jenis Ujian</th>
-            <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Sesi Ujian</th>
-            <td>Sesi {{ $ujian['sesi'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Waktu Mulai</th>
-            <td>{{ $ujian['mulai'] ?? '-' }} WIB</td>
-          </tr>
-          <tr>
-            <th>Waktu Selesai</th>
-            <td>{{ $ujian['selesai'] ?? '-' }} WIB</td>
-          </tr>
-          <tr>
-            <th>Link Ujian</th>
-            <td>
-              {{-- @if(!empty($ujian['link'])) --}}
-                <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="btn btn-sm btn-success">
-                  <i class="fa fa-link"></i> Buka Ujian
-                </a>
-              {{-- @else --}}
-                {{-- <span class="text-muted">Belum tersedia</span> --}}
-              {{-- @endif --}}
-            </td>
-          </tr>
-          <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
-            <li class="text-black">
-              <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-").</p>
-            </li>
-            <li class="text-black">
-              <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
-            </li>
-          </ul>
+            <tr>
+              <th width="200">Nama</th>
+              <td>{{ $detailPeserta['nama'] ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>No Peserta</th>
+              <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
+            </tr>
+            <tr>
+              <th>PIN Ujian</th>
+              <td>
+                {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
+              </td>
+            </tr>
+            <tr>
+              <th>Jenis Ujian</th>
+              <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>Sesi Ujian</th>
+              <td>Sesi {{ $ujian['sesi'] ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>Waktu Mulai</th>
+              <td>{{ $ujian['mulai'] ?? '-' }} WIB</td>
+            </tr>
+            <tr>
+              <th>Waktu Selesai</th>
+              <td>{{ $ujian['selesai'] ?? '-' }} WIB</td>
+            </tr>
+            <tr>
+              <th>Link Ujian</th>
+              <td>
+                  <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="btn btn-sm btn-success">
+                    <i class="fa fa-link"></i> Buka Ujian
+                  </a>
+              </td>
+            </tr>
+            <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
+              <li class="text-black">
+                <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-").</p>
+              </li>
+              <li class="text-black">
+                <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
+              </li>
+            </ul>
 
-        </table>
+          </table>
 
           
+        @else --}}
+        
+        @if($pengumuman && $today < $pengumuman)
+          <div class="alert text-center">
+            <strong class="text-warning">Pengumuman Hasil Ujian Belum Tersedia</strong><br>
+            Hasil ujian akan diumumkan pada tanggal <strong>{{ $pengumuman->format('d-m-Y H:i') }} WIB</strong>.
+          </div>
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
             <strong>SELAMAT!</strong><br>
@@ -107,6 +110,14 @@
           <p class="text-center">
             Anda tidak dapat melanjutkan ke tahap berikutnya
           </p>
+        @else
+          <div class="alert text-center">
+            <h3 class="text-info fw-bold">Hasil Ujian Sedang Diproses!</h3><br>
+            Mohon menunggu informasi selanjutnya.
+            <p>Informasi akan diupdate pada halaman lamaran</p>
+          </div>
+          <p class="text-danger text-center fw-bold">Silahkan periksa halaman lamaran secara berkala!</p>
+          
         @endif
 
         {{-- <div class="row text-center">

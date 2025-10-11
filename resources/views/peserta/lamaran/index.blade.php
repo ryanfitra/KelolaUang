@@ -57,10 +57,18 @@ Lamaran Peserta
                     @for($i = 0; $i < count($detailPeserta['ujian']); $i++)
                          @php
                             $ujian = $detailPeserta['ujian'][$i]; 
-                           $ujian['mulai']   =$ujian['mulai'];
-                            $ujian['selesai'] =$ujian['selesai'];
-                            $pengumuman = \Carbon\Carbon::parse($ujian['pengumuman']);
+                            $ujian['mulai']   =$ujian['mulai'] ?? '';
+                            $ujian['selesai'] =$ujian['selesai'] ?? '';
+                            $mulai   =$ujian['mulai'] ?? '';
+                            $selesai =$ujian['selesai'] ?? '';
+                            $pengumuman = $ujian['pengumuman'] ?? '';
+                            $today = \Carbon\Carbon::now()->format('d-m-Y H:i');
                         @endphp
+
+                        <p>{{$ujian['mulai']}}</p>
+                        <p>{{$ujian['selesai']}}</p>
+                        <p>{{$pengumuman}}</p>
+                        <p>{{$today}}</p>
 
                         {{-- TRY OUT: belum mulai --}}
                         @if($today <$ujian['mulai'])
@@ -124,7 +132,7 @@ Lamaran Peserta
 @push('scripts')
 @if(!empty($detailPeserta['ujian']))
     <script>
-        var targetDate = new Date("{{ $pengumuman->format('Y-m-d H:i:s') }}").getTime();
+        var targetDate = @if($pengumuman) new Date("{{ $pengumuman->format('Y-m-d H:i:s') }}").getTime() @else null @endif;
 
         var x = setInterval(function() {
             var now = new Date().getTime();

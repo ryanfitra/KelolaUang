@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content rounded-4 shadow-lg" style="padding-inline: 20px;">
       <div class="modal-header">
-        <h3 class="modal-title">Detail Peserta Ujian</h3>
+        <h3 class="modal-title">Kartu Peserta Ujian</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -17,40 +17,58 @@
         </div>
 
         <table class="table table-bordered">
-          <tr>
-            <th width="200">Nama</th>
-            <td>{{ $detailPeserta['nama'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>No Peserta</th>
-            <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
-          </tr>
-          <tr>
-            <th>Jenis Ujian</th>
-            <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Waktu Mulai</th>
-            <td>{{ $ujian['waktu_mulai'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Waktu Selesai</th>
-            <td>{{ $ujian['waktu_selesai'] ?? '-' }}</td>
-          </tr>
-          <tr>
-            <th>Link Ujian</th>
-            <td>
-              {{-- @if(!empty($ujian['link'])) --}}
-                <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="btn btn-sm btn-success">
-                  <i class="fa fa-link"></i> Buka Ujian
-                </a>
-              {{-- @else --}}
-                {{-- <span class="text-muted">Belum tersedia</span> --}}
-              {{-- @endif --}}
-            </td>
-          </tr>
+            <tr>
+              <th width="200">Nama</th>
+              <td>{{ $detailPeserta['nama'] ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>No Peserta</th>
+              <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
+            </tr>
+            <tr>
+              <th>PIN Ujian</th>
+              <td>
+                {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
+              </td>
+            </tr>
+            <tr>
+              <th>Jenis Ujian</th>
+              <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>Sesi Ujian</th>
+              <td>Sesi {{ $ujian['sesi'] ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>Waktu Mulai</th>
+              <td>{{ $ujian['mulai'] ?? '-' }} WIB</td>
+            </tr>
+            <tr>
+              <th>Waktu Selesai</th>
+              <td>{{ $ujian['selesai'] ?? '-' }} WIB</td>
+            </tr>
+            <tr>
+              <th>Link Ujian</th>
+              <td>
+                {{-- @if(!empty($ujian['link'])) --}}
+                  <a href="https://103.121.159.166/main/peserta" target="_blank" class="btn btn-sm btn-success">
+                    <i class="fa fa-link"></i> Buka Ujian
+                  </a>
+                {{-- @else --}}
+                  {{-- <span class="text-muted">Belum tersedia</span> --}}
+                {{-- @endif --}}
+              </td>
+            </tr>
+            <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
+              <li class="text-black">
+                <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-").</p>
+              </li>
+              <li class="text-black">
+                <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
+              </li>
+            </ul>
 
-        </table>
+          </table>
 
         @php
             $customId = $data_peserta->id . '-' . $detailPeserta['ujian'][$i]['no_peserta'] . '-' . $detailPeserta['ujian'][$i]['jenis_ujian_id'];

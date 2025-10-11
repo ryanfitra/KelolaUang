@@ -45,7 +45,7 @@
                     </ul>
                     Seluruh peserta diwajibkan memeriksa jadwal ujian pada halaman Lamaran (Kartu Peserta) untuk mengetahui Sesi Ujian.
                     Ujian akan dilaksanakan secara online, pada website 
-                    <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
+                    <a href="https://103.121.159.166/main/peserta" target="_blank" class="text-primary">
                         cbt.unsri.ac.id
                     </a>
                 </h4>
@@ -121,7 +121,7 @@
               </div> --}}
               <div class="card-body">
                 <p class="text-black">Ujian akan dilaksanakan secara online, pada website 
-                    <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
+                    <a href="https://103.121.159.166/main/peserta" target="_blank" class="text-primary">
                         https://cbt.unsri.ac.id/main/peserta
                     </a>
                     untuk memantau jadwal ujian dan dan hasil ujian, Silahkan klik Tombol dibawah untuk menuju halaman Lamaran (Kartu Peserta).</p>
