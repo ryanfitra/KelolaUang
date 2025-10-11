@@ -71,7 +71,9 @@ Lamaran Peserta
                         <p>{{$today}}</p> --}}
 
                         {{-- TRY OUT: belum mulai --}}
-                        @if($today <$ujian['mulai'])
+                        {{-- JANGAN LUPA KEMBALIKAN KONDISI INI --}}
+                        @if($today <= '12-10-2025 10:00')
+                        {{-- @if($today <$ujian['mulai']) --}}
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
                                 data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
@@ -81,9 +83,8 @@ Lamaran Peserta
                             </button>
 
                         {{-- TRY OUT: sedang berlangsung --}}{{-- UJIAN NORMAL --}}
-                        {{-- JANGAN LUPA KEMBALIKAN KONDISI INI --}}
-                        @elseif($today <= '12-10-2025 10:00')
-                        {{-- @elseif($today >=$ujian['mulai'] && $today <= $ujian['selesai']) --}}
+                        {{-- @elseif($today <= '12-10-2025 10:00') --}}
+                        @elseif($today >=$ujian['mulai'] && $today <= $ujian['selesai'])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
                                 data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
