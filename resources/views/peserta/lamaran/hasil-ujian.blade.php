@@ -105,9 +105,10 @@
           </p>
         @else
           {{-- @if(!$pengumuman && $pengumuman -> format('d F Y H:i')) --}}
-            <div class="alert text-center ">
+            <h4 class="alert text-center ">
               Hasil {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }} akan diumumkan kemudian
-            </div>
+            </h4>
+            <p class="text-center text-danger">Silahkan pantau halaman lamaran secara berkala!</p>
           {{-- @else
             <div class="alert text-center ">
               Hasil ujian akan diumumkan pada :
