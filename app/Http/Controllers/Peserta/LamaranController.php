@@ -93,7 +93,7 @@ class LamaranController extends Controller
 
         // dd($today, $data_peserta, $detailPeserta);
 
-        // dd($detailPeserta['ujian'], $jadwal->waktu_mulai_to, $today, $data_peserta );
+        // dd($detailPeserta, $jadwal->waktu_mulai_to, $today, $data_peserta, $jadwal->waktu_pengumuman );
 
         
 

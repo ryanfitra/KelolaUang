@@ -22,7 +22,7 @@
         </div>
         <hr>
 
-        @if($today < $pengumuman)
+        @if($pengumuman && $today < $pengumuman)
           <table class="table table-bordered">
           <tr>
             <th width="200">Nama</th>
@@ -58,7 +58,7 @@
             <th>Link Ujian</th>
             <td>
               {{-- @if(!empty($ujian['link'])) --}}
-                <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="btn btn-sm btn-success">
+                <a href="https://103.121.159.166/main/peserta" target="_blank" class="btn btn-sm btn-success">
                   <i class="fa fa-link"></i> Buka Ujian
                 </a>
               {{-- @else --}}
@@ -74,7 +74,6 @@
               <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
             </li>
           </ul>
-
         </table>
 
           
@@ -99,7 +98,6 @@
             <strong class="text-warning">MOHON MAAF!</strong><br>
             Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jenisUjian->deskripsi.')' : '' }}</br>
           </div>
-          
           <p class="text-center">
             {{-- Anda menempati nomor urut <strong>{{ $peringkat }}</strong> dari <strong>{{ $totalPeserta }}</strong> peserta. --}}
             {{-- Anda menempati nomor urut <strong>12</strong>  --}}

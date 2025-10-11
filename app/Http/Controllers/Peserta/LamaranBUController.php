@@ -83,6 +83,8 @@ class LamaranController extends Controller
             ];
         }
 
+        // dd($detailPeserta['ujian']);
+
         // 🔎 FILTER UJIAN SESUAI KONDISI
         $ujians = $detailPeserta['ujian'];
         $ujiansToShow = [];
