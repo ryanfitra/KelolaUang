@@ -38,7 +38,7 @@ class LamaranController extends Controller
         $jenisUjian = JenisUjian::all();
 
         $detailPeserta = [
-            'foto' => asset('storage/foto_peserta/'.$data_peserta->foto),
+            'foto' => asset('images/foto_peserta/'.$data_peserta->foto),
             'nama' => $data_peserta->nama,
             'posisi' => $data_peserta->posisi,
             'instansi' => $data_peserta->instansi,
@@ -100,7 +100,7 @@ class LamaranController extends Controller
 
         // dd($today, $data_peserta, $detailPeserta);
 
-        // dd($detailPeserta['ujian'], $jadwal->waktu_mulai_to, $today, $data_peserta, $jadwal->waktu_pengumuman );
+        // dd($detailPeserta, $jadwal->waktu_mulai_to, $today, $data_peserta, $jadwal->waktu_pengumuman );
 
         
 

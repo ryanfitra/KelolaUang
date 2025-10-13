@@ -69,11 +69,12 @@ Lamaran Peserta
                         <p>{{$ujian['selesai']}}</p>
                         <p>{{$pengumuman}}</p>
                         <p>{{$today}}</p> --}}
+                        {{-- {{ \Carbon\Carbon::parse($today)->format('d-m-Y H:i') }} WIB --}}
 
                         {{-- TRY OUT: belum mulai --}}
                         {{-- JANGAN LUPA KEMBALIKAN KONDISI INI --}}
-                        @if($today <= '12-10-2025 10:00')
-                        {{-- @if($today <$ujian['mulai']) --}}
+                        {{-- @if($today <= '12-10-2025 10:00') --}}
+                        @if($today <$ujian['mulai'])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
                                 data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
@@ -133,34 +134,35 @@ Lamaran Peserta
 </section>
 @endsection
 @push('scripts')
-@if(!empty($detailPeserta['ujian']))
-    <script>
-        var targetDate = @if($pengumuman) new Date("{{ $pengumuman }}").getTime() @else null @endif;
+@if(!empty($pengumuman))
+<script>
+    // Ambil waktu pengumuman dari PHP (sudah dalam format "d-m-Y H:i")
+    var targetDate = new Date("{{ \Carbon\Carbon::parse($pengumuman)->format('Y-m-d H:i:s') }}").getTime();
 
-        var x = setInterval(function() {
-            var now = new Date().getTime();
-            var distance = targetDate - now;
+    var countdown = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = targetDate - now;
 
-            if (distance <= 0) {
-                clearInterval(x);
-                document.getElementById("days").innerHTML    = "0";
-                document.getElementById("hours").innerHTML   = "0";
-                document.getElementById("minutes").innerHTML = "0";
-                // document.getElementById("seconds").innerHTML = "0";
-                return;
-            }
+        if (distance <= 0) {
+            clearInterval(countdown);
+            document.getElementById("days").innerHTML    = "0";
+            document.getElementById("hours").innerHTML   = "0";
+            document.getElementById("minutes").innerHTML = "0";
+            document.getElementById("seconds").innerHTML = "0";
+            return;
+        }
 
-            var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerHTML    = days;
-            document.getElementById("hours").innerHTML   = hours;
-            document.getElementById("minutes").innerHTML = minutes;
-            // document.getElementById("seconds").innerHTML = seconds;
-        }, 1000);
-    </script>
+        document.getElementById("days").innerHTML    = days;
+        document.getElementById("hours").innerHTML   = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+    }, 1000);
+</script>
 @endif
 
 {{-- <script>

@@ -6,11 +6,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        @if($detailPeserta['foto'] == NULL )
+        @if($detailPeserta['foto'] != NULL )
           <div class="text-center mb-3">
               
             <img 
-              src="{{ $detailPeserta['foto'] }}" 
+              {{-- src="{{ $detailPeserta['foto'] }}"  --}}
+              src="{{ $detailPeserta['foto']
+                    ? $detailPeserta['foto'] 
+                    : asset('images/foto_peserta/default.png') }}"
+
               alt="Foto Peserta" 
               title="Foto Peserta"
               width="225" height="300"

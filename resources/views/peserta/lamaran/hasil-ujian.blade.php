@@ -71,16 +71,49 @@
               </li>
             </ul>
 
-          </table>
+          </table> --}}
 
-          
-        @else --}}
+        {{-- @elseif($pengumuman && $today < $pengumuman)  --}}
         
         @if($pengumuman && $today < $pengumuman)
           <div class="alert text-center">
-            <strong class="text-warning">Pengumuman Hasil Ujian Belum Tersedia</strong><br>
-            Hasil ujian akan diumumkan pada tanggal <strong>{{ $pengumuman->format('d-m-Y H:i') }} WIB</strong>.
+            Hasil ujian akan diumumkan pada :
+            <p class="text-center">
+              <strong>
+                <span class="text-primary mt-10">
+                  <strong style="font-size: 20px;">
+                    {{ \Carbon\Carbon::parse($pengumuman)->translatedFormat('d F Y') }} <br>
+                    Pukul {{ \Carbon\Carbon::parse($pengumuman)->format('H:i') }}
+                  </strong>
+                </span>
+              </strong>
+            </p>
           </div>
+
+
+          {{-- Countdown Timer --}}
+          {{-- <div class="text-center mt-3">
+            <label>Sisa Waktu</label><br>
+              <table class="table d-inline-block text-center" style="width:auto;">
+                  <thead class="table-primary">
+                      <tr>
+                          <th>Hari</th>
+                          <th>Jam</th>
+                          <th>Menit</th>
+                          <th>Detik</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td id="days">0</td>
+                          <td id="hours">0</td>
+                          <td id="minutes">0</td>
+                          <td id="seconds">0</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div> --}}
+          
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
             <strong>SELAMAT!</strong><br>
