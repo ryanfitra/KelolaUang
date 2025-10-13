@@ -74,8 +74,8 @@
                     <a href="{{ route('peserta.lamaran') }}" 
                     class="fw-bold text-success" 
                     style="text-decoration: none;">
-                    {{-- 1 --}}
-                    {{ collect($detailPeserta['ujian'])->whereNotIn('status_ujian',['Belum Ujian', 'Sedang Ujian', NULL])->count() }}
+                    2
+                    {{-- {{ collect($detailPeserta['ujian'])->whereNotIn('status_ujian',['Belum Ujian', 'Sedang Ujian', NULL])->count() }} --}}
                     </a>
                 </h2>
                 </div>
