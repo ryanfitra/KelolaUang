@@ -16,7 +16,7 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
 Route::get('/register-bu', [App\Http\Controllers\Auth\RegisteredUserController::class, 'create1'])->middleware('guest')->name('register.create1');
 
-Route::get('/under-construction', [App\Http\Controllers\GuestController::class, 'construction'])->name('under-construction');
+// Route::get('/under-construction', [App\Http\Controllers\GuestController::class, 'construction'])->name('under-construction');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
