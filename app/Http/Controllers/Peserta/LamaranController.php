@@ -82,15 +82,18 @@ class LamaranController extends Controller
                 'nama_ujian'     => $nama_ujian,
                 'sesi'     => $jadwal->sesi,
                 // 'foto'           => $data_peserta->foto ?? null,
-                'mulai'          => Carbon::parse($mulai)->format('d-m-Y H:i'),
-                'selesai'        => Carbon::parse($selesai)->format('d-m-Y H:i'),
+                // 'mulai'          => Carbon::parse($mulai)->format('d-m-Y H:i'),
+                // 'selesai'        => Carbon::parse($selesai)->format('d-m-Y H:i'),
+                'mulai'          => $mulai,
+                'selesai'        => $selesai,
                 // tambahkan pengumuman & status ujian biar bisa difilter
                 'status_ujian'     => $pesertaUjian->status_ujian ?? '-',
                 'format_nama'      => $format_nama,
             ];
 
             if (isset($jadwal->waktu_pengumuman)) {
-                $ujianData['pengumuman'] = Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i');
+                // $ujianData['pengumuman'] = Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i');
+                $ujianData['pengumuman'] = $jadwal->waktu_pengumuman;
             } else {
                 $ujianData['pengumuman'] = null;
             }

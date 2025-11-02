@@ -62,14 +62,10 @@ Lamaran Peserta
                             $mulai   =$ujian['mulai'] ?? '';
                             $selesai =$ujian['selesai'] ?? '';
                             $pengumuman = $ujian['pengumuman'] ?? '';
-                            $today = \Carbon\Carbon::now()->format('d-m-Y H:i');
+                            //$today = \Carbon\Carbon::now()->format('d-m-Y H:i');
                         @endphp
 
-                        {{-- <p>{{$ujian['mulai']}}</p>
-                        <p>{{$ujian['selesai']}}</p>
-                        <p>{{$pengumuman}}</p>
-                        <p>{{$today}}</p> --}}
-                        {{-- {{ \Carbon\Carbon::parse($today)->format('d-m-Y H:i') }} WIB --}}
+                       {{-- {{ \Carbon\Carbon::parse($today)->format('d-m-Y H:i') }} WIB --}}
 
                         {{-- TRY OUT: belum mulai --}}
                         {{-- JANGAN LUPA KEMBALIKAN KONDISI INI --}}
@@ -95,7 +91,7 @@ Lamaran Peserta
                             </button>
                         
                         {{-- HASIL --}}
-                        @elseif($today > $ujian['selesai'])
+                        @elseif($today > $ujian['selesai'] || $ujian['pengumuman' == NULL])
                             <button type="button"
                                 class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
                                 data-bs-toggle="modal" data-bs-target="#hasilUjian{{$i}}"
