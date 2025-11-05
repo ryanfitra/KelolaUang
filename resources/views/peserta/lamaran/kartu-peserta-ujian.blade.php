@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        @if($detailPeserta['foto'] != NULL )
+        <!-- @if($detailPeserta['foto'] != NULL )
           <div class="text-center mb-3">
               
             <img 
@@ -21,7 +21,7 @@
               class="border rounded"
               style="object-fit: cover;">
           </div>
-        @endif
+        @endif -->
 
         <table class="table table-bordered">
             <tr>

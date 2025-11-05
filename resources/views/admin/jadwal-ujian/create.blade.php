@@ -26,9 +26,9 @@
 
                         <!-- Sesi Ujian -->
                         <div class="col-md-12 mb-3">
-                            <label for="sesi" class="form-label">Jenis Ujian</label>
+                            <label for="sesi" class="form-label">Sesi Ujian</label>
                             <select name="sesi" id="sesi" required class="form-select">
-                                <option value="" selected disabled>-- Pilih Jenis Ujian --</option>
+                                <option value="" selected disabled>-- Pilih Sesi Ujian --</option>
                                     <option value="1">Sesi 1</option>
                                     <option value="2">Sesi 2</option>
                                     <option value="3">Sesi 3</option>
@@ -39,11 +39,11 @@
                         <!-- Tanggal Mulai & Selesai Try Out -->
                         <div class="col-md-6 mb-3">
                             <label for="waktu_mulai_to" class="form-label">Tanggal Mulai TO</label>
-                            <input type="datetime-local" name="waktu_mulai_to" id="waktu_mulai_to" class="form-control" required>
+                            <input type="datetime-local" name="waktu_mulai_to" id="waktu_mulai_to" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="waktu_selesai_to" class="form-label">Tanggal Selesai TO</label>
-                            <input type="datetime-local" name="waktu_selesai_to" id="waktu_selesai_to" class="form-control" required>
+                            <input type="datetime-local" name="waktu_selesai_to" id="waktu_selesai_to" class="form-control">
                         </div>
 
                         <!-- Tanggal Mulai & Selesai Ujian -->
@@ -59,7 +59,7 @@
                         <!-- Tanggal Pengumuman Hasil Ujian -->
                         <div class="col-md-6 mb-3">
                             <label for="waktu_pengumuman" class="form-label">Tanggal Pengumuman Hasil Ujian</label>
-                            <input type="datetime-local" name="waktu_pengumuman" id="waktu_pengumuman" class="form-control" required>
+                            <input type="datetime-local" name="waktu_pengumuman" id="waktu_pengumuman" class="form-control">
                         </div>
                     </div>
                 </div>

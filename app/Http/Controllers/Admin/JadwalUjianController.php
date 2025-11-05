@@ -33,11 +33,11 @@ class JadwalUjianController extends Controller
         $request->validate([
             'jenis_ujian_id'     => 'required|unique:jadwal_ujians,jenis_ujian_id',
             'sesi'               => 'required',
-            'waktu_mulai_to'     => 'required|date',
-            'waktu_selesai_to'   => 'required|date|after:waktu_mulai_to',
+            'waktu_mulai_to'     => 'nullable|date',
+            'waktu_selesai_to'   => 'nullable|date|after:waktu_mulai_to',
             'waktu_mulai_ujian'  => 'required|date',
             'waktu_selesai_ujian'=> 'required|date|after:waktu_mulai_ujian',
-            'waktu_pengumuman'   => 'required|date|after:waktu_selesai_ujian',
+            'waktu_pengumuman'   => 'nullable|date|after:waktu_selesai_ujian',
         ]);
 
         try {
@@ -94,11 +94,11 @@ class JadwalUjianController extends Controller
 
         $validated = $request->validate([
             'jenis_ujian_id' => 'required|exists:jenis_ujians,id',
-            'waktu_mulai_to' => 'required|date',
-            'waktu_selesai_to' => 'required|date|after:waktu_mulai_to',
+            'waktu_mulai_to' => 'nullable|date',
+            'waktu_selesai_to' => 'nullable|date|after:waktu_mulai_to',
             'waktu_mulai_ujian' => 'required|date',
             'waktu_selesai_ujian' => 'required|date|after:waktu_mulai_ujian',
-            'waktu_pengumuman' => 'required|date',
+            'waktu_pengumuman' => 'nullable|date',
         ]);
 
         try {

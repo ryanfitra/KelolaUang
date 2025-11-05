@@ -72,26 +72,37 @@ JADWAL UJIAN
                           <tbody>
                             @foreach ($data as $d)
                             <tr>
-                                <td class="text-center align-middle">{{$loop->iteration}}</td>
-                                <td class="text-center align-middle">{{ isset($d->jenisUjian) ? $d->jenisUjian->nama_ujian : '-' }}</td>
-                                <td class="text-center align-middle">{{ $d->sesi}}</td>
-                                <td class="text-center align-middle">
-                                    {{ \Carbon\Carbon::parse($d->waktu_mulai_to)->format('d-m-Y (H:i)') }} - 
-                                    {{ \Carbon\Carbon::parse($d->waktu_selesai_to)->format('d-m-Y (H:i)') }}
-                                </td>
-                                <td class="text-center align-middle">
-                                    {{ \Carbon\Carbon::parse($d->waktu_mulai_ujian)->format('d-m-Y (H:i)') }} - 
-                                    {{ \Carbon\Carbon::parse($d->waktu_selesai_ujian)->format('d-m-Y (H:i)') }}
-                                </td>
-                                <td class="text-center align-middle">
-                                    {{ \Carbon\Carbon::parse($d->waktu_pengumuman)->format('d-m-Y (H:i)') }}
-                                </td>
-                                
+                                <td class="text-center align-middle">{{ $loop->iteration }}</td>
 
                                 <td class="text-center align-middle">
-                                    {{-- <button class="btn btn-rounded bg-warning" title="Edit Data" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editButton({{$d}}, {{$d->id}})">
-                                        <i class="fa fa-pencil-square-o"><span class="path1"></span><span class="path2"></span></i>
-                                    </button> --}}
+                                    {{ $d->jenisUjian->nama_ujian ?? '-' }}
+                                </td>
+
+                                <td class="text-center align-middle">{{ $d->sesi ?? '-' }}</td>
+
+                                <td class="text-center align-middle">
+                                    @if($d->waktu_mulai_to && $d->waktu_selesai_to)
+                                        {{ \Carbon\Carbon::parse($d->waktu_mulai_to)->format('d-m-Y (H:i)') }} -
+                                        {{ \Carbon\Carbon::parse($d->waktu_selesai_to)->format('d-m-Y (H:i)') }}
+                                    @else
+                                        <span class="text-muted">Belum dijadwalkan</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center align-middle">
+                                    @if($d->waktu_mulai_ujian && $d->waktu_selesai_ujian)
+                                        {{ \Carbon\Carbon::parse($d->waktu_mulai_ujian)->format('d-m-Y (H:i)') }} - 
+                                        {{ \Carbon\Carbon::parse($d->waktu_selesai_ujian)->format('d-m-Y (H:i)') }}
+                                    @else
+                                        <span class="text-muted">Belum ditentukan</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center align-middle">
+                                    {{ $d->waktu_pengumuman ? \Carbon\Carbon::parse($d->waktu_pengumuman)->format('d-m-Y (H:i)') : '-' }}
+                                </td>
+
+                                <td class="text-center align-middle">
                                     <button class="btn btn-rounded bg-warning" 
                                         title="Edit Data" 
                                         data-bs-toggle="modal" 
@@ -100,16 +111,21 @@ JADWAL UJIAN
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
 
-                                    <button type="button" class="btn btn-rounded bg-danger my-2" title="Delete Data" onclick="deleteButton({{$d->id}})">
-                                        <i class="fa fa-trash"><span class="path1"></span><span class="path2"></span></i>
+                                    <button type="button" 
+                                        class="btn btn-rounded bg-danger my-2" 
+                                        title="Delete Data" 
+                                        onclick="deleteButton({{ $d->id }})">
+                                        <i class="fa fa-trash"></i>
                                     </button>
-                                    <form action="{{route('admin.jadwal-ujian.delete', $d->id)}}" method="POST" id="delete-form-{{$d->id}}">
+
+                                    <form action="{{ route('admin.jadwal-ujian.delete', $d->id) }}" method="POST" id="delete-form-{{ $d->id }}">
                                         @csrf
-                                        @method('delete')
+                                        @method('DELETE')
                                     </form>
                                 </td>
                             </tr>
                             @endforeach
+
                           </tbody>
                       </table>
                       </div>

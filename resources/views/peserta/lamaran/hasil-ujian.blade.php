@@ -92,7 +92,7 @@
 
 
           {{-- Countdown Timer --}}
-          {{-- <div class="text-center mt-3">
+          <!-- <div class="text-center mt-3">
             <label>Sisa Waktu</label><br>
               <table class="table d-inline-block text-center" style="width:auto;">
                   <thead class="table-primary">
@@ -112,11 +112,12 @@
                       </tr>
                   </tbody>
               </table>
-          </div> --}}
+          </div> -->
           
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
-            <strong>SELAMAT!</strong><br>
+            <h3><strong class="text-success">SELAMAT!</strong></h1><br>
+            <!-- <strong>SELAMAT!</strong><br> -->
             Anda dinyatakan <span class="text-success"><strong>LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br>
           </div>
 
@@ -126,22 +127,29 @@
           </p>
           <p class="text-center">
             Dengan ini Anda dapat melanjutkan ke tahap berikutnya
-            {{-- <strong>
-              {{ isset($data_peserta->pesertaUjian[$i+1]) ? $data_peserta->pesertaUjian[$i+1]->jenisUjian->nama_ujian : '-' }}
-            </strong> --}}
+            <strong>
+              {{ isset($data_peserta->pesertaUjian[$i+1]) ? $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->nama_ujian : '' }}
+            </strong><br>
+            <!-- MENAMPILKAN JADWAL UJIAN SELANJUTNYA -->
+              <!-- yang akan dilaksanakan pada 
+            <strong>{{ isset($data_peserta->pesertaUjian[$i+1]) ? 
+              \Carbon\Carbon::parse($data_peserta->pesertaUjian[$i+1]->jadwalUjian->waktu_mulai_ujian)->format('d F Y H:i') : '-' }}
+              WIB</strong> -->
           </p>
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Tidak Lulus')
           <div class="alert  text-center">
-            <strong class="text-warning">MOHON MAAF!</strong><br>
-            Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br>
+            <h3><strong class="text-warning">Dear Pelamar!</strong></h1><br>
+            <p>Terima kasih atas  partisipasi Anda dalam proses rekrutmen di PT TeL PP.</p>
+            <p>Dari hasil tahapan <strong class="text-warning">{{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</strong>,</br>
+                kami belum dapat melanjutkan proses Anda ke tahap berikutnya.
+            </p>
+            <p>Kami sangat menghargai waktu yang telah Anda berikan. Semoga sukses selalu bersama Anda.</p>
+            <!-- Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br> -->
           </div>
           
           <p class="text-center">
             {{-- Anda menempati nomor urut <strong>{{ $peringkat }}</strong> dari <strong>{{ $totalPeserta }}</strong> peserta. --}}
             {{-- Anda menempati nomor urut <strong>12</strong>  --}}
-          </p>
-          <p class="text-center">
-            Anda tidak dapat melanjutkan ke tahap berikutnya
           </p>
         @else
           <div class="alert text-center">

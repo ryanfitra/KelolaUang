@@ -50,7 +50,6 @@ class LamaranController extends Controller
         foreach ($data_peserta->pesertaUjian as $pesertaUjian) {
             $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jadwal_ujian_id)->first();
 
-            // dd($today, $jadwal->waktu_mulai_to, $jadwal->waktu_selesai_to, $jadwal->waktu_selesai_ujian);
             if (!$jadwal) {
                 continue;
             }
