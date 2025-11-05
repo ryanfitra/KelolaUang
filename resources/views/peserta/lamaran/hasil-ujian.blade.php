@@ -132,17 +132,23 @@
           </p>
 
           <p class="text-center">
-              Dengan ini Anda dapat melanjutkan ke tahap berikutnya <br>
+              Dengan ini Anda dapat melanjutkan ke tahap berikutnya :
               @if($data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->id == '2')
                   {{-- <strong>
                       {{ $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->nama_ujian }}
                   </strong>  --}}
-                  yang akan dilaksanakan pada 
+                  <strong>Tes Tahap III (Tes Psikologi)</strong><br>
+                  Yang akan dilaksanakan pada 
                   <strong>
-                    15 & 16 November 2025 (Online)
+                    15 & 16 November 2025
                       {{-- {{ \Carbon\Carbon::parse($data_peserta->pesertaUjian[$i+1]->jadwalUjian->waktu_mulai_ujian)->format('d F Y H:i') }}
                       WIB --}}
-                  </strong>
+                  </strong><br>
+                  Secara <strong>Online</strong>, pada website 
+                    <a href="https://103.121.159.166/main/peserta" target="_blank" class="text-primary">
+                        cbt.unsri.ac.id
+                    </a>
+                  
               @else
                   <strong></strong>
               @endif
