@@ -116,26 +116,38 @@
           
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
-            <h3><strong class="text-success">SELAMAT!</strong></h1><br>
-            <!-- <strong>SELAMAT!</strong><br> -->
-            Anda dinyatakan <span class="text-success"><strong>LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br>
+              <h3><strong class="text-success">SELAMAT!</strong></h3><br>
+              Anda dinyatakan 
+              <span class="text-success"><strong>LOLOS</strong></span> 
+              {{ isset($data_peserta->pesertaUjian[$i]) 
+                  ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian 
+                    . ' (' . $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi . ')' 
+                  : '' }}
+              <br>
           </div>
 
           <p class="text-center">
-            {{-- Anda menempati nomor urut <strong>{{ $peringkat }}</strong> dari <strong>{{ $totalPeserta }}</strong> peserta. --}}
-            {{-- Anda menempati nomor urut <strong>12</strong>  --}}
+              {{-- Jika kamu ingin tampilkan peringkat, bisa aktifkan ini --}}
+              {{-- Anda menempati nomor urut <strong>{{ $peringkat }}</strong> dari <strong>{{ $totalPeserta }}</strong> peserta. --}}
           </p>
+
           <p class="text-center">
-            Dengan ini Anda dapat melanjutkan ke tahap berikutnya
-            <strong>
-              {{ isset($data_peserta->pesertaUjian[$i+1]) ? $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->nama_ujian : '' }}
-            </strong><br>
-            <!-- MENAMPILKAN JADWAL UJIAN SELANJUTNYA -->
-              <!-- yang akan dilaksanakan pada 
-            <strong>{{ isset($data_peserta->pesertaUjian[$i+1]) ? 
-              \Carbon\Carbon::parse($data_peserta->pesertaUjian[$i+1]->jadwalUjian->waktu_mulai_ujian)->format('d F Y H:i') : '-' }}
-              WIB</strong> -->
+              Dengan ini Anda dapat melanjutkan ke tahap berikutnya <br>
+              @if($data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->id == '2')
+                  {{-- <strong>
+                      {{ $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->nama_ujian }}
+                  </strong>  --}}
+                  yang akan dilaksanakan pada 
+                  <strong>
+                    15 & 16 November 2025 (Online)
+                      {{-- {{ \Carbon\Carbon::parse($data_peserta->pesertaUjian[$i+1]->jadwalUjian->waktu_mulai_ujian)->format('d F Y H:i') }}
+                      WIB --}}
+                  </strong>
+              @else
+                  <strong></strong>
+              @endif
           </p>
+
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Tidak Lulus')
           <div class="alert  text-center">
             <h3><strong class="text-warning">Dear Pelamar!</strong></h1><br>
