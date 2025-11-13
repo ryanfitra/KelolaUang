@@ -48,11 +48,11 @@
             </tr>
             <tr>
               <th>Waktu Mulai</th>
-              <td>{{ $ujian['mulai'] ?? '-' }} WIB</td>
+              <td>{{ \Carbon\Carbon::parse($ujian['mulai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['mulai'])->format('H:i') }} WIB</td>
             </tr>
             <tr>
               <th>Waktu Selesai</th>
-              <td>{{ $ujian['selesai'] ?? '-' }} WIB</td>
+              <td>{{ \Carbon\Carbon::parse($ujian['selesai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['selesai'])->format('H:i') }} WIB</td>
             </tr>
             <tr>
               <th>Link Ujian</th>
