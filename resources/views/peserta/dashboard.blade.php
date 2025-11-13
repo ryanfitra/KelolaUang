@@ -64,7 +64,7 @@
                                 </ul>
 
                                 <p class="mb-2">
-                                    Untuk jadwal Zoom Meeting, silakan buka halaman:
+                                    Untuk jadwal ujian CBT dan Wawancara Daring, silakan buka halaman :
                                 </p>
                                 <a href="{{ route('peserta.lamaran') }}" class="btn btn-success btn-sm shadow-sm">
                                     <i class="fa fa-file"></i> Halaman Lamaran (Kartu Peserta)

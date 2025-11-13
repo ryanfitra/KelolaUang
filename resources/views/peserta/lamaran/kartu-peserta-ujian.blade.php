@@ -129,7 +129,7 @@
                         <td>
                             @if($ujian['link_wawancara'] == '-' || empty($ujian['link_wawancara']))
                                 <button class="btn btn-sm btn-danger">
-                                    <i class="fa fa-clock-o"></i> Link wawancara akan diupdate 1 jam sebelum wawancara
+                                    <i class="fa fa-clock-o"></i> Link Zoom Meeting akan diupdate 1 jam sebelum wawancara
                                 </button>
                             @else
                                 <a href="{{ $ujian['link_wawancara'] }}" 
