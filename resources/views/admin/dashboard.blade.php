@@ -1,75 +1,116 @@
 @extends('layouts.admin')
-@section('title')
-DASHBOARD
-@endsection
+@section('title', 'DASHBOARD')
+
 @section('content')
 @include('swal')
+
 <div class="content-header">
     <div class="d-flex align-items-center">
         <div class="me-auto">
             <h3 class="page-title">DASHBOARD ADMIN</h3>
-            <div class="d-inline-block align-items-center">
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                    </ol>
-                </nav>
-            </div>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="mdi mdi-home-outline"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </nav>
         </div>
     </div>
 </div>
+
 <section class="content">
-    <div class="row">
-        <div class="col-12">
-            <div class="box box-outline-success bs-3 border-success">
-                {{-- <div class="box-header with-border d-flex justify-content-between">
-                    //Tombol Generate Nomor Peserta
-                    <div class="mb-0">
-                        <form action="{{ route('admin.pendaftar.generateAll') }}" method="POST" id="generateAllForm">
-                            @csrf
-                            <button type="button" class="btn btn-primary" onclick="generateAllPeserta()">
-                                <i class="fa fa-id-card me-1"></i> Generate Nomor Peserta
-                            </button>
-                        </form>
-                    </div>
-                    <span class="divider-line mx-1"></span>
-                        <button
-                        type="button"
-                        class="btn btn-success waves-effect waves-light"
-                        data-bs-toggle="modal"
-                        data-bs-target="#uploadModal"
-                    >
-                    <i class="fa fa-upload me-2"></i>Upload Data
-                    </button>
+    {{-- Statistik --}}
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Jumlah Peserta</h5>
+                            <h2>{{ $jumlahPeserta }}</h2>
+                        </div>
+                        <i class="fa fa-users fa-3x"></i>
                     </div>
                 </div>
-                @include('admin.peserta-ujian.upload') --}}
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h5>Jumlah Peserta Ujian</h5>
-                                    <h1>{{ $jumlahPeserta }}</h1>
-                                </div>
-                            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Jenis Ujian</h5>
+                            <h2>{{ $jumlahJenisUjian }}</h2>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h5>Jumlah Jenis Ujian</h5>
-                                    <h1>{{ $jumlahJenisUjian }}</h1>
-                                </div>
-                            </div>
+                        <i class="fa fa-file-alt fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Jabatan Dibuka</h5>
+                            <h2>{{ $jumlahJabatan }}</h2>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h5>Jumlah Jabatan Dibuka</h5>
-                                    <h1>{{ $jumlahJabatan }}</h1>
-                                </div>
-                            </div>
+                        <i class="fa fa-briefcase fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    {{-- Pemantauan User Login --}}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient-success text-white rounded-top-4">
+                    <h4 class="mb-0 fw-bold text-center">LOG PESERTA</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="alert alert-light border-start border-4 border-success shadow-sm">
+                        <h4 class="mb-3"><i class="fa fa-user"></i> Pemantauan User Login</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="sessionTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama User</th>
+                                        <th>Email</th>
+                                        <th>IP Address</th>
+                                        <th>Terakhir Aktif</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($sessions as $index => $session)
+                                        @php
+                                            $lastActive = \Carbon\Carbon::parse($session->terakhir_aktif);
+                                            $isOnline = $lastActive->diffInMinutes(now()) <= 5; // dianggap online jika aktif 5 menit terakhir
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $session->nama_user ?? 'Guest' }}</td>
+                                            <td>{{ $session->email ?? '-' }}</td>
+                                            <td>{{ $session->ip_address ?? '-' }}</td>
+                                            <td>{{ $lastActive->diffForHumans() }}</td>
+                                            <td>
+                                                <span class="badge {{ $isOnline ? 'bg-success' : 'bg-secondary' }}">
+                                                    {{ $isOnline ? 'Online' : 'Offline' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted">Belum ada user yang login</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -78,79 +119,18 @@ DASHBOARD
     </div>
 </section>
 @endsection
+
 @push('js')
-<script src="{{asset('assets/vendor_components/datatable/datatables.min.js')}}"></script>
-<script src="{{asset('assets/vendor_components/select2/dist/js/select2.min.js')}}"></script>
-<script src="{{asset('assets/vendor_components/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/sweetalert/sweetalert.min.js') }}"></script>
 <script>
-
-     $(function() {
-        "use strict";
-
-        $('#data').DataTable();
+$(function() {
+    $('#sessionTable').DataTable({
+        pageLength: 10,
+        order: [[4, 'desc']],
+        responsive: true
     });
-
-    $('.btn-confirm').click(function(e) {
-        e.preventDefault();
-
-        let form = $(this).closest('form');
-        let status = form.find('input[name="status_ujian"]').val();
-
-        swal({
-            title: "Apakah anda yakin?",
-            text: "Peserta akan diberi status: " + status,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Lanjutkan",
-            cancelButtonText: "Batal"
-        }, function(isConfirm) {
-            if (isConfirm) {
-                form.submit();
-            }
-        });
-    });
-
-
-    $('#uploadForm').submit(function(e){
-        e.preventDefault();
-        swal({
-            title: 'Simpan Data',
-            text: "Apakah anda yakin ingin menyimpan data?",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Lanjutkan',
-            cancelButtonText: 'Batal'
-        }, function(isConfirm){
-            if (isConfirm) {
-                $('#uploadForm').unbind('submit').submit();
-                $('#spinner').show();
-            }
-        });
-    });
-
-    $('#editForm').submit(function(e){
-        e.preventDefault();
-        swal({
-            title: 'Edit Data',
-            text: "Apakah anda yakin ingin merubah data?",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Lanjutkan',
-            cancelButtonText: 'Batal'
-        }, function(isConfirm){
-            if (isConfirm) {
-                $('#editForm').unbind('submit').submit();
-                $('#spinner').show();
-            }
-        });
-    });
-
-
+});
 </script>
 @endpush

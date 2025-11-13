@@ -25,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
             ->name('admin.dashboard');
+        Route::get('/sessions', [App\Http\Controllers\Admin\DashboardController::class, 'monitorSessions'])
+            ->name('admin.session');
 
         // Route::prefix('peserta')->group(function () {
         //     Route::get('/', [App\Http\Controllers\Admin\PesertaUjianController::class, 'index'])->name('admin.peserta-ujian.index');
