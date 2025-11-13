@@ -58,7 +58,7 @@
               <th>Link Ujian</th>
               <td>
                 {{-- @if(!empty($ujian['link'])) --}}
-                  <a href="https://103.121.159.166/main/peserta" target="_blank" class="btn btn-sm btn-success">
+                  <a href="https://103.121.159.166/main/peserta_psikologi" target="_blank" class="btn btn-sm btn-success">
                     <i class="fa fa-link"></i> Buka Ujian
                   </a>
                 {{-- @else --}}
