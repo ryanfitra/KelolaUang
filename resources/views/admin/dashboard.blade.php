@@ -129,7 +129,7 @@ $(function() {
     $('#sessionTable').DataTable({
         pageLength: 10,
         order: [[4, 'desc']],
-        responsive: true
+        // responsive: true
     });
 });
 </script>
