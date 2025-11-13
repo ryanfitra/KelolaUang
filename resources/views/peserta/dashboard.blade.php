@@ -3,220 +3,225 @@
 @section('title', 'Dashboard Peserta CBT Universitas Sriwijaya')
 
 @section('content')
-<section class="content">
+<section class="content container-fluid py-4">
 
-  {{-- Greeting Section --}}
-  <div class="row align-items-end">
-      <div class="col-12">
-          <div class="card bg-primary text-white shadow-sm mb-4">
-              <div class="card-body">
-                  <h3>Selamat Datang, <strong>{{ auth()->user()->nama }}</strong> 🎉</h3>
-                  {{-- <p class="mb-0">Selamat mengikuti <strong>Computer Based Test Universitas Sriwijaya</strong>.</p> --}}
-              </div>
-          </div>
-      </div>
-  </div>
-
-  {{-- <div class="row mt-4">
-      <div class="col-12">
-          <div class="card shadow-sm">
-              <div class="card-header bg-danger-light">
-                  <h2 class="mb-0 text-danger fw-bold">PENGUMUMAN!</h2>
-              </div>
-              <div class="card-body"> --}}
-                {{-- <h4 class="text-black">Pada tanggal <strong class="text-danger">09 Oktober 2025</strong> pukul <strong class="text-danger">15:00</strong> WIB, akan dilaksanakan <strong>TRY OUT ULANG</strong> untuk seluruh peserta seleksi. Ujian akan dilaksanakan secara online, pada website 
-                    <a href="https://cbt.unsri.ac.id/main/peserta" target="_blank" class="text-primary">
-                        cbt.unsri.ac.id
-                    </a>
-                </h4> --}}
-
-                {{-- <h4 class="text-black">Tes Tahap II akan dilaksanakan pada tanggal <strong class="text-danger">11 Oktober 2025</strong> 
-                    <p class="fw-bold mb-0 mt-20">Waktu Pelaksanaan:</p>
-                    <ul>
-                        <li>
-                            <strong>Sesi I  </strong> : Pukul 10:00 - 11:00 WIB
-                        </li>
-                        <li>
-                            <strong>Sesi II </strong> : Pukul 13:00 - 14:00 WIB
-                        </li>
-                        <li>
-                            <strong>Sesi III</strong> : Pukul 15:00 - 16:00 WIB
-                        </li>
-                    </ul>
-                    Seluruh peserta diwajibkan memeriksa jadwal ujian pada halaman Lamaran (Kartu Peserta) untuk mengetahui Sesi Ujian.
-                    Ujian akan dilaksanakan secara online, pada website 
-                    <a href="https://103.121.159.166/main/peserta" target="_blank" class="text-primary">
-                        cbt.unsri.ac.id
-                    </a>
-                </h4> --}}
-              {{-- </div>
-          </div>
-      </div>
-  </div> --}}
-
-  {{-- Quick Stats --}}
+    {{-- 🎉 Greeting Section --}}
     <div class="row">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-left-primary">
-                <div class="card-body text-center">
-                    <h5 class="text-muted">Tahapan Seleksi</h5>
-                    <h2 class="fw-bold">
-                        {{ $jenisUjian->count() }}
-                    </h2>
+        <div class="col-12">
+            <div class="card border-0 shadow-lg bg-gradient-primary text-white p-4 rounded-4">
+                <div class="align-items-md-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bold mb-2">
+                            Selamat Datang, <span class="text-warning">{{ auth()->user()->nama }}</span> 🎓
+                        </h3>
+                        <!-- <p class="mb-0 fs-5">Semoga sukses dalam pelaksanaan <strong>Computer Based Test Universitas Sriwijaya</strong>.</p> -->
+                    </div>
+                    <!-- <img src="https://placehold.co/150x90?text=CBT+Illustration" alt="CBT Illustration" class="img-fluid mt-3 mt-md-0" style="max-height: 90px;"> -->
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-left-success">
-                <div class="card-body text-center">
-                <h5 class="text-muted">Tahapan Selesai</h5>
-                <h2>
-                    <a href="{{ route('peserta.lamaran') }}" 
-                    class="fw-bold text-success" 
-                    style="text-decoration: none;">
-                    2
-                    {{-- {{ collect($detailPeserta['ujian'])->whereNotIn('status_ujian',['Belum Ujian', 'Sedang Ujian', NULL])->count() }} --}}
+    </div>
+
+    {{-- 🔔 Announcement Card --}}
+    {{-- 🎓 Pengumuman Khusus untuk Peserta Lulus Jenis Ujian ID = 2 --}}
+    @if(!empty($detailPeserta['ujian'][1]) 
+        && $detailPeserta['ujian'][1]['jenis_ujian_id'] == 2
+        && strtolower($detailPeserta['ujian'][1]['status_ujian']) == 'lulus')
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header bg-gradient-danger text-white rounded-top-4">
+                        <h4 class="mb-0 fw-bold text-center">📢 PENGUMUMAN PENTING</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="alert alert-light border-start border-4 border-danger shadow-sm">
+                            <p class="fs-5">
+                                Pada tanggal <strong class="text-danger">15 - 16 November 2025</strong> pukul 
+                                <strong class="text-danger">08:00 - 18:00 WIB</strong> akan dilaksanakan 
+                                <strong class="text-primary">Seleksi Tahap III (Tes Psikologi)</strong> 
+                                bagi peserta yang <strong class="text-success">Lulus Tahap II</strong>.
+                            </p>
+
+                            <p class="fs-5">
+                                Sebelum mengikuti ujian Peserta diwajibkan mengisi Formulir pada link berikut :<br>
+                                <a href="https://forms.gle/gWK9ZtgiSS5EYcQx7" target="_blank" class="text-primary fw-bold">
+                                    Formulir Daftar Riwayat Hidup
+                                </a> 
+                            </p>
+
+                            <p class="fs-5">
+                                Ujian dilaksanakan secara <strong>online</strong> di website 
+                                <a href="https://103.121.159.166/main/peserta_psikologi" target="_blank" class="text-primary fw-bold">
+                                    cbt.unsri.ac.id
+                                </a> dan melalui <strong>Zoom Meeting</strong>.
+                            </p>
+
+                            <div class="mt-3">
+                                <h6 class="fw-bold">⏰ Waktu Ujian CBT:</h6>
+                                <ul class="mb-3">
+                                    <li><strong>Sesi I:</strong> 08:00 - 12:00 WIB</li>
+                                    <li><strong>Sesi II:</strong> 13:00 - 17:00 WIB</li>
+                                </ul>
+
+                                <p class="mb-2">
+                                    Untuk jadwal Zoom Meeting, silakan buka halaman:
+                                </p>
+                                <a href="{{ route('peserta.lamaran') }}" class="btn btn-success btn-sm shadow-sm">
+                                    <i class="fa fa-file"></i> Halaman Lamaran (Kartu Peserta)
+                                </a>
+                            </div>
+                        </div>
+                        <ul class="text-danger"><strong>Catatan :</strong>
+                            <li class="text-black">
+                            <p class="mb-0">Peserta diwajibkan mengikuti Tes menggunakan perangkat <strong>Komputer / PC / Laptop</strong> dengan <strong>web browser (Google Chrome / Firefox)</strong> versi terbaru.</p>
+                            </li>
+                            <!-- <li class="text-black">
+                            <p class="mb-0">Kegiatan <strong>Try Out</strong> bertujuan untuk melakukan uji coba aplikasi dan jaringan saat ujian, serta memperkenalkan cara menggunakan aplikasi ujian kepada peserta.</p>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- 📊 Quick Stats --}}
+    <div class="row mt-4 g-3">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 hover-shadow text-center py-4">
+                <h6 class="text-muted">Tahapan Seleksi</h6>
+                <h2 class="fw-bold text-primary display-5 mb-0">{{ $jenisUjian->count() }}</h2>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 hover-shadow text-center py-4">
+                <h6 class="text-muted">Tahapan Selesai</h6>
+                <h2 class="fw-bold mb-0">
+                    <a href="{{ route('peserta.lamaran') }}" class="text-success text-decoration-none fs-42">
+                        2
                     </a>
                 </h2>
+            </div>
+        </div>
+    </div>
+
+    {{-- 📅 Next Exam --}}
+    {{-- <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-gradient-light rounded-top-4">
+                    <h5 class="fw-bold mb-0">📅 Jadwal Ujian Berikutnya</h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="fs-5">
+                        Ujian akan dilaksanakan secara online melalui 
+                        <a href="https://103.121.159.166/main/peserta_psikologi" target="_blank" class="text-primary fw-bold">
+                            https://cbt.unsri.ac.id/main/peserta
+                        </a>.
+                        <br>
+                        Untuk melihat detail jadwal dan sesi ujian, klik tombol di bawah:
+                    </p>
+                    <a href="{{ route('peserta.lamaran') }}" class="btn btn-primary btn-lg shadow-sm mt-2">
+                        <i class="fa fa-calendar"></i> Lihat Jadwal & Kartu Peserta
+                    </a>
                 </div>
             </div>
         </div>
+    </div> --}}
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-left-warning">
-                <div class="card-body text-center">
-                    <h5 class="text-muted">Tahapan Aktif</h5>
-                    <h2 class="fw-bold text-warning">
-                    {{ collect($detailPeserta['ujian'])->where('status_ujian','Sedang Ujian')->count() }}
-                    </h2>
-                </div>
-            </div>
-        </div>  
-    </div>
-
-  {{-- Upcoming Exam --}}
-  <div class="row mt-4">
-      <div class="col-12">
-          <div class="card shadow-sm">
-              <div class="card-header bg-light">
-                  <h5 class="mb-0">Jadwal Ujian Berikutnya</h5>
-              </div>
-              {{-- <div class="card-body">
-                  @php
-                    // Ensure we operate on the ujian list (if present) and pick the next single exam (first match).
-                    // Use null (lowercase) and fallback to empty array to avoid errors.
-                    $nextExam = collect($detailPeserta['ujian'] ?? [])->whereIn('status_ujian', ['Belum Ujian', 'Sedang Ujian', null])->first();
-                  @endphp
-                  @if($nextExam && $today <= data_get($nextExam, 'mulai') && $today <= data_get($nextExam, 'selesai'))
-                      Display next exam details safely using data_get so it works with arrays or objects
-                      <p><strong>{{ data_get($nextExam, 'nama_ujian') }}</strong></p>
-                      <p>Tanggal: {{$today}} {{ data_get($nextExam, 'mulai') }} s/d {{ data_get($nextExam, 'selesai') }}</p>
-                      <p>No Peserta: <span class="fw-bold">{{ data_get($nextExam, 'no_peserta') }}</span></p>
-                      <a href="route()" class="btn btn-primary btn-sm">
-                          <i class="fa fa-eye"></i> Ikuti Ujian
-                      </a>
-                  @else
-                      <p class="text-muted">Belum ada jadwal ujian.</p>
-                  @endif
-              </div> --}}
-              <div class="card-body">
-                <p class="text-black">Ujian akan dilaksanakan secara online, pada website 
-                    <a href="https://103.121.159.166/main/peserta" target="_blank" class="text-primary">
-                        https://cbt.unsri.ac.id/main/peserta
-                    </a>
-                    untuk memantau jadwal ujian dan dan hasil ujian, Silahkan klik Tombol dibawah untuk menuju halaman Lamaran (Kartu Peserta).</p>
-                <a href="{{ route('peserta.lamaran') }}" class="btn btn-primary btn-xl">
-                    <i class="fa fa-file"></i> Halaman Lamaran
-                </a>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  {{-- Timeline Seleksi --}}
+    {{-- 🕒 Timeline Seleksi --}}
     <div class="row mt-4">
         <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
-                    <h4 class="card-title">Jadwal Seleksi</h4>
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-gradient-light rounded-top-4">
+                    <h4 class="mb-0 fw-bold">📆 Jadwal Seleksi</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     @if($timelines->isEmpty())
-                        <div class="timeline__post">
-                            <div class="timeline__content">
-                                <h4>Belum ada Jadwal yang tersedia</h4>
-                                {{-- <p>{{ $timeline->deskripsi }}</p> --}}
-                            </div>
+                        <div class="text-center py-5 text-muted">
+                            <i class="fa fa-calendar-times fa-2x mb-3"></i>
+                            <h5>Belum ada Jadwal yang tersedia</h5>
                         </div>
                     @else
-                        <div class="timeline5">
-                            <div class="timeline__group">
-                                <span class="timeline__year">2025</span>
-                                
-                                @foreach($timelines as $timeline)
-                                    @php
-                                        $tanggalMulai = $timeline->tanggal_mulai ? \Carbon\Carbon::parse($timeline->tanggal_mulai) : null;
-                                        $tanggalSelesai = $timeline->tanggal_selesai ? \Carbon\Carbon::parse($timeline->tanggal_selesai) : null;
-                                    @endphp
-
-                                    <div class="timeline__box" 
-                                        style="{{ !$tanggalSelesai && $tanggalMulai ? 'margin-left: 30px; padding-left:120px' : '' }}">
-                                        
-                                            @if(!$tanggalMulai)
-                                            <div class="timeline__date text-center" style="margin-left: 15px">
-                                                <span class="timeline__month text-center" ><strong>Diinfokan<br>Kemudian</strong></span>
-                                            </div>
-                                            @elseif($tanggalMulai && !$tanggalSelesai)
-                                            <div class="timeline__date text-center">
-                                                <span class="timeline__day">{{ $tanggalMulai->format('d') }}</span>
-                                                <span class="timeline__month">{{ $tanggalMulai->format('M') }}</span>
-                                            </div>
-                                            @else
-                                            <div class="timeline__date text-center">
-                                                <span class="timeline__day">
-                                                    {{ $tanggalMulai->format('d') }} - {{ $tanggalSelesai->format('d') }}
-                                                </span>
-                                                <span class="timeline__month">{{ $tanggalMulai->format('M') }}</span>
-                                            </div>
-                                            @endif
-
-                                        <div class="timeline__post">
-                                            <div class="timeline__content">
-                                                <h6>{{ $timeline->nama_kegiatan }}</h6>
-                                                <p>{{ $timeline->deskripsi }}</p>
-                                            </div>
-                                        </div>
+                        <ul class="timeline list-unstyled position-relative ps-3">
+                            @foreach($timelines as $timeline)
+                                @php
+                                    $mulai = $timeline->tanggal_mulai ? \Carbon\Carbon::parse($timeline->tanggal_mulai)->format('d M Y') : null;
+                                    $selesai = $timeline->tanggal_selesai ? \Carbon\Carbon::parse($timeline->tanggal_selesai)->format('d M Y') : null;
+                                @endphp
+                                <li class="mb-4 position-relative ps-4 border-start border-3 border-primary">
+                                    <div class="mb-1 fw-bold text-primary">
+                                        📍 {{ $timeline->nama_kegiatan }}
                                     </div>
-                                @endforeach
-
-
-                            </div>
-                        </div>
+                                    <div class="text-muted small">
+                                        {{ $mulai ? $mulai.($selesai ? ' - '.$selesai : '') : 'Tanggal belum ditentukan' }}
+                                    </div>
+                                    <p class="mt-1 mb-0">{{ $timeline->deskripsi }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
                     @endif
-                </div>                
+                </div>
             </div>
         </div>
     </div>
 
-  
-
-  {{-- Announcements --}}
-  <div class="row mt-4">
-      <div class="col-12">
-          <div class="card shadow-sm">
-              <div class="card-header bg-light">
-                  <h5 class="mb-0">Pengumuman</h5>
-              </div>
-              <div class="card-body">
-                  <ul class="list-unstyled mb-0">
-                      <li>📢 Pengumuman hasil ujian akan disampaikan melalui dashboard ini.</li>
-                      <li>⚠️ Pastikan Anda login tepat waktu sesuai jadwal ujian.</li>
-                      <li>💡 Gunakan browser terbaru untuk menghindari masalah teknis.</li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-  </div>
+    {{-- 📢 Additional Announcements --}}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-gradient-light rounded-top-4">
+                    <h5 class="mb-0 fw-bold">ℹ️ Informasi Umum</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0 fs-6">
+                        <li>✅ Pengumuman hasil ujian akan ditampilkan di dashboard ini.</li>
+                        <li>⚠️ Pastikan login tepat waktu sesuai jadwal ujian.</li>
+                        <li>💡 Gunakan browser terbaru (Google Chrome / Firefox) untuk performa terbaik.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>
+
+{{-- 🎨 Custom Styles --}}
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(90deg, #007bff 0%, #00bcd4 100%);
+    }
+    .bg-gradient-danger {
+        background: linear-gradient(90deg, #dc3545 0%, #ff6b6b 100%);
+    }
+    .bg-gradient-light {
+        background: linear-gradient(90deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    .hover-shadow:hover {
+        transform: translateY(-3px);
+        transition: 0.2s;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15) !important;
+    }
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: #007bff;
+        border-radius: 2px;
+    }
+    .timeline li::before {
+        content: "";
+        position: absolute;
+        left: -9px;
+        top: 5px;
+        width: 18px;
+        height: 18px;
+        background: #fff;
+        border: 3px solid #007bff;
+        border-radius: 50%;
+    }
+</style>
 @endsection

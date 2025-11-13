@@ -236,6 +236,12 @@ JADWAL UJIAN
             }
         });
     });
+    
+    $('#metode_ujians').select2({
+        placeholder: 'Pilih satu atau lebih metode ujian',
+        width: '100%',
+        dropdownParent: $('#createModal') // atau #editModal tergantung letaknya
+    });
 
 
 </script>

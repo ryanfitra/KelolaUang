@@ -22,7 +22,9 @@ class LamaranController extends Controller
             'instansi',
             'pesertaUjian',
             'pesertaUjian.jadwalUjian',
-            'pesertaUjian.jadwalUjian.jenisUjian'
+            'pesertaUjian.jadwalUjian.jenisUjian',
+            'pesertaUjian.jadwalUjian.metodeUjians',
+            'pesertaUjian.jadwalUjian.jadwalWawancaraDaring',
         );
 
         // dd($data_peserta);
@@ -50,52 +52,50 @@ class LamaranController extends Controller
         foreach ($data_peserta->pesertaUjian as $pesertaUjian) {
             $jadwal = $jadwal_ujian->where('id', $pesertaUjian->jadwal_ujian_id)->first();
 
-            if (!$jadwal) {
-                continue;
-            }
+            if (!$jadwal) continue;
 
             // Tentukan status ujian
             if ($today < $jadwal->waktu_mulai_to) {
-                $nama_ujian  = 'Try Out ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
-                $mulai  = $jadwal->waktu_mulai_to;
-                $selesai= $jadwal->waktu_selesai_to;
+                $nama_ujian = 'Try Out ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
+                $mulai = $jadwal->waktu_mulai_to;
+                $selesai = $jadwal->waktu_selesai_to;
             } elseif ($today >= $jadwal->waktu_mulai_to && $today <= $jadwal->waktu_selesai_to) {
-                $nama_ujian  = 'Try Out ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
-                $mulai  = $jadwal->waktu_mulai_to;
-                $selesai= $jadwal->waktu_selesai_to;
+                $nama_ujian = 'Try Out ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
+                $mulai = $jadwal->waktu_mulai_to;
+                $selesai = $jadwal->waktu_selesai_to;
             } elseif ($today > $jadwal->waktu_selesai_to && $today <= $jadwal->waktu_selesai_ujian) {
-                $nama_ujian  = $jadwal->jenisUjian->nama_ujian ?? '-';
-                $mulai  = $jadwal->waktu_mulai_ujian;
-                $selesai= $jadwal->waktu_selesai_ujian;
+                $nama_ujian = $jadwal->jenisUjian->nama_ujian ?? '-';
+                $mulai = $jadwal->waktu_mulai_ujian;
+                $selesai = $jadwal->waktu_selesai_ujian;
             } else {
-                $nama_ujian  = 'Hasil ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
-                $mulai  = $jadwal->waktu_mulai_ujian;
-                $selesai= $jadwal->waktu_selesai_ujian;
+                $nama_ujian = 'Hasil ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
+                $mulai = $jadwal->waktu_mulai_ujian;
+                $selesai = $jadwal->waktu_selesai_ujian;
             }
 
             $format_nama = strtoupper(str_replace(' ', '_', $detailPeserta['nama']));
-// dd($detailPeserta['ujian']);
-            $ujianData = [
-                'jenis_ujian_id' => $jadwal->jenis_ujian_id,
-                'no_peserta'     => $pesertaUjian->no_peserta ?? '-',
-                'nama_ujian'     => $nama_ujian,
-                'sesi'     => $jadwal->sesi,
-                // 'foto'           => $data_peserta->foto ?? null,
-                // 'mulai'          => Carbon::parse($mulai)->format('d-m-Y H:i'),
-                // 'selesai'        => Carbon::parse($selesai)->format('d-m-Y H:i'),
-                'mulai'          => $mulai,
-                'selesai'        => $selesai,
-                // tambahkan pengumuman & status ujian biar bisa difilter
-                'status_ujian'     => $pesertaUjian->status_ujian ?? '-',
-                'format_nama'      => $format_nama,
-            ];
 
-            if (isset($jadwal->waktu_pengumuman)) {
-                // $ujianData['pengumuman'] = Carbon::parse($jadwal->waktu_pengumuman)->format('d-m-Y H:i');
-                $ujianData['pengumuman'] = $jadwal->waktu_pengumuman;
-            } else {
-                $ujianData['pengumuman'] = null;
-            }
+            // 🔍 Ambil data wawancara peserta ini
+            $wawancara = $jadwal->jadwalWawancaraDaring
+                ->where('nomor_peserta', $pesertaUjian->no_peserta)
+                ->first();
+
+            // 📦 Susun data ujian
+            $ujianData = [
+                'jenis_ujian_id'    => $jadwal->jenis_ujian_id,
+                'metode_ujians'     => $jadwal->metodeUjians,
+                'no_peserta'        => $pesertaUjian->no_peserta ?? '-',
+                'nama_ujian'        => $nama_ujian,
+                'sesi'              => $jadwal->sesi,
+                'mulai'             => $mulai,
+                'selesai'           => $selesai,
+                'wawancara_mulai'   => optional($wawancara)->waktu_mulai_wawancara ?? '-',
+                'wawancara_selesai' => optional($wawancara)->waktu_selesai_wawancara ?? '-',
+                'link_wawancara'    => optional($wawancara)->link_wawancara ?? '-',
+                'status_ujian'      => $pesertaUjian->status_ujian ?? '-',
+                'format_nama'       => $format_nama,
+                'pengumuman'        => $jadwal->waktu_pengumuman ?? null,
+            ];
 
             $detailPeserta['ujian'][] = $ujianData;
         }
@@ -104,8 +104,7 @@ class LamaranController extends Controller
 
         // dd($detailPeserta, $jadwal->waktu_mulai_to, $today, $data_peserta, $jadwal->waktu_pengumuman );
 
-        
-
+        // dd($detailPeserta['ujian'][2]);
 
         return view('peserta.lamaran.index', [
             'data_peserta'=> $data_peserta,

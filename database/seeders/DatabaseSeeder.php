@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(PesertaUjianSeeder::class);
         $this->call(TimelineSeeder::class);
+        $this->call(MetodeUjianSeeder::class);
     }
 }

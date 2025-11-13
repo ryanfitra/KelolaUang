@@ -77,7 +77,7 @@ class DashboardController extends Controller
 
         $timelines = Timeline::where('instansi_id', $data_peserta->instansi_id )->orderBy('id')->get();
 
-        // dd($timelines);
+        // dd($detailPeserta['ujian'][1]['jenis_ujian_id']);
 
         // Kirim ke view dashboard peserta
         return view('peserta.dashboard', [

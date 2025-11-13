@@ -90,6 +90,60 @@
         </a> --}}
 
 
+      {{-- MENAMPILKAN JADWAL WAWANCARA DARING --}}
+      @php
+          $hasWawancaraDaring = false;
+
+          if (isset($ujian['metode_ujians'])) {
+              $hasWawancaraDaring = collect($ujian['metode_ujians'])->contains('id', 2);
+          } elseif (isset($ujian->metodeUjians)) {
+              $hasWawancaraDaring = $ujian->metodeUjians->contains('id', 2);
+          }
+      @endphp
+
+      @if($hasWawancaraDaring)
+        <div class="alert mt-20 p-0">
+            <h5 class="text-primary">
+                <i class="fa fa-video-camera"></i> Jadwal Wawancara Daring
+            </h5>
+
+            @if(empty($ujian['wawancara_mulai']) || $ujian['wawancara_mulai'] == '-' || empty($ujian['wawancara_selesai']) || $ujian['wawancara_selesai'] == '-')
+                <div class="alert alert-warning mt-2 mb-0">
+                    <i class="fa fa-exclamation-circle"></i> Jadwal wawancara belum diisi. Silakan menunggu informasi selanjutnya.
+                </div>
+            @else
+                <table class="table table-bordered mt-2">
+                    <tr>
+                        <th>Tanggal</th>
+                        <td>{{ \Carbon\Carbon::parse($ujian['wawancara_mulai'])->format('d M Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Waktu</th>
+                        <td>
+                            {{ \Carbon\Carbon::parse($ujian['wawancara_mulai'])->format('H:i') }} -
+                            {{ \Carbon\Carbon::parse($ujian['wawancara_selesai'])->format('H:i') }} WIB
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Link Wawancara</th>
+                        <td>
+                            @if($ujian['link_wawancara'] == '-' || empty($ujian['link_wawancara']))
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fa fa-clock-o"></i> Link wawancara akan diupdate 1 jam sebelum wawancara
+                                </button>
+                            @else
+                                <a href="{{ $ujian['link_wawancara'] }}" 
+                                  target="_blank" 
+                                  class="btn btn-sm btn-primary">
+                                    <i class="fa fa-link"></i> Masuk Wawancara
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+            @endif
+        </div>
+    @endif
 
       </div>
     </div>

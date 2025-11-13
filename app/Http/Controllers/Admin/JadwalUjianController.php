@@ -4,34 +4,37 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\JenisUjian;
 use App\Models\JadwalUjian;
+use App\Models\MetodeUjian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Models\PesertaUjian;
+use Illuminate\Validation\Rule;
 
 class JadwalUjianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        
-        $data = JadwalUjian::with('jenisUjian', 'pesertaUjian', )->orderBy('id', 'ASC')->orderBy('sesi', 'ASC')->get();
+        $data = JadwalUjian::with(['jenisUjian', 'pesertaUjian', 'metodeUjians'])
+            ->orderBy('id', 'ASC')
+            ->orderBy('sesi', 'ASC')
+            ->get();
+
         $jenisUjian = JenisUjian::get();
+        $metodeUjian = MetodeUjian::get();
 
-        // $peserta = PesertaUjian::with('jenisUjian')->get();
-        // dd($data);
-        // $semester = Semester::orderBy('id_semester', 'desc')->get();
-        // dd($data);
-
-        return view('admin.jadwal-ujian.index', compact('data', 'jenisUjian'));
+        return view('admin.jadwal-ujian.index', compact('data', 'jenisUjian', 'metodeUjian'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_ujian_id'     => 'required|unique:jadwal_ujians,jenis_ujian_id',
+            'jenis_ujian_id'     => [
+                'required',
+                Rule::unique('jadwal_ujians', 'jenis_ujian_id')->where(function ($q) use ($request) {
+                    return $q->where('sesi', $request->sesi);
+                }),
+            ],
             'sesi'               => 'required',
             'waktu_mulai_to'     => 'nullable|date',
             'waktu_selesai_to'   => 'nullable|date|after:waktu_mulai_to',
@@ -41,7 +44,7 @@ class JadwalUjianController extends Controller
         ]);
 
         try {
-            JadwalUjian::create([
+            $jadwal = JadwalUjian::create([
                 'jenis_ujian_id'     => $request->jenis_ujian_id,
                 'sesi'               => $request->sesi,
                 'waktu_mulai_to'     => $request->waktu_mulai_to,
@@ -51,49 +54,39 @@ class JadwalUjianController extends Controller
                 'waktu_pengumuman'   => $request->waktu_pengumuman,
             ]);
 
+            // Simpan metode ujian ke pivot
+            $jadwal->metodeUjians()->attach($request->metode_ujians);
+
             return redirect()->route('admin.jadwal-ujian.index')
-                            ->with('success', 'Jadwal ujian berhasil ditambahkan');
+                ->with('success', 'Jadwal ujian berhasil ditambahkan.');
         } catch (QueryException $e) {
-            if ($e->getCode() == '23000') { // duplicate / constraint violation
+            if ($e->getCode() == '23000') {
                 return redirect()->back()->with('error', 'Jenis ujian tersebut sudah memiliki jadwal ujian.');
             }
-            throw $e; // biarkan error lain ditangani Laravel
+            throw $e;
         }
-    }
-
-
-
-    
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     public function edit(JadwalUjian $jadwalUjian)
     {
-        // Cek apakah sudah ada peserta ujian
-        if ($jadwalUjian->jenisUjian->pesertaUjian->count() > 0) {
-            return redirect()->back()->with('error', 'Jadwal ujian sudah memiliki peserta, tidak bisa diedit.');
-        }
-
         $jenisUjian = JenisUjian::all();
+        $metodeUjian = MetodeUjian::all();
 
-        return view('admin.jadwal-ujian.edit', compact('jadwalUjian', 'jenisUjian'));
+        return view('admin.jadwal-ujian.edit', compact('jadwalUjian', 'jenisUjian', 'metodeUjian'));
     }
 
     public function update(Request $request, JadwalUjian $jadwalUjian)
     {
-        // Cek apakah sudah ada peserta ujian
-        if ($jadwalUjian->jenisUjian->pesertaUjian->count() > 0) {
-            return redirect()->back()->with('error', 'Jadwal ujian sudah memiliki peserta, tidak bisa diubah.');
-        }
-
         $validated = $request->validate([
-            'jenis_ujian_id' => 'required|exists:jenis_ujians,id',
+            'jenis_ujian_id' => [
+                'required',
+                Rule::unique('jadwal_ujians', 'jenis_ujian_id')
+                    ->where(function ($q) use ($request) {
+                        return $q->where('sesi', $request->sesi);
+                    })
+                    ->ignore($jadwalUjian->id),
+            ],
+            'sesi' => 'required',
             'waktu_mulai_to' => 'nullable|date',
             'waktu_selesai_to' => 'nullable|date|after:waktu_mulai_to',
             'waktu_mulai_ujian' => 'required|date',
@@ -105,34 +98,27 @@ class JadwalUjianController extends Controller
             $jadwalUjian->update($validated);
             return redirect()->route('admin.jadwal-ujian.index')->with('success', 'Data berhasil diubah.');
         } catch (QueryException $e) {
-            // Cek apakah error karena duplicate entry
             if ($e->errorInfo[1] == 1062) {
-                return redirect()->back()->with('error', 'Jenis ujian ini sudah memiliki jadwal, silakan pilih jenis ujian lain.');
+                return redirect()->back()->with('error', 'Jenis ujian ini sudah memiliki jadwal pada sesi tersebut.');
             }
-
-            // Kalau error lain, lempar kembali
             throw $e;
         }
-}
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        
-        $jadwalUjian = JadwalUjian::findOrFail($id);
-
-        // dd($jadwalUjian);
-        if ($jadwalUjian->pesertaUjian->count() > 0) {
-            return redirect()->back()->with('error', 'Jadwal ujian tidak bisa dihapus karena sudah memiliki peserta.');
-        }
-
-        $jadwalUjian->delete();
-        return redirect()->back()->with('success', 'Jadwal ujian berhasil dihapus.');
     }
 
 
+    public function destroy($id)
+    {
+        $jadwal = JadwalUjian::findOrFail($id);
+
+        if ($jadwal->pesertaUjian->count() > 0) {
+            return redirect()->back()->with('error', 'Jadwal ujian tidak bisa dihapus karena sudah memiliki peserta.');
+        }
+
+        // Hapus relasi pivot terlebih dahulu
+        $jadwal->metodeUjians()->detach();
+        $jadwal->delete();
+
+        return redirect()->back()->with('success', 'Jadwal ujian berhasil dihapus.');
+    }
 }
+
