@@ -87,17 +87,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($sessions as $index => $session)
+                                    @forelse ($logs as $index => $log)
                                         @php
-                                            $lastActive = \Carbon\Carbon::parse($session->terakhir_aktif);
-                                            $isOnline = $lastActive->diffInMinutes(now()) <= 5; // dianggap online jika aktif 5 menit terakhir
+                                            $lastActive = $log->terakhir_aktif
+                                                ? \Carbon\Carbon::parse($log->terakhir_aktif)
+                                                : null;
+
+                                            $isOnline = $lastActive && $lastActive->diffInMinutes(now()) <= 5;
                                         @endphp
+
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $session->nama_user ?? 'Guest' }}</td>
-                                            <td>{{ $session->email ?? '-' }}</td>
-                                            <td>{{ $session->ip_address ?? '-' }}</td>
-                                            <td>{{ $lastActive->diffForHumans() }}</td>
+                                            <td>{{ $log->user->nama ?? 'Guest' }}</td>
+                                            <td>{{ $log->user->email ?? '-' }}</td>
+                                            <td>{{ $log->ip_address ?? '-' }}</td>
+                                            <td>{{ $lastActive ? $lastActive->diffForHumans() : '-' }}</td>
                                             <td>
                                                 <span class="badge {{ $isOnline ? 'bg-success' : 'bg-secondary' }}">
                                                     {{ $isOnline ? 'Online' : 'Offline' }}

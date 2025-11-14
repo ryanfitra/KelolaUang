@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserLoginLog;
 
 class DashboardController extends Controller
 {
@@ -17,32 +18,41 @@ class DashboardController extends Controller
         $adminInstansiId = Auth::user()->instansi_id;
 
         $jumlahPeserta = Auth::user()
-                        ->where('instansi_id', $adminInstansiId)
-                        ->where('role', 'peserta')
-                        ->count();
+                            ->where('instansi_id', $adminInstansiId)
+                            ->where('role', 'peserta')
+                            ->count();
+
         $jumlahJenisUjian = JenisUjian::count();
         $jumlahJabatan = Jabatan::count();
 
-        // Ambil data sesi aktif dari tabel sessions yang sesuai instansi admin
-        $sessions = DB::table('sessions as s')
-            ->leftJoin('users as u', 'u.id', '=', 's.user_id')
-            ->where('u.instansi_id', $adminInstansiId) // filter berdasarkan instansi
-            ->whereNot('u.role','admin')
+        // Ambil log login user dari tabel khusus (BUKAN sessions)
+        $logs = UserLoginLog::with('user')
             ->select(
-                's.id as session_id',
-                'u.nama as nama_user',
-                'u.email',
-                's.ip_address',
-                DB::raw('FROM_UNIXTIME(s.last_activity) as terakhir_aktif')
+                'user_login_logs.*',
+                DB::raw("(SELECT FROM_UNIXTIME(s.last_activity)
+                        FROM sessions s 
+                        WHERE s.user_id = user_login_logs.user_id
+                        ORDER BY s.last_activity DESC
+                        LIMIT 1
+                        ) AS terakhir_aktif")
             )
-            ->orderByDesc('s.last_activity')
+            ->whereIn('user_login_logs.id', function($q) use ($adminInstansiId) {
+                $q->select(DB::raw("MAX(user_login_logs.id)"))
+                ->from('user_login_logs')
+                ->join('users', 'users.id', '=', 'user_login_logs.user_id')
+                ->where('users.instansi_id', $adminInstansiId)
+                ->where('users.role', 'peserta')
+                ->groupBy('user_login_logs.user_id');
+            })
+            ->orderByDesc('logged_in_at')
             ->get();
 
         return view('admin.dashboard', compact(
             'jumlahPeserta',
             'jumlahJenisUjian',
             'jumlahJabatan',
-            'sessions'
+            'logs'
         ));
     }
+
 }
