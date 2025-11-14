@@ -30,29 +30,29 @@
             </tr>
             <tr>
               <th>No Peserta</th>
-              <td>{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
+              <td class="text-wrap">{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
             </tr>
             <tr>
               <th>PIN Ujian</th>
-              <td>
+              <td class="text-wrap">
                 {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
               </td>
             </tr>
             <tr>
               <th>Jenis Ujian</th>
-              <td>{{ $ujian['nama_ujian'] ?? '-' }}</td>
+              <td class="text-wrap">{{ $ujian['nama_ujian'] ?? '-' }}</td>
             </tr>
             <tr>
               <th>Sesi Ujian</th>
-              <td>Sesi {{ $ujian['sesi'] ?? '-' }}</td>
+              <td class="text-wrap">Sesi {{ $ujian['sesi'] ?? '-' }}</td>
             </tr>
             <tr>
               <th>Waktu Mulai</th>
-              <td>{{ \Carbon\Carbon::parse($ujian['mulai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['mulai'])->format('H:i') }} WIB</td>
+              <td class="text-wrap">{{ \Carbon\Carbon::parse($ujian['mulai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['mulai'])->format('H:i') }} WIB</td>
             </tr>
             <tr>
               <th>Waktu Selesai</th>
-              <td>{{ \Carbon\Carbon::parse($ujian['selesai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['selesai'])->format('H:i') }} WIB</td>
+              <td class="text-wrap">{{ \Carbon\Carbon::parse($ujian['selesai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['selesai'])->format('H:i') }} WIB</td>
             </tr>
             <tr>
               <th>Link Ujian</th>
@@ -106,6 +106,11 @@
             <h5 class="text-primary">
                 <i class="fa fa-video-camera"></i> Jadwal Wawancara Daring
             </h5>
+            <ul class="text-danger"><strong>Panduan Join Zoom Meeting:</strong>
+              <li class="text-black">
+                <p class="mb-0">Username zoom peserta gunakan format : <strong>Formasi_Nama Peserta_Nomor Peserta<strong></p>
+              </li>
+            </ul>
 
             @if(empty($ujian['wawancara_mulai']) || $ujian['wawancara_mulai'] == '-' || empty($ujian['wawancara_selesai']) || $ujian['wawancara_selesai'] == '-')
                 <div class="alert alert-warning mt-2 mb-0">
@@ -128,7 +133,7 @@
                         <th>Link Wawancara</th>
                         <td>
                             @if($ujian['link_wawancara'] == '-' || empty($ujian['link_wawancara']))
-                                <button class="btn btn-sm btn-danger">
+                                <button class="btn btn-sm btn-danger text-wrap">
                                     <i class="fa fa-clock-o"></i> Link Zoom Meeting akan diupdate 1 jam sebelum wawancara
                                 </button>
                             @else
