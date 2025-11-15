@@ -54,6 +54,11 @@ class LamaranController extends Controller
 
             if (!$jadwal) continue;
 
+            // 🔍 Ambil data wawancara peserta ini
+            $wawancara = $jadwal->jadwalWawancaraDaring
+                ->where('nomor_peserta', $pesertaUjian->no_peserta)
+                ->first();
+
             // Tentukan status ujian
             if ($today < $jadwal->waktu_mulai_to) {
                 $nama_ujian = 'Try Out ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
@@ -68,17 +73,18 @@ class LamaranController extends Controller
                 $mulai = $jadwal->waktu_mulai_ujian;
                 $selesai = $jadwal->waktu_selesai_ujian;
             } else {
-                $nama_ujian = 'Hasil ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
-                $mulai = $jadwal->waktu_mulai_ujian;
-                $selesai = $jadwal->waktu_selesai_ujian;
+                if($wawancara && $today < $wawancara->waktu_selesai_wawancara){
+                    $nama_ujian = $jadwal->jenisUjian->nama_ujian ?? '-';
+                    $mulai = $jadwal->waktu_mulai_ujian;
+                    $selesai = $jadwal->waktu_selesai_ujian;
+                }else{
+                    $nama_ujian = 'Hasil ' . ($jadwal->jenisUjian->nama_ujian ?? '-');
+                    $mulai = $jadwal->waktu_mulai_ujian;
+                    $selesai = $jadwal->waktu_selesai_ujian;
+                }
             }
 
             $format_nama = strtoupper(str_replace(' ', '_', $detailPeserta['nama']));
-
-            // 🔍 Ambil data wawancara peserta ini
-            $wawancara = $jadwal->jadwalWawancaraDaring
-                ->where('nomor_peserta', $pesertaUjian->no_peserta)
-                ->first();
 
             // 📦 Susun data ujian
             $ujianData = [
@@ -90,7 +96,7 @@ class LamaranController extends Controller
                 'mulai'             => $mulai,
                 'selesai'           => $selesai,
                 'wawancara_mulai'   => optional($wawancara)->waktu_mulai_wawancara ?? '-',
-                'wawancara_selesai' => optional($wawancara)->waktu_selesai_wawancara ?? '-',
+                'wawancara_selesai' => optional($wawancara)->waktu_selesai_wawancara ?? '',
                 'link_wawancara'    => optional($wawancara)->link_wawancara ?? '-',
                 'status_ujian'      => $pesertaUjian->status_ujian ?? '-',
                 'format_nama'       => $format_nama,

@@ -59,6 +59,7 @@ Lamaran Peserta
                             $ujian = $detailPeserta['ujian'][$i]; 
                             $ujian['mulai']   =$ujian['mulai'] ?? '';
                             $ujian['selesai'] =$ujian['selesai'] ?? '';
+                            $ujian['wawancara_selesai'] =$ujian['wawancara_selesai'] ?? '0';
                             $mulai   =$ujian['mulai'] ?? '';
                             $selesai =$ujian['selesai'] ?? '';
                             $pengumuman = $ujian['pengumuman'] ?? '';
@@ -92,13 +93,23 @@ Lamaran Peserta
                         
                         {{-- HASIL --}}
                         @elseif($today > $ujian['selesai'] || $ujian['pengumuman' == NULL])
-                            <button type="button"
-                                class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
-                                data-bs-toggle="modal" data-bs-target="#hasilUjian{{$i}}"
-                                onclick="showHasil({{ $i }})" style="margin: 5px 10px;">
-                                <i class="fa fa-file-pen"></i>
-                                {{ $ujian['nama_ujian'] }}
-                            </button>
+                            @if($ujian['jenis_ujian_id'] == '3' && $today < $ujian['wawancara_selesai'])
+                                <button type="button"
+                                    class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
+                                    data-bs-toggle="modal" data-bs-target="#detailPesertaUjian{{$i}}"
+                                    onclick="showDetail({{ $i }})" style="margin: 5px 10px;">
+                                    <i class="fa fa-file-pen"></i>
+                                    {{ $ujian['nama_ujian'] }}
+                                </button>
+                            @else
+                                <button type="button"
+                                    class="waves-effect waves-light btn btn-rounded btn-outline btn-primary btn-lg"
+                                    data-bs-toggle="modal" data-bs-target="#hasilUjian{{$i}}"
+                                    onclick="showHasil({{ $i }})" style="margin: 5px 10px;">
+                                    <i class="fa fa-file-pen"></i>
+                                    {{ $ujian['nama_ujian'] }}
+                                </button>
+                            @endif
                         @endif
 
                         @include('peserta.lamaran.kartu-peserta-ujian')
