@@ -6,6 +6,38 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+        {{-- MENAMPILKAN JADWAL WAWANCARA DARING --}}
+        @php
+            $customId = $data_peserta->id . '-' . $detailPeserta['ujian'][$i]['no_peserta'] . '-' . $detailPeserta['ujian'][$i]['jenis_ujian_id'];
+            $format_nama = Str::upper(Str::replace(' ', '_', $detailPeserta['ujian'][$i]['no_peserta']));
+
+            $hasCAT = false;
+            $hasWawancaraDaring = false;
+            $hasWawancaraOffline = false;
+
+            if (isset($ujian['metode_ujians'])) {
+                $hasWawancaraOffline = collect($ujian['metode_ujians'])->contains('id', 1);
+            } elseif (isset($ujian->metodeUjians)) {
+                $hasWawancaraOffline = $ujian->metodeUjians->contains('id', 1);
+            }
+
+            if (isset($ujian['metode_ujians'])) {
+                $hasWawancaraDaring = collect($ujian['metode_ujians'])->contains('id', 2);
+            } elseif (isset($ujian->metodeUjians)) {
+                $hasWawancaraDaring = $ujian->metodeUjians->contains('id', 2);
+            }
+
+            if (isset($ujian['metode_ujians'])) {
+                $hasWawancaraOffline = collect($ujian['metode_ujians'])->contains('id', 3);
+            } elseif (isset($ujian->metodeUjians)) {
+                $hasWawancaraOffline = $ujian->metodeUjians->contains('id', 3);
+            }
+
+        @endphp
+        <!-- @php
+            $customId = $data_peserta->id . '-' . $detailPeserta['ujian'][$i]['no_peserta'] . '-' . $detailPeserta['ujian'][$i]['jenis_ujian_id'];
+        @endphp -->
+
         <!-- @if($detailPeserta['foto'] != NULL )
           <div class="text-center mb-3">
               
@@ -32,12 +64,14 @@
               <th>No Peserta</th>
               <td class="text-wrap">{{ str_replace('-', '', $ujian['no_peserta'] ?? '') }}</td>
             </tr>
+            @if($hasCAT)
             <tr>
               <th>PIN Ujian</th>
               <td class="text-wrap">
                 {{ !empty($data_peserta->tanggal_lahir) ? \Carbon\Carbon::parse($data_peserta->tanggal_lahir)->format('Ym') : '-' }}
               </td>
             </tr>
+            @endif
             <tr>
               <th>Jenis Ujian</th>
               <td class="text-wrap">{{ $ujian['nama_ujian'] ?? '-' }}</td>
@@ -54,18 +88,16 @@
               <th>Waktu Selesai</th>
               <td class="text-wrap">{{ \Carbon\Carbon::parse($ujian['selesai'])->format('d M Y') }}, Pukul {{\Carbon\Carbon::parse($ujian['selesai'])->format('H:i') }} WIB</td>
             </tr>
+            @if($hasCAT)
             <tr>
               <th>Link Ujian</th>
               <td>
-                {{-- @if(!empty($ujian['link'])) --}}
                   <a href="https://103.121.159.166/main/peserta_psikologi" target="_blank" class="btn btn-sm btn-success">
                     <i class="fa fa-link"></i> Buka Ujian
                   </a>
-                {{-- @else --}}
-                  {{-- <span class="text-muted">Belum tersedia</span> --}}
-                {{-- @endif --}}
               </td>
             </tr>
+            
             <ul class="text-danger"><strong>Panduan Login Ujian:</strong>
               <li class="text-black">
                 <p class="mb-0">Gunakan Nomer Peserta untuk login ke laman ujian (tanpa menggunakan tanda "-").</p>
@@ -74,13 +106,43 @@
                 <p class="mb-0">PIN Ujian menggunakan tahun dan bulan lahir anda (6 digit angka).</a></p>
               </li>
             </ul>
+            @endif
+
+            @if($hasWawancaraOffline)
+            <tr>
+              <th>Lokasi Ujian</th>
+              <td class="text-wrap">
+                Aula Magister Manajemen - Universitas Sriwijaya Palembang
+              </td>
+            </tr>
+            <tr>
+              <th></th>
+              <td>
+                <a href="{{ route('peserta.download-kartu-peserta', $customId) }}" 
+                  class="btn btn-primary" 
+                  target="_blank"
+                  download="KARTU_PESERTA_{{ $format_nama }}.pdf"
+                  >
+                  <i class="fa fa-download"></i> Download Kartu Peserta
+                </a>
+              </td>
+            </tr>
+            <ul class="text-danger"><strong>Panduan Ujian:</strong>
+              <li class="text-black">
+                <p class="mb-0">Wajib datang 60 menit sebelum waktu ujian dimulai.</p>
+              </li>
+              <li class="text-black">
+                <p class="mb-0">Wajib menggunakan pakaian Formal.</p>
+              </li>
+              <li class="text-black">
+                <p class="mb-0">Wajib membawa Berkas Asli (KTP, Ijazah, Transkrip, Surat Pengalaman Kerja).</p>
+              </li>
+            </ul>
+            @endif
 
           </table>
 
-        @php
-            $customId = $data_peserta->id . '-' . $detailPeserta['ujian'][$i]['no_peserta'] . '-' . $detailPeserta['ujian'][$i]['jenis_ujian_id'];
-        @endphp
-
+        
         {{-- <a href="{{ route('peserta.download-kartu-peserta', $customId) }}" 
           class="btn btn-primary" 
           target="_blank"
@@ -88,18 +150,6 @@
           >
           <i class="fa fa-download"></i> Download Kartu Peserta
         </a> --}}
-
-
-      {{-- MENAMPILKAN JADWAL WAWANCARA DARING --}}
-      @php
-          $hasWawancaraDaring = false;
-
-          if (isset($ujian['metode_ujians'])) {
-              $hasWawancaraDaring = collect($ujian['metode_ujians'])->contains('id', 2);
-          } elseif (isset($ujian->metodeUjians)) {
-              $hasWawancaraDaring = $ujian->metodeUjians->contains('id', 2);
-          }
-      @endphp
 
       @if($hasWawancaraDaring)
         <div class="alert mt-20 p-0">
@@ -148,7 +198,7 @@
                 </table>
             @endif
         </div>
-    @endif
+      @endif
 
       </div>
     </div>
