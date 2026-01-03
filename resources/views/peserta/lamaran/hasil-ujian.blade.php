@@ -158,7 +158,7 @@
               @elseif($data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->id == '3')
                   <strong>Tes Tahap IV (Interview User)</strong><br>
                   <br>Yang jadwalnya akan diinfokan kemudian
-                  <br>Lokasi Tes: <strong class="text-primary">Universitas Sriwijaya Palembang</strong>
+                  <br>Lokasi Tes: <strong class="text-primary">Aula Magister Manajemen - Universitas Sriwijaya Palembang</strong>
                   
               @else
                   <strong></strong>
