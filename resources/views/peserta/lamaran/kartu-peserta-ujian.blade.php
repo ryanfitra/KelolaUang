@@ -115,7 +115,7 @@
                 Aula Magister Manajemen - Universitas Sriwijaya Palembang
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <th></th>
               <td>
                 <a href="{{ route('peserta.download-kartu-peserta', $customId) }}" 
@@ -126,7 +126,7 @@
                   <i class="fa fa-download"></i> Download Kartu Peserta
                 </a>
               </td>
-            </tr>
+            </tr> -->
             <ul class="text-danger"><strong>Panduan Ujian:</strong>
               <li class="text-black">
                 <p class="mb-0">Wajib datang 60 menit sebelum waktu ujian dimulai.</p>
