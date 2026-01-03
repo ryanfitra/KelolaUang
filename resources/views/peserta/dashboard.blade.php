@@ -24,47 +24,48 @@
 
     {{-- 🔔 Announcement Card --}}
     {{-- 🎓 Pengumuman Khusus untuk Peserta Lulus Jenis Ujian ID = 2 --}}
-    @if(!empty($detailPeserta['ujian'][1]) 
-        && $detailPeserta['ujian'][1]['jenis_ujian_id'] == 2
-        && strtolower($detailPeserta['ujian'][1]['status_ujian']) == 'lulus')
+    @if(!empty($detailPeserta['ujian'][2]) 
+        && $detailPeserta['ujian'][2]['jenis_ujian_id'] == '3'
+        && strtolower($detailPeserta['ujian'][2]['status_ujian']) == 'lulus')
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card shadow-lg border-0 rounded-4">
                     <div class="card-header bg-gradient-danger text-white rounded-top-4">
                         <h4 class="mb-0 fw-bold text-center">📢 PENGUMUMAN PENTING</h4>
                     </div>
+                    <!-- PENGUMUMAN JADWAL -->
                     <div class="card-body p-4">
                         <div class="alert alert-light border-start border-4 border-danger shadow-sm">
                             <p class="fs-5">
-                                Pada tanggal <strong class="text-danger">15 - 16 November 2025</strong> pukul 
-                                <strong class="text-danger">08:00 - 18:00 WIB</strong> akan dilaksanakan 
-                                <strong class="text-primary">Seleksi Tahap III (Tes Psikologi)</strong> 
-                                bagi peserta yang <strong class="text-success">Lulus Tahap II</strong>.
+                                Pada tanggal <strong class="text-danger">8 - 10 Januari 2026</strong> pukul 
+                                <strong class="text-danger">08:00 - 17:00 WIB</strong> akan dilaksanakan 
+                                <strong class="text-primary">Seleksi Tahap IV (Interview User)</strong> 
+                                bagi peserta yang <strong class="text-success">Lulus Tahap III</strong>.
                             </p>
 
-                            <p class="fs-5">
+                            <!-- <p class="fs-5">
                                 Sebelum mengikuti ujian Peserta diwajibkan mengisi Formulir pada link berikut :<br>
                                 <a href="https://forms.gle/gWK9ZtgiSS5EYcQx7" target="_blank" class="text-primary fw-bold">
                                     Formulir Daftar Riwayat Hidup
                                 </a> 
-                            </p>
+                            </p> -->
 
                             <p class="fs-5">
-                                Ujian dilaksanakan secara <strong>online</strong> di website 
-                                <a href="https://103.121.159.166/main/peserta_psikologi" target="_blank" class="text-primary fw-bold">
-                                    cbt.unsri.ac.id
-                                </a> dan melalui <strong>Zoom Meeting</strong>.
+                                Ujian dilaksanakan secara <strong>offline</strong> di Kampus
+                                <strong>Universitas Sriwijaya Palembang</strong>.
                             </p>
 
                             <div class="mt-3">
-                                <h6 class="fw-bold">⏰ Waktu Ujian CBT:</h6>
+                                <h6 class="fw-bold">⏰ Waktu Tes Interview User:</h6>
                                 <ul class="mb-3">
                                     <li><strong>Sesi I:</strong> 08:00 - 12:00 WIB</li>
                                     <li><strong>Sesi II:</strong> 13:00 - 17:00 WIB</li>
+                                    <!-- <li><strong>Sesi III:</strong> 13:00 - 15:00 WIB</li>
+                                    <li><strong>Sesi IV:</strong> 15:00 - 17:00 WIB</li> -->
                                 </ul>
 
                                 <p class="mb-2">
-                                    Untuk jadwal ujian CBT dan Wawancara Daring, silakan buka halaman :
+                                    Untuk jadwal lengkapnya, silakan buka halaman :
                                 </p>
                                 <a href="{{ route('peserta.lamaran') }}" class="btn btn-success btn-sm shadow-sm">
                                     <i class="fa fa-file"></i> Halaman Lamaran (Kartu Peserta)
@@ -73,13 +74,27 @@
                         </div>
                         <ul class="text-danger"><strong>Catatan :</strong>
                             <li class="text-black">
+                                <p>Peserta diharapkan hadir 60 menit sebelum sesi dimulai.</p>
+                            </li>
+                        <!-- <li class="text-black">
                             <p class="mb-0">Peserta diwajibkan mengikuti Tes menggunakan perangkat <strong>Komputer / PC / Laptop</strong> dengan <strong>web browser (Google Chrome / Firefox)</strong> versi terbaru.</p>
                             </li>
-                            <!-- <li class="text-black">
+                            <li class="text-black">
                             <p class="mb-0">Kegiatan <strong>Try Out</strong> bertujuan untuk melakukan uji coba aplikasi dan jaringan saat ujian, serta memperkenalkan cara menggunakan aplikasi ujian kepada peserta.</p>
                             </li> -->
                         </ul>
                     </div>
+                    <!-- <div class="card-body p-4">
+                        <div class="alert alert-light border-start border-4 border-danger shadow-sm">
+                            <p class="fs-5 mb-0">
+                                Jadwal Seleksi Tahap IV (Interview User) akan diumumkan kemudian melalui dashboard peserta ini.
+                            </p><br>
+                            <p><strong>Lokasi Tes</strong><br>
+                                <i class="fa fa-map-marker text-danger me-2" aria-hidden="true"></i>
+                                Universitas Sriwijaya Palembang
+                            </p>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -98,7 +113,7 @@
                 <h6 class="text-muted">Tahapan Selesai</h6>
                 <h2 class="fw-bold mb-0">
                     <a href="{{ route('peserta.lamaran') }}" class="text-success text-decoration-none fs-42">
-                        2
+                        {{ $tahapan_selesai }}
                     </a>
                 </h2>
             </div>

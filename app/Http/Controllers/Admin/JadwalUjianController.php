@@ -28,6 +28,7 @@ class JadwalUjianController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'jenis_ujian_id'     => [
                 'required',

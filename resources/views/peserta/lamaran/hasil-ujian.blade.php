@@ -116,14 +116,24 @@
           
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Lulus')
           <div class="alert text-center text-primary">
-              <h3><strong class="text-success">SELAMAT!</strong></h3><br>
+              <p>Berdasarkan hasil 
+                <strong>
+                  {{ isset($data_peserta->pesertaUjian[$i]) 
+                    ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian 
+                      . ' (' . $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi . ')' 
+                    : '' }}
+                </strong>
+              </p>
+              <h3><strong class="text-success">SELAMAT!</strong></h3>
               Anda dinyatakan 
               <span class="text-success"><strong>LOLOS</strong></span> 
-              {{ isset($data_peserta->pesertaUjian[$i]) 
-                  ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian 
-                    . ' (' . $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi . ')' 
+              dan lanjut ke tahap berikutnya
+              <strong>
+                {{ isset($data_peserta->pesertaUjian[$i+1]) 
+                  ? $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->nama_ujian 
+                    . ' (' . $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->deskripsi . ')' 
                   : '' }}
-              <br>
+              </strong>
           </div>
 
           <p class="text-center">
@@ -132,12 +142,7 @@
           </p>
 
           <p class="text-center">
-              Dengan ini Anda dapat melanjutkan ke tahap berikutnya :
               @if($data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->id == '2')
-                  {{-- <strong>
-                      {{ $data_peserta->pesertaUjian[$i+1]->jadwalUjian->jenisUjian->nama_ujian }}
-                  </strong>  --}}
-                  <strong>Tes Tahap III (Tes Psikologi)</strong><br>
                   Yang akan dilaksanakan pada 
                   <strong>
                     15 & 16 November 2025
@@ -148,6 +153,12 @@
                     <a href="https://103.121.159.166/main/peserta" target="_blank" class="text-primary">
                         cbt.unsri.ac.id
                     </a>
+              
+              <!-- KONDISI UNTUK HASIL TAHAP 3 -->
+              @elseif($data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->id == '3')
+                  <strong>Tes Tahap IV (Interview User)</strong><br>
+                  <br>Yang jadwalnya akan diinfokan kemudian
+                  <br>Lokasi Tes: <strong class="text-primary">Universitas Sriwijaya Palembang</strong>
                   
               @else
                   <strong></strong>
@@ -157,11 +168,13 @@
         @elseif($data_peserta->pesertaUjian[$i]->status_ujian == 'Tidak Lulus')
           <div class="alert  text-center">
             <h3><strong class="text-warning">Dear Pelamar!</strong></h1><br>
-            <p>Terima kasih atas  partisipasi Anda dalam proses rekrutmen di PT TeL PP.</p>
-            <p>Dari hasil tahapan <strong class="text-warning">{{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</strong>,</br>
-                kami belum dapat melanjutkan proses Anda ke tahap berikutnya.
+            <!-- <p>Terima kasih atas  partisipasi Anda dalam proses rekrutmen di PT TeL PP.</p> -->
+            <p>Berdasarkan hasil <strong class="text-warning">{{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</strong>,</br>
+                Anda dinyatakan 
+                <strong class="text-danger">Belum Berhasil Lolos</strong>
+                ke tahap selanjutnya. 
             </p>
-            <p>Kami sangat menghargai waktu yang telah Anda berikan. Semoga sukses selalu bersama Anda.</p>
+            <p>Terima kasih atas partisipasi Anda, semoga bisa bergabung di kesempatan yang lain</p>
             <!-- Anda dinyatakan <span class="text-danger"><strong>TIDAK LOLOS</strong></span> {{ isset($data_peserta->pesertaUjian[$i]) ? $data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->nama_ujian.' ('.$data_peserta->pesertaUjian[$i]->jadwalUjian->jenisUjian->deskripsi.')' : '' }}</br> -->
           </div>
           
