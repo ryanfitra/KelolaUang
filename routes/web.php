@@ -104,7 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('lamaran')->group(function () {
             Route::get('/', [App\Http\Controllers\Peserta\LamaranController::class, 'index'])
             ->name('peserta.lamaran');
-            Route::get('/download-kartu-peserta/{customId}', [App\Http\Controllers\Peserta\LamaranController::class, 'download_kartu'])
+            Route::get('/download-kartu-peserta/{customId}', [App\Http\Controllers\Peserta\LamaranController::class, 'downloadKartu'])
                 ->name('peserta.download-kartu-peserta');
         });
 

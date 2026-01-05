@@ -8,8 +8,12 @@
       <div class="modal-body">
         {{-- MENAMPILKAN JADWAL WAWANCARA DARING --}}
         @php
-            $customId = $data_peserta->id . '-' . $detailPeserta['ujian'][$i]['no_peserta'] . '-' . $detailPeserta['ujian'][$i]['jenis_ujian_id'];
-            $format_nama = Str::upper(Str::replace(' ', '_', $detailPeserta['ujian'][$i]['no_peserta']));
+            $customId =
+              $data_peserta->id . '-' .
+              $detailPeserta['ujian'][$i]['no_peserta'] . '-' .
+              $detailPeserta['ujian'][$i]['jenis_ujian_id'];
+
+            $format_nama = Str::upper(Str::replace(' ', '_', $detailPeserta['nama']));
 
             $hasCAT = false;
             $hasWawancaraDaring = false;
@@ -112,7 +116,7 @@
             <tr>
               <th>Lokasi Ujian</th>
               <td class="text-wrap">
-                Aula Magister Manajemen - Universitas Sriwijaya Palembang
+                Gedung Graha Sriwijaya - Universitas Sriwijaya Palembang
               </td>
             </tr>
             <!-- <tr>
