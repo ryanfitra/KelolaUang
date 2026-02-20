@@ -37,10 +37,9 @@
                     <div class="card-body p-4">
                         <div class="alert alert-light border-start border-4 border-danger shadow-sm">
                             <p class="fs-5">
-                                Pada tanggal <strong class="text-danger">8 - 10 Januari 2026</strong> pukul 
-                                <strong class="text-danger">08:00 - 17:00 WIB</strong> akan dilaksanakan 
-                                <strong class="text-primary">Seleksi Tahap IV (Interview User)</strong> 
-                                bagi peserta yang <strong class="text-success">Lulus Tahap III</strong>.
+                                Pada tanggal <strong class="text-danger">20 Februari 2026</strong> pukul 
+                                <strong class="text-danger">16:00 WIB</strong> akan diumumkan 
+                                <strong class="text-primary">Hasil Seleksi Tahap IV (Interview User)</strong>.
                             </p>
 
                             <!-- <p class="fs-5">
@@ -50,39 +49,31 @@
                                 </a> 
                             </p> -->
 
-                            <p class="fs-5">
+                            <!-- <p class="fs-5">
                                 Ujian dilaksanakan secara <strong>offline</strong> di Kampus
                                 <strong>Universitas Sriwijaya Palembang</strong>.
-                            </p>
+                            </p> -->
 
                             <div class="mt-3">
-                                <h6 class="fw-bold">⏰ Waktu Tes Interview User:</h6>
+                                <!-- <h6 class="fw-bold">⏰ Waktu Tes Interview User:</h6>
                                 <ul class="mb-3">
                                     <li><strong>Sesi I:</strong> 08:00 - 12:00 WIB</li>
                                     <li><strong>Sesi II:</strong> 13:00 - 17:00 WIB</li>
-                                    <!-- <li><strong>Sesi III:</strong> 13:00 - 15:00 WIB</li>
-                                    <li><strong>Sesi IV:</strong> 15:00 - 17:00 WIB</li> -->
-                                </ul>
+                                </ul> -->
 
                                 <p class="mb-2">
-                                    Untuk jadwal lengkapnya, silakan buka halaman :
+                                    Hasil Seleksi bisa dilihat di halaman berikut :
                                 </p>
                                 <a href="{{ route('peserta.lamaran') }}" class="btn btn-success btn-sm shadow-sm">
-                                    <i class="fa fa-file"></i> Halaman Lamaran (Kartu Peserta)
+                                    <i class="fa fa-file"></i> Halaman Lamaran
                                 </a>
                             </div>
                         </div>
-                        <ul class="text-danger"><strong>Catatan :</strong>
+                        <!-- <ul class="text-danger"><strong>Catatan :</strong>
                             <li class="text-black">
                                 <p>Peserta diharapkan hadir 60 menit sebelum sesi dimulai.</p>
                             </li>
-                        <!-- <li class="text-black">
-                            <p class="mb-0">Peserta diwajibkan mengikuti Tes menggunakan perangkat <strong>Komputer / PC / Laptop</strong> dengan <strong>web browser (Google Chrome / Firefox)</strong> versi terbaru.</p>
-                            </li>
-                            <li class="text-black">
-                            <p class="mb-0">Kegiatan <strong>Try Out</strong> bertujuan untuk melakukan uji coba aplikasi dan jaringan saat ujian, serta memperkenalkan cara menggunakan aplikasi ujian kepada peserta.</p>
-                            </li> -->
-                        </ul>
+                        </ul> -->
                     </div>
                     <!-- <div class="card-body p-4">
                         <div class="alert alert-light border-start border-4 border-danger shadow-sm">
