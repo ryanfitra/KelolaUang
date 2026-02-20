@@ -189,7 +189,10 @@
                   @endif
                   
                   <br>
-                  <p class="text-center">Selanjutnya akan dihubungi oleh pihak HRD PT TELPP untuk <em>offering</em></p>
+                  <h4 class="text-center">
+                    Selanjutnya akan dihubungi oleh pihak <strong class="text-danger">HRD PT TELPP</strong> untuk 
+                    <em><strong class="text-danger">Offering</strong></em>
+                  </h4>
               @else
                   <strong></strong>
               @endif
