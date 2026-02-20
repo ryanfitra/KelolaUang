@@ -17,7 +17,9 @@
           </div>
           <div class="col-md-6 text-md-end">
             <p>{{ $detailPeserta['instansi']['nama_instansi'] ?? 'Tidak diisi' }}</p>
-            <p>{{ $detailPeserta['posisi'] ?? 'Tidak diisi' }}</p>
+            {{--
+              <p>{{ $detailPeserta['posisi'] ?? 'Tidak diisi' }}</p>
+              --}}
           </div>
         </div>
         <hr>

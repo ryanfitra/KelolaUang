@@ -39,7 +39,7 @@ Lamaran Peserta
             <div class="box bt-5 border-danger rounded mb-3">
                 @if(empty($detailPeserta['ujian']))
                 <div class="box-body">
-                    <h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>
+                    {{--<h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>--}}
                     <p class="subtitle mb-20">{{ $data_peserta->instansi->nama_instansi }}</p>
                     <div class="clearfix">
                         <div class="alert alert-warning" role="alert">
@@ -51,7 +51,7 @@ Lamaran Peserta
                 </div>
                 @else
                 <div class="box-body">
-                    <h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>
+                    {{--<h3 class="box-title mb-1"><strong>{{ $data_peserta->posisi }}</strong></h3>--}}
                     <p class="subtitle mb-20">{{ $data_peserta->instansi->nama_instansi }}</p>
                     <div class="clearfix">
                     @for($i = 0; $i < count($detailPeserta['ujian']); $i++)
