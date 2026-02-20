@@ -25,6 +25,7 @@ class LamaranController extends Controller
             'pesertaUjian.jadwalUjian.jenisUjian',
             'pesertaUjian.jadwalUjian.metodeUjians',
             'pesertaUjian.jadwalUjian.jadwalWawancaraDaring',
+            'pesertaUjian.jabatanLulus',
         );
 
         // dd($data_peserta);

@@ -30,4 +30,9 @@ class PesertaUjian extends Model
     {
         return $this->belongsTo(JadwalUjian::class, 'jadwal_ujian_id', 'id');
     }
+
+    public function jabatanLulus()
+    {
+        return $this->belongsTo(Jabatan::class, 'id_jabatan_lulus', 'id');
+    }
 }

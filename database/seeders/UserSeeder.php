@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
                 'nama' => 'Admin PT TEL',
                 'email' => 'admin_pt_tel@local.com',
                 'role' => 'admin',
-                'password' => bcrypt('pttel2025@!'), // password di-hash
+                'password' => bcrypt('pttel@!'), // password di-hash
                 'instansi_id' => '1',
                 'tanggal_daftar'=> '2025-08-01'
             ],
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'nama' => 'Peserta CBT',
                 'email' => 'peserta_cbt@unsri.ac.id',
                 'role' => 'peserta',
-                'password' => bcrypt('Eleunsri*#*#'), // password di-hash
+                'password' => bcrypt('*#*#'), // password di-hash
                 'nik' => '1234567890123456',
                 'warga_negara' => 'WNI',
                 'jenis_kelamin' => 'L',
