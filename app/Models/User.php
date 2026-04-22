@@ -19,40 +19,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
 
-    protected $fillable = [
-        'nama',
-        'nik',
-        'warga_negara',
-        'jenis_kelamin',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'alamat',
-        'alamat_kelurahan_desa',
-        'kode_kelurahan_desa',
-        'alamat_kecamatan',
-        'kode_kecamatan',
-        'alamat_kabupaten_kota',
-        'kode_kabupaten_kota',
-        'alamat_provinsi',
-        'kode_provinsi',
-        'agama',
-        'no_wa',
-        'wa_sender',
-        'foto',
-        'pendidikan_terakhir',
-        'jurusan',
-        'sekolah_universitas',
-        'ijazah',
-        'posisi_id',
-        'posisi',
-        'instansi_id',
-        'tanggal_daftar',
-        'email',
-        'email_verified_at',
-        'password',
-        'role',
-        'remember_token',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'role'];
 
     /**
      * The attributes that should be hidden for serialization.

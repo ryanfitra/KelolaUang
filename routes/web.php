@@ -21,6 +21,34 @@ Route::get('/register-bu', [App\Http\Controllers\Auth\RegisteredUserController::
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    // Peserta dashboard
+    Route::prefix('pengguna')->middleware('role:user')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('user.dashboard');
+
+        Route::prefix('transaksi')->group(function () {
+            Route::get('/', [App\Http\Controllers\User\TransactionController::class, 'index'])->name('user.transactions.index');
+            Route::get('/create', [App\Http\Controllers\User\TransactionController::class, 'create'])->name('user.transactions.create');
+            Route::post('/store', [App\Http\Controllers\User\TransactionController::class, 'store'])->name('user.transactions.store');
+
+            Route::delete('/destroy/{transaction}', [App\Http\Controllers\User\TransactionController::class, 'destroy'])->name('user.transactions.delete');
+        
+        });
+        
+        
+        Route::prefix('lamaran')->group(function () {
+            Route::get('/', [App\Http\Controllers\Peserta\LamaranController::class, 'index'])
+            ->name('user.lamaran');
+            Route::get('/download-kartu-peserta/{customId}', [App\Http\Controllers\Peserta\LamaranController::class, 'downloadKartu'])
+                ->name('user.download-kartu-peserta');
+        });
+
+        Route::prefix('profil-perusahaan')->group(function () {
+            Route::get('/', [App\Http\Controllers\ProfilController::class, 'index'])
+            ->name('user.profil-pt');
+        });
+
+    });
+
     // Admin dashboard
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
@@ -95,25 +123,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     
 
-    // Peserta dashboard
-    Route::prefix('peserta')->middleware('role:peserta')->group(function () {
-        Route::get('/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])
-            ->name('peserta.dashboard');
-        
-        
-        Route::prefix('lamaran')->group(function () {
-            Route::get('/', [App\Http\Controllers\Peserta\LamaranController::class, 'index'])
-            ->name('peserta.lamaran');
-            Route::get('/download-kartu-peserta/{customId}', [App\Http\Controllers\Peserta\LamaranController::class, 'downloadKartu'])
-                ->name('peserta.download-kartu-peserta');
-        });
-
-        Route::prefix('profil-perusahaan')->group(function () {
-            Route::get('/', [App\Http\Controllers\ProfilController::class, 'index'])
-            ->name('peserta.profil-pt');
-        });
-
-    });
+    
 });
 
 // Route::middleware('auth')->group(function () {

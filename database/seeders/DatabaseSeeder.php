@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\DaftarInstansi;
 use App\Models\JenisUjian;
 use App\Models\User;
@@ -17,12 +18,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call(DaftarInstansiSeeder::class);
-        $this->call(JenisUjianSeeder::class);
-        $this->call(JadwalUjianSeeder::class);
+        // $this->call(DaftarInstansiSeeder::class);
+        // $this->call(JenisUjianSeeder::class);
+        // $this->call(JadwalUjianSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(PesertaUjianSeeder::class);
-        $this->call(TimelineSeeder::class);
-        $this->call(MetodeUjianSeeder::class);
+        $this->call(TypeSeeder::class);
+        $this->call(CategorySeeder::class);
+        // $this->call(TimelineSeeder::class);
+        // $this->call(MetodeUjianSeeder::class);
     }
 }

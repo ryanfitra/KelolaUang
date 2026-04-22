@@ -26,7 +26,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'peserta') {
-                return redirect()->route('peserta.dashboard');
+                return redirect()->route('user.dashboard');
             } elseif ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             }
